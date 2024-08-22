@@ -12,6 +12,7 @@ import ProductDetailsPage from "../Pages/Products/ProductDetailsPage";
 import CategoriesPage from "../Pages/Categories/CategoriesPage";
 import ShopProductsPage from "../Pages/Products/ShopProductsPage";
 import BrandsPage from "../Pages/Brands/BrandsPage";
+import DashBoardAdminPage from "../Pages/Admin/DashBoardAdminPage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -76,7 +77,7 @@ const router = createBrowserRouter(
             // </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="brands"
           element={
@@ -89,6 +90,20 @@ const router = createBrowserRouter(
             // </ProtectedRoute>
           }
         />
+
+        <Route
+          path="admin/dash-board"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <DashBoardAdminPage />
+            // </ProtectedRoute>
+          }
+        />
+
       </Route>
 
       {/* Page Not Found */}

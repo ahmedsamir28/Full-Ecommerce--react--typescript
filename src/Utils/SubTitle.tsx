@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Button from './Button';
+import Button from '../UI-items/Button';
 
 // Define prop types
 interface SubTitleProps {

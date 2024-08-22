@@ -1,7 +1,7 @@
 import CategoryHeader from "../../Components/Categories/CategoryHeader"
 import ProductsContainer from "../../Components/Products/ProductsContainer"
 import DropDown from "../../Utils/DropDown"
-import SideFilter from "../../Utils/SideFilter"
+import SideFilter from "../../Components/Products/SideFilter"
 
 function ShopProductsPage() {
     return (

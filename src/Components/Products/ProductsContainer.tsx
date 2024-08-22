@@ -1,4 +1,4 @@
-import SubTitle from "../../UI-items/SubTitle"
+import SubTitle from "../../Utils/SubTitle";
 import ProductCard from "./ProductCard"
 
 // Define prop types
