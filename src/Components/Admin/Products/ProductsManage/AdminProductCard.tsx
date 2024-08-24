@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import Image from "../../UI-items/Image"
+import Image from "../../../../UI-items/Image"
 
-const ProductCard = () => {
+function AdminProductCard() {
     return (
         <div className='border-2 p-2 rounded-badge'>
             <div className="relative">
@@ -43,4 +43,4 @@ const ProductCard = () => {
     )
 }
 
-export default ProductCard
+export default AdminProductCard

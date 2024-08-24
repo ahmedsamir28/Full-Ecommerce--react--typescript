@@ -12,7 +12,7 @@ const SubTitle: React.FC<SubTitleProps> = ({ title, buttonTitle, pathText }) => 
     return (
         <>
             <div className="container flex justify-between items-center">
-                <h6 className="capitalize text-md xs:text-4xl font-semibold"> {title} </h6>
+                <h6 className="capitalize text-md xl:text-xl font-bold"> {title} </h6>
                 {buttonTitle && pathText ? (
                     <Link to={pathText}>
                         <Button className="capitalize text-sm sm:text-sm hover:text-blue-700 cursor-pointer">

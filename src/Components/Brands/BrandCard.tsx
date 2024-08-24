@@ -5,7 +5,7 @@ function BrandCard() {
         <>
         <div className='flex items-center py-3 px-6 gap-x-4 bg-zinc-100 rounded-2xl'>
             <div className='w-24 h-24'>
-                <Link to={`products/brand/5`}>
+                <Link to="/products/brand/5">
                     <img alt="Category" src="/src/assets/assets/Headphone9.png" className="h-full" />
                 </Link>
             </div>

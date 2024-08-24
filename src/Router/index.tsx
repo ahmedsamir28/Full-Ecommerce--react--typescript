@@ -13,6 +13,8 @@ import CategoriesPage from "../Pages/Categories/CategoriesPage";
 import ShopProductsPage from "../Pages/Products/ShopProductsPage";
 import BrandsPage from "../Pages/Brands/BrandsPage";
 import DashBoardAdminPage from "../Pages/Admin/DashBoardAdminPage";
+import AdminProductsPage from "../Pages/Admin/AdminProductsPage";
+import AdminCategoriesPage from "../Pages/Admin/AdminCategoriesPage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -100,6 +102,32 @@ const router = createBrowserRouter(
             // data={userData}
             // >
             <DashBoardAdminPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="admin/products"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <AdminProductsPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="admin/categories"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <AdminCategoriesPage />
             // </ProtectedRoute>
           }
         />
