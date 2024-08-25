@@ -9,7 +9,7 @@ function AdminProductsPage() {
                     <AdminSideBar />
                 </div>
                 <div>
-                    <AdminProducts />
+                    <AdminProducts title="all products" buttonTitle="" pathTitle="" />
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import Button from "../../../UI-items/Button"
 import Image from "../../../UI-items/Image"
 
-function AdminCategoryTable() {
+function AdminBrandTable() {
     return (
         <div className="overflow-x-auto border-2 rounded-lg xl:w-[900px] 2xl:w-[1000px]">
             <table className="table">
@@ -9,7 +9,7 @@ function AdminCategoryTable() {
                 <thead>
                     <tr className="">
                         <th className="capitalize font-extrabold text-black text-sm"></th>
-                        <th className="capitalize font-extrabold text-black text-sm">category title</th>
+                        <th className="capitalize font-extrabold text-black text-sm">brand title</th>
                         <th className="capitalize font-extrabold text-black text-sm">created at</th>
                         <th></th>
                     </tr>
@@ -55,4 +55,4 @@ function AdminCategoryTable() {
     )
 }
 
-export default AdminCategoryTable
+export default AdminBrandTable

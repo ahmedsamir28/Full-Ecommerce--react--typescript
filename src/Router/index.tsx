@@ -15,6 +15,8 @@ import BrandsPage from "../Pages/Brands/BrandsPage";
 import DashBoardAdminPage from "../Pages/Admin/DashBoardAdminPage";
 import AdminProductsPage from "../Pages/Admin/AdminProductsPage";
 import AdminCategoriesPage from "../Pages/Admin/AdminCategoriesPage";
+import AdminSubCategoriesPage from "../Pages/Admin/AdminSubCategoriesPage";
+import AdminBrandsPage from "../Pages/Admin/AdminBrandsPage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -132,7 +134,35 @@ const router = createBrowserRouter(
           }
         />
 
+        <Route
+          path="admin/subcategories"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <AdminSubCategoriesPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="admin/brands"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <AdminBrandsPage />
+            // </ProtectedRoute>
+          }
+        />
+
       </Route>
+
+
 
       {/* Page Not Found */}
       <Route path="*" element={<PageNotFound />} />

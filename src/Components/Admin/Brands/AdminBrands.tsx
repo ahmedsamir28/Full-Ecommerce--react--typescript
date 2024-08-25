@@ -1,24 +1,24 @@
 import SubTitle from "../../../Utils/SubTitle"
-import AdminAddCategory from "./AdminAddCategory";
-import AdminCategoryTable from "./AdminCategoryTable"
+import AdminAddBrand from "./AdminAddBrand";
+import AdminBrandTable from "./AdminBrandTable";
 interface cateTitleProps {
     title: string;
     buttonTitle?: string;
     pathTitle?: string;
 }
-function AdminCategories({ title, buttonTitle, pathTitle }: cateTitleProps) {
+function AdminBrands({ title, buttonTitle, pathTitle }: cateTitleProps) {
     return (
         <div className='mt-5 '>
             <div className="flex items-center mb-3">
                 <SubTitle title={title} buttonTitle={buttonTitle} pathText={pathTitle} />
 
-                <AdminAddCategory/>
+                <AdminAddBrand/>
             </div>
             <div className="">
-                <AdminCategoryTable />
+                <AdminBrandTable />
             </div>
         </div>
     )
 }
 
-export default AdminCategories
+export default AdminBrands

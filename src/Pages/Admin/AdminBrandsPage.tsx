@@ -1,7 +1,7 @@
 import AdminSideBar from "../../Components/Admin/AdminSideBar"
-import AdminCategories from "../../Components/Admin/Categories/AdminCategories"
+import AdminBrands from "../../Components/Admin/Brands/AdminBrands"
 
-function AdminCategoriesPage() {
+function AdminBrandsPage() {
     return (
         <div className="min-h-[calc(80vh-100px)] border-t-2 mb-10 mt-3 py-5 container">
             <div className="flex flex-col lg:flex-row lg:items-start gap-5 ">
@@ -9,11 +9,11 @@ function AdminCategoriesPage() {
                     <AdminSideBar />
                 </div>
                 <div>
-                    <AdminCategories title="all categories" buttonTitle="" pathTitle="" />
+                    <AdminBrands title="all brands" buttonTitle="" pathTitle="" />
                 </div>
             </div>
         </div>
     )
 }
 
-export default AdminCategoriesPage
+export default AdminBrandsPage

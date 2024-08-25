@@ -37,6 +37,23 @@ function AdminSideBar() {
                         </Link>
                     </li>
 
+                    <li>
+                        <Link
+                            to="/admin/subcategories"
+                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        >
+                            <i className="fa-solid fa-list mr-1 text-violet-700 "></i>  Add A SubCategory
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            to="/admin/brands"
+                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                        >
+                            <i className="fa-solid fa-shuffle mr-1 text-pink-700"></i>  Add A Brand
+                        </Link>
+                    </li>
                 </ul>
             </div>
 
@@ -52,7 +69,7 @@ function AdminSideBar() {
                         <p className="text-xs">
                             <strong className="block font-medium">Eric Frusciante</strong>
 
-                            <span> eric@frusciante.com </span>
+                            <span>admin@admin.com</span>
                         </p>
                     </div>
                 </a>
