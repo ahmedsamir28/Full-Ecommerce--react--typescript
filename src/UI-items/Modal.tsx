@@ -31,7 +31,7 @@ function Modal({ isOpen, closeModal, title,add,children }: IProps) {
                     className="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 "
                     onClick={handleOverlayClick}
                 >
-                    <div className="relative w-full max-w-2xl p-4 max-h-full">
+                    <div className="relative w-full max-w-2xl p-4 max-h-full overflow-auto">
                         {/* Modal content */}
                         <div className="relative bg-slate-100 rounded-lg shadow ">
                             {/* Modal header */}
