@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom"
 import React, { useState } from "react";
-import Button from "../../../../UI-items/Button";
-import Modal from "../../../../UI-items/Modal";
-import Image from "../../../../UI-items/Image";
+
 import Multiselect from 'multiselect-react-dropdown';
 import { CompactPicker } from 'react-color';
+import Modal from "../../../UI-items/Modal";
+import Image from "../../../UI-items/Image";
+import Button from "../../../UI-items/Button";
+
 type Option = {
     label: string;
     value: string;
@@ -16,8 +19,10 @@ const options: Option[] = [
     { label: 'Option 4', value: 'option4' },
 ];
 
-function AdminAddProduct() {
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
+function AdminProductCard() {
+    const [handleEditModal, setHandleEditModal] = useState(false);
+    const [handleRemoveModal, setHandleRemoveModal] = useState(false);
+
     const [images, setImages] = useState<string[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const [showColor, setShowColor] = useState(false);
@@ -58,14 +63,23 @@ function AdminAddProduct() {
     };
 
     return (
-        <div className="flex items-center justify-center">
-            <Button onClick={() => setIsOpenConfirmModal(true)} className="w-46 btn btn-outline capitalize btn-success">
-                <i className="fa-solid fa-plus text-lg"></i> Add Product
-            </Button>
+        <>
+            {/* modal of remove the product */}
             <Modal
-                isOpen={isOpenConfirmModal}
-                closeModal={() => setIsOpenConfirmModal(false)}
-                title="Add Your Product"
+                isOpen={handleRemoveModal}
+                closeModal={() => setHandleRemoveModal(false)}
+                title="Confirm deletion"
+                add="remove product"
+                btnClass="error"
+            >
+                <p>Are you sure about the product deletion process ?</p>
+            </Modal>
+
+            {/* modal of edit the product*/}
+            <Modal
+                isOpen={handleEditModal}
+                closeModal={() => setHandleEditModal(false)}
+                title="Add Product"
                 add="Add Product"
             >
                 <div className="flex gap-5 items-center justify-start border-2 rounded-lg py-2 scroll">
@@ -85,7 +99,7 @@ function AdminAddProduct() {
                     </div>
                 </div>
 
-                <div>
+                <div className="">
                     <label className="input input-bordered input-info flex items-center mb-5 gap-2">
                         Title:
                         <input type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
@@ -96,7 +110,7 @@ function AdminAddProduct() {
                     </label>
                     <textarea id="textarea" className="textarea textarea-info text-lg mt-2 w-full placeholder:text-zinc-500 text-gray-700 capitalize" placeholder="Type description"></textarea>
 
-                    <div className="flex flex-col md:flex-row items-center gap-5 mt-5 mb-5">
+                    <div className="flex flex-col md:flex-row items-center gap-5 md:gap-2 mt-5 mb-5">
                         <label className="input input-bordered input-info flex items-center w-full gap-2">
                             Price:
                             <input type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Price before discount" />
@@ -161,8 +175,47 @@ function AdminAddProduct() {
                 </div>
 
             </Modal>
-        </div>
-    );
+
+            <div className='border-2 p-2 rounded-badge'>
+                <div className="relative">
+                    <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
+                        <Link to="/product-details/4">
+                            <Image
+                                alt="image name"
+                                url="/src/assets/assets/Headphone2.png"
+                                className="w-full"
+                            />
+                        </Link>
+                    </div>
+                    <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                        <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
+                    </Button>
+                    <Button onClick={() => setHandleRemoveModal(true)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                        <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
+                    </Button>
+
+
+                    <div className="absolute bottom-3 left-3">
+                        <div className="flex items-start bg-white px-4 py-1 rounded-full ">
+                            <span className="mr-1">5.0</span>
+                            <i className="fa-solid fa-star text-blue-700 text-sm"></i>
+                            <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="mt-2 ml-2">
+                    <h6>title of the product</h6>
+                    <div className="mt-1 flex justify-between items-center">
+                        <div className="flex justify-between items-center w-full">
+                            <span className="text-lg">$ 5000 </span>
+                            <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ 3000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+
+    )
 }
 
-export default AdminAddProduct;
+export default AdminProductCard

@@ -17,6 +17,11 @@ import AdminProductsPage from "../Pages/Admin/AdminProductsPage";
 import AdminCategoriesPage from "../Pages/Admin/AdminCategoriesPage";
 import AdminSubCategoriesPage from "../Pages/Admin/AdminSubCategoriesPage";
 import AdminBrandsPage from "../Pages/Admin/AdminBrandsPage";
+import AdminCouponsPage from "../Pages/Admin/AdminCouponsPage";
+import UserOrdersPage from "../Pages/User/UserOrdersPage";
+import UserWishListPage from "../Pages/User/UserWishListPage";
+import UserAddressesPage from "../Pages/User/UserAddressesPage";
+import UserProfilePage from "../Pages/User/UserProfilePage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -40,8 +45,6 @@ const router = createBrowserRouter(
             // </ProtectedRoute>
           }
         />
-
-
 
         <Route
           path="categories"
@@ -95,6 +98,7 @@ const router = createBrowserRouter(
           }
         />
 
+        {/* admin routes */}
         <Route
           path="admin/dash-board"
           element={
@@ -160,7 +164,74 @@ const router = createBrowserRouter(
           }
         />
 
+        <Route
+          path="admin/coupons"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <AdminCouponsPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        {/* user routes */}
+        <Route
+          path="user/orders"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <UserOrdersPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="user/wish-list"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <UserWishListPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="user/addresses"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <UserAddressesPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="user/profile"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <UserProfilePage />
+            // </ProtectedRoute>
+          }
+        />
+
       </Route>
+
 
 
 

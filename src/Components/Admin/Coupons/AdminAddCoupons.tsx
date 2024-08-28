@@ -2,12 +2,12 @@ import { useState } from "react";
 import Button from "../../../UI-items/Button"
 import Modal from "../../../UI-items/Modal"
 
-function AdminAddSubCategory() {
+function AdminAddCoupon() {
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
 
     return (
         <div className="flex items-center justify-center">
-            <Button onClick={() => setIsOpenConfirmModal(true)} className="w-46 btn btn-outline capitalize btn-success"> <i className="fa-solid fa-plus text-lg"></i>  add subCategory</Button>
+            <Button onClick={() => setIsOpenConfirmModal(true)} className="w-46 btn btn-outline capitalize btn-success"> <i className="fa-solid fa-plus text-lg"></i>  add coupon</Button>
             <Modal
                 isOpen={isOpenConfirmModal}
                 closeModal={() => setIsOpenConfirmModal(false)}
@@ -29,4 +29,4 @@ function AdminAddSubCategory() {
     )
 }
 
-export default AdminAddSubCategory
+export default AdminAddCoupon

@@ -1,4 +1,4 @@
-import AdminProducts from "../../Components/Admin/Products/ProductsManage/AdminProducts"
+import AdminProducts from "../../Components/Admin/Products/AdminProducts"
 import AdminSideBar from "../../Components/Admin/AdminSideBar"
 
 function AdminProductsPage() {

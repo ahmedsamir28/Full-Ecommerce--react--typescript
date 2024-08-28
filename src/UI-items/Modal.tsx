@@ -5,13 +5,13 @@ import Button from './Button';
 interface IProps {
     isOpen: boolean
     title?: string
-    add:string
+    add: string
+    btnClass?: string
     children: ReactNode
     closeModal: () => void
 
 }
-function Modal({ isOpen, closeModal, title,add,children }: IProps) {
-
+function Modal({ isOpen, closeModal, title, btnClass ="success", add, children }: IProps) {
     const open: boolean = true
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         // If the clicked element is the overlay (i.e., not the modal content itself), close the modal
@@ -23,7 +23,7 @@ function Modal({ isOpen, closeModal, title,add,children }: IProps) {
     return (
         <>
             {/* Main modal */}
-            {open && (
+            {isOpen && (
                 <div
                     id="default-modal"
                     tabIndex={-1}
@@ -48,7 +48,7 @@ function Modal({ isOpen, closeModal, title,add,children }: IProps) {
 
                             {/* Modal footer */}
                             <div className="flex gap-3 items-start justify-end p-4 md:p-5 ">
-                                <Button onClick={closeModal} className="btn btn-outline btn-success capitalize border-2">
+                                <Button onClick={closeModal} className={`btn btn-outline btn-${btnClass} capitalize border-2`}>
                                     {add}
                                 </Button>
                                 <Button

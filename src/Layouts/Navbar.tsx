@@ -20,7 +20,7 @@ function Navbar() {
         <div className="flex justify-between items-center gap-4">
 
           <div className="flex items-center gap-1.5 cursor-pointer hover:text-zinc-400">
-            <div className="text-sm">WishList</div>
+            <Link to="/user/wish-list" className="text-sm">WishList</Link>
             <div className="relative">
               <i className="fa-regular fa-heart text-lg"></i>
               <span className="absolute bottom-3 left-2.5 bg-zinc-300 text-sm font-semibold border-2 px-1.5 rounded-full">8
@@ -71,8 +71,12 @@ function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
               <li>
-                <Link to ="/admin/dash-board" className="justify-between">
-                  Profile
+                <Link to="/admin/dash-board" className="justify-between">
+                  control panel
+                  <span className="badge">New</span>
+                </Link>
+                <Link to="/user/orders" className="justify-between">
+                  profile page
                   <span className="badge">New</span>
                 </Link>
               </li>

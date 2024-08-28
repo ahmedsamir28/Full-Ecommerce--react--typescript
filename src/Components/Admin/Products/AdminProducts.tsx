@@ -1,6 +1,6 @@
-import SubTitle from "../../../../Utils/SubTitle"
+import SubTitle from "../../../Utils/SubTitle"
 import AdminAddProduct from "./AdminAddProduct"
-import AdminProductCard from "./AdminProductCard"
+import AdminProductCard from "./AdminProductCard";
 
 interface prodTitleProps {
     title: string;

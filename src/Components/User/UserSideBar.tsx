@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-function AdminSideBar() {
+function UserSideBar() {
     return (
         <div className="flex flex-col justify-between border-e bg-white lg:w-64 ">
             <div className="px-4 py-6">
@@ -11,59 +11,43 @@ function AdminSideBar() {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            to="/admin/dash-board"
+                            to="/user/orders"
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
-                            <i className="fa-solid fa-gauge-high text-sky-600 mr-1"></i>  DashBoard
+                            <i className="fa-solid fa-gauge-high text-sky-600 mr-1"></i>  Orders
                         </Link>
+
                     </li>
 
 
                     <li>
                         <Link
-                            to="/admin/products"
+                            to="/user/wish-list"
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            <i className="fa-solid fa-bars-progress text-amber-700 mr-1"></i> Products Manage
+                            <i className="fa-solid fa-dollar-sign mr-1 text-yellow-600"></i> WishList
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            to="/admin/categories"
+                            to="/user/addresses"
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            <i className="fa-solid fa-layer-group  mr-1 text-emerald-600"></i>  Add A Category
+                            <i className="fa-solid fa-map-location mr-1 text-green-600"></i> Addresses
                         </Link>
                     </li>
 
                     <li>
                         <Link
-                            to="/admin/subcategories"
+                            to="/user/profile"
                             className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                         >
-                            <i className="fa-solid fa-list mr-1 text-violet-700 "></i>  Add A SubCategory
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link
-                            to="/admin/brands"
-                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        >
-                            <i className="fa-solid fa-shuffle mr-1 text-pink-700"></i>  Add A Brand
-                        </Link>
-                    </li>
-
-                    <li>
-                        <Link
-                            to="/admin/coupons"
-                            className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                        >
-                            <i className="fa-solid fa-dollar-sign mr-1 text-yellow-600"></i>  Add A coupon
+                            <i className="fa-solid fa-user mr-1 text-indigo-600"></i> Profile
                         </Link>
                     </li>
                 </ul>
+
             </div>
 
             <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
@@ -87,4 +71,4 @@ function AdminSideBar() {
     )
 }
 
-export default AdminSideBar
+export default UserSideBar
