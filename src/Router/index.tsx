@@ -22,6 +22,7 @@ import UserOrdersPage from "../Pages/User/UserOrdersPage";
 import UserWishListPage from "../Pages/User/UserWishListPage";
 import UserAddressesPage from "../Pages/User/UserAddressesPage";
 import UserProfilePage from "../Pages/User/UserProfilePage";
+import CartPage from "../Pages/Cart/CartPage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -230,6 +231,18 @@ const router = createBrowserRouter(
           }
         />
 
+        <Route
+          path="/cart"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <CartPage />
+            // </ProtectedRoute>
+          }
+        />
       </Route>
 
 
