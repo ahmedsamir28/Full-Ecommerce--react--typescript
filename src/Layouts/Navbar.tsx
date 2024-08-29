@@ -81,7 +81,7 @@ function Navbar() {
                 </Link>
               </li>
               <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
+              <li><Link to="/auth/login">Logout</Link></li>
             </ul>
           </div>
         </div>

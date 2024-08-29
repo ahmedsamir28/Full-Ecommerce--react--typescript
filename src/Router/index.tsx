@@ -23,6 +23,8 @@ import UserWishListPage from "../Pages/User/UserWishListPage";
 import UserAddressesPage from "../Pages/User/UserAddressesPage";
 import UserProfilePage from "../Pages/User/UserProfilePage";
 import CartPage from "../Pages/Cart/CartPage";
+import LoginPage from "../Pages/Auth/LoginPage";
+import RegisterPage from "../Pages/Auth/RegisterPage";
 
 // const storageKey = "user";
 // const userDataString = localStorage.getItem(storageKey);
@@ -243,6 +245,33 @@ const router = createBrowserRouter(
             // </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/auth/login"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <LoginPage />
+            // </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/auth/register"
+          element={
+            // <ProtectedRoute
+            // isAllowed={userData?.jwt}
+            // redirectPath="/login"
+            // data={userData}
+            // >
+            <RegisterPage />
+            // </ProtectedRoute>
+          }
+        />
+
       </Route>
 
 
