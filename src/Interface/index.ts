@@ -19,3 +19,13 @@ export interface ILoginInput {
         pattern?: RegExp;
     };
 }
+
+export interface ICategory {
+    name: string;
+    slug: string;
+    image: string;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}

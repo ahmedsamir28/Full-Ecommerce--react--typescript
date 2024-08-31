@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../UI-items/Button";
-import { LOGIN_FORM } from "../../Data/Index";
+import { LOGIN_FORM } from "../../Data_Auth/Index";
 import InputErrorMessage from "../../UI-items/InputErrorMessage";
 import { loginSchema } from "../../validation";
 import { yupResolver } from '@hookform/resolvers/yup';

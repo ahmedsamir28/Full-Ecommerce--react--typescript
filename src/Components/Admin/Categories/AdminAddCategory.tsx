@@ -1,30 +1,27 @@
-import { useState } from "react";
-import Button from "../../../UI-items/Button"
+import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
+import AddCategoryHook from "../../../Hooks/Add_Category_Hook";
+import { ToastContainer } from "react-toastify";
 
 function AdminAddCategory() {
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-    const [img, setImg] = useState("");
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-    const onImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-            setImg(URL.createObjectURL(event.target.files[0]));
-            setSelectedFile(event.target.files[0]);
-        }
-    };
+const [isOpenConfirmModal, img, name, handleCloseModal, handleShowModal, onImageChange, onChangeName, handleSubmit, isPosting] = AddCategoryHook()
 
     return (
         <div className="flex items-center justify-center">
-            <Button onClick={() => setIsOpenConfirmModal(true)} className="w-46 btn btn-outline capitalize btn-success">
-                <i className="fa-solid fa-plus text-lg"></i>  add category
+            <Button
+                onClick={handleShowModal}
+                className="w-46 btn btn-outline capitalize btn-success"
+            >
+                <i className="fa-solid fa-plus text-lg"></i> Add Category
             </Button>
             <Modal
                 isOpen={isOpenConfirmModal}
-                closeModal={() => setIsOpenConfirmModal(false)}
-                title="Add category"
-                add="Add category"
+                closeModal={handleCloseModal}
+                onSubmit={handleSubmit}
+                title="Add Category"
+                add={isPosting ? 'Loading...' : 'add category'}
+                
             >
                 <div className="flex gap-5 items-center justify-start border-2 rounded-lg py-2 scroll">
                     <div>
@@ -34,7 +31,12 @@ function AdminAddCategory() {
                                 <div className="capitalize text-blue-700 mt-3">Click to Upload</div>
                             </div>
                         </label>
-                        <input type="file" id="upload-photo" multiple onChange={onImageChange} className="hidden" />
+                        <input
+                            type="file"
+                            id="upload-photo"
+                            onChange={onImageChange}
+                            className="hidden"
+                        />
                     </div>
                     <div className="flex space-x-2 items-center">
                         <Image url={img} alt="" className="h-24 rounded-md cursor-pointer" />
@@ -42,11 +44,18 @@ function AdminAddCategory() {
                 </div>
                 <label className="input input-bordered input-info flex items-center mb-5 gap-2">
                     Category Title:
-                    <input type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
+                    <input
+                        onChange={onChangeName}
+                        type="text"
+                        className="grow capitalize placeholder:text-zinc-500 text-gray-700"
+                        placeholder="Type here"
+                        value={name}
+                    />
                 </label>
             </Modal>
+            <ToastContainer />
         </div>
-    )
+    );
 }
 
-export default AdminAddCategory
+export default AdminAddCategory;

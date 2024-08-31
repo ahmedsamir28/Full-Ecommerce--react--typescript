@@ -1,18 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { FormEvent, ReactNode } from 'react';
 import Button from './Button';
-
-
 interface IProps {
-    isOpen: boolean
-    title?: string
-    add: string
-    btnClass?: string
-    children: ReactNode
-    closeModal: () => void
-
+    isOpen: boolean;
+    title?: string;
+    add: string | ReactNode;
+    btnClass?: string;
+    children: ReactNode;
+    closeModal: () => void;
+    onSubmit?: (e: FormEvent<HTMLFormElement>) => void; // Type for form submission
 }
-function Modal({ isOpen, closeModal, title, btnClass ="success", add, children }: IProps) {
-    const open: boolean = true
+
+function Modal({ isOpen, closeModal, onSubmit, title, btnClass = "success", add, children }: IProps) {
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         // If the clicked element is the overlay (i.e., not the modal content itself), close the modal
         if (e.target === e.currentTarget) {
@@ -40,24 +38,27 @@ function Modal({ isOpen, closeModal, title, btnClass ="success", add, children }
                                     {title}
                                 </h3>
                             </div>
-
-                            {/* Modal body */}
-                            <div className="p-4 md:p-5 border-2 space-y-4">
-                                {children}
-                            </div>
-
-                            {/* Modal footer */}
-                            <div className="flex gap-3 items-start justify-end p-4 md:p-5 ">
-                                <Button onClick={closeModal} className={`btn btn-outline btn-${btnClass} capitalize border-2`}>
-                                    {add}
-                                </Button>
-                                <Button
-                                    onClick={closeModal}
-                                    className="btn btn-outline btn-ghost capitalize border-2"
-                                >
-                                    close
-                                </Button>
-                            </div>
+                            {/* Form wrapping the modal content */}
+                            <form onSubmit={onSubmit}>
+                                {/* modal body */}
+                                <div className="p-4 md:p-5 border-2 space-y-4">
+                                    {children}
+                                </div>
+                                <div className="flex gap-3 items-start justify-end p-4 md:p-5">
+                                    <Button
+                                        type="submit"
+                                        className={`btn btn-outline btn-${btnClass} capitalize border-2`}
+                                    >
+                                        {add}
+                                    </Button>
+                                    <Button
+                                        onClick={closeModal}
+                                        className="btn btn-outline btn-ghost capitalize border-2"
+                                    >
+                                        close
+                                    </Button>
+                                </div>
+                            </form>
 
                         </div>
                     </div>

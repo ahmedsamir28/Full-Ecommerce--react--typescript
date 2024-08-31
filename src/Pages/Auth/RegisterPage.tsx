@@ -4,10 +4,10 @@ import InputErrorMessage from "../../UI-items/InputErrorMessage";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from "react-router-dom";
 import { registerSchema } from "../../validation";
-import { REGISTER_FORM } from "../../Data/Index";
+import { REGISTER_FORM } from "../../Data_Auth/Index";
 
 type Inputs = {
-    username:string
+    username: string
     email: string;
     password: string;
 };
@@ -30,7 +30,7 @@ function RegisterPage() {
 
             </div>
         );
-    });  
+    });
     return (
         <div className="min-h-[calc(70vh-100px)] border-t-2 mb-10 mt-3 py-5 container mx-auto">
             <div className="w-full max-w-md border-2 mx-auto rounded-lg py-4 px-5 mt-20">
