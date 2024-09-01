@@ -7,7 +7,7 @@ function CategoryContainer() {
     const { data, isError, isLoading } = useGetCategoriesQuery();
 
     useEffect(() => {
-        document.title = "Home Page";
+        document.title = "Categories Page";
     }, []);
 
     return (

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
-import { usePostCategoryMutation } from "../Redux/RTK Query/categories_slice";
-import Notify from "../Utils/UseNotifaction";
+import { usePostCategoryMutation } from "../../../Redux/RTK Query/categories_slice";
+import Notify from "../../../Utils/UseNotifaction";
 
 function AddCategoryHook() {
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
