@@ -1,13 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import { categories_slice } from './RTK Query/categories_slice'
+import { brands_slice } from './RTK Query/brands_slice'
 
 export const store = configureStore({
     reducer: {
-        [categories_slice.reducerPath] : categories_slice.reducer
+        [categories_slice.reducerPath] : categories_slice.reducer,
+        [brands_slice.reducerPath] : brands_slice.reducer
+
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(categories_slice.middleware),
+        getDefaultMiddleware().concat(categories_slice.middleware,brands_slice.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

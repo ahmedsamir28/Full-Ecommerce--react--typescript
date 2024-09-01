@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useGetCategoriesQuery } from "../../Redux/RTK Query/categories_slice";
 import SubTitle from "../../Utils/SubTitle";
 import CategoryCard from "../Categories/CategoryCard";
-import { ICategory } from "../../Interface";
+import { IData } from "../../Interface";
 
 interface cateTitleProps {
     title: string;
@@ -12,10 +11,6 @@ interface cateTitleProps {
 
 function CategoryHome({ title, buttonTitle, pathTitle }: cateTitleProps) {
     const { data, isError, isLoading } = useGetCategoriesQuery();
-
-    useEffect(() => {
-        document.title = "Home Page";
-    }, []);
 
     // useEffect(() => {
     //     if (!isLoading && !isError && data) {
@@ -33,7 +28,7 @@ function CategoryHome({ title, buttonTitle, pathTitle }: cateTitleProps) {
                 {!isLoading &&
                     !isError &&
                     data &&
-                    data.data.slice(0, 4).map((category: ICategory) => (
+                    data.data.slice(0, 4).map((category: IData) => (
                         <CategoryCard key={category._id} category={category} isLoading={isLoading} />
                     ))}
             </div>

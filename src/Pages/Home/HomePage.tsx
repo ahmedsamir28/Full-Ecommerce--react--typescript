@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import BrandFeatures from "../../Components/Brands/BrandFeatures"
 import CategoryHome from "../../Components/Home/CategoryHome"
 import DiscountSection from "../../Components/Home/DiscountSection"
@@ -5,6 +6,10 @@ import ProductsContainer from "../../Components/Products/ProductsContainer"
 import Landing from "../../Layouts/Landing"
 
 function HomePage() {
+  useEffect(() => {
+    document.title = "Home Page";
+}, []);
+
   return (
     <>
       <Landing />

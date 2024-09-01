@@ -1,14 +1,9 @@
-import { useEffect } from 'react';
 import { useGetCategoriesQuery } from '../../Redux/RTK Query/categories_slice';
-import CategoryCard from './CategoryCard'; // تأكد من مسار الاستيراد الصحيح
-import { ICategory } from '../../Interface';
+import CategoryCard from './CategoryCard';
+import { IData } from '../../Interface';
 
 function CategoryContainer() {
     const { data, isError, isLoading } = useGetCategoriesQuery();
-
-    useEffect(() => {
-        document.title = "Categories Page";
-    }, []);
 
     return (
         <div>
@@ -18,7 +13,7 @@ function CategoryContainer() {
                 {!isLoading &&
                     !isError &&
                     data &&
-                    data.data.map((category: ICategory) => (
+                    data.data.map((category: IData) => (
                         <CategoryCard key={category._id} category={category} isLoading={isLoading} />
                     ))}
             </div>

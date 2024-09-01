@@ -20,7 +20,7 @@ export interface ILoginInput {
     };
 }
 
-export interface ICategory {
+export interface IData {
     name: string;
     slug: string;
     image: string;
@@ -29,9 +29,9 @@ export interface ICategory {
     updatedAt: string;
 }
 
-export interface CategoriesResponse {
+export interface IDataResponse {
     results: number;
-    data: ICategory[];
+    data: IData[];
     paginationResult: {
         currentPage: number;
         limit: number;

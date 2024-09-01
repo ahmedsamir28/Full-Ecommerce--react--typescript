@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
-import { useUpdateCategoryMutation } from "../../../Redux/RTK Query/categories_slice";
-import { IData } from "../../../Interface";
 import Notify from "../../../Utils/UseNotifaction";
+import { IData } from "../../../Interface";
+import { useUpdateBrandMutation } from "../../../Redux/RTK Query/brands_slice";
 
-function UpdateCategoryHook() {
-    const [putCategory, { isLoading: isPosting, isSuccess: updateIsSuccess }] = useUpdateCategoryMutation();
+function UpdateBrandHook() {
+    const [putBrand, { isLoading: isPosting, isSuccess: updateIsSuccess }] = useUpdateBrandMutation();
 
     const [selectedEditCategoryId, setSelectedEditCategoryId] = useState<string | null>(null);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
@@ -48,7 +48,7 @@ function UpdateCategoryHook() {
 
         try {
             if (selectedEditCategoryId) {
-                await putCategory({ id: selectedEditCategoryId, formData }).unwrap();
+                await putBrand({ id: selectedEditCategoryId, formData }).unwrap();
                 setIsOpenEditModal(false);
                 resetForm();
                 Notify({ msg: 'The update was completed successfully', type: 'success' });
@@ -74,4 +74,4 @@ function UpdateCategoryHook() {
 
 }
 
-export default UpdateCategoryHook
+export default UpdateBrandHook

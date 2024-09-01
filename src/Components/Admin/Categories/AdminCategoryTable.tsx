@@ -1,15 +1,15 @@
-import { ICategory } from "../../../Interface";
 import Button from "../../../UI-items/Button";
 import Image from "../../../UI-items/Image";
 import Modal from "../../../UI-items/Modal";
 import GetCategoryTableHook from "../../../Hooks/Admin/Category/Get_Category_Table_Hook";
 import DeleteCategoryHook from "../../../Hooks/Admin/Category/Delete_Category_Hook";
 import UpdateCategoryHook from "../../../Hooks/Admin/Category/Update_Category_Hook";
+import { IData } from "../../../Interface";
 
 function AdminCategoryTable() {
     const [data, isError, isLoading, formatDate] = GetCategoryTableHook();
     const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, isDeleting, removeCategoryHandler] = DeleteCategoryHook();
-    const [isOpenEditModal,handleCloseEditModal,editCategoryHandler,isPosting,onImageChange,img,onChangeName,name,handleShowEditModal] = UpdateCategoryHook()
+    const [isOpenEditModal, handleCloseEditModal, editCategoryHandler, isPosting, onImageChange, img, onChangeName, name, handleShowEditModal] = UpdateCategoryHook()
 
     return (
         <>
@@ -77,7 +77,7 @@ function AdminCategoryTable() {
                     </thead>
                     <tbody>
                         {isLoading ? (
-                            Array.from({ length:  data?.data.length || 5 }, (_, index) => (
+                            Array.from({ length: data?.data.length || 5 }, (_, index) => (
                                 <tr key={index}>
                                     <td className="text-center">
                                         <div className="h-4 w-10 bg-gray-300 animate-pulse mx-auto"></div>
@@ -105,7 +105,7 @@ function AdminCategoryTable() {
                             ))
                         ) : (
                             data &&
-                            data.data.map((category: ICategory, index) => (
+                            data.data.map((category: IData, index) => (
                                 <tr key={category._id}>
                                     <td className="text-center">{index + 1}</td>
                                     <td>

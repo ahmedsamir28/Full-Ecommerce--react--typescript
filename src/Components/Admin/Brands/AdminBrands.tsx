@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import SubTitle from "../../../Utils/SubTitle"
 import AdminAddBrand from "./AdminAddBrand";
 import AdminBrandTable from "./AdminBrandTable";
@@ -12,11 +13,13 @@ function AdminBrands({ title, buttonTitle, pathTitle }: cateTitleProps) {
             <div className="flex items-center mb-3">
                 <SubTitle title={title} buttonTitle={buttonTitle} pathText={pathTitle} />
 
-                <AdminAddBrand/>
+                <AdminAddBrand />
             </div>
             <div className="">
                 <AdminBrandTable />
             </div>
+            <ToastContainer />
+
         </div>
     )
 }

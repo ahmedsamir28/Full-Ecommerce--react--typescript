@@ -16,45 +16,45 @@ import { IData, IDataResponse } from '../../Interface';
 //     },
 // });
 
-export const categories_slice = createApi({
-    reducerPath: 'categoriesApi',
-    tagTypes: ['Category'],
+export const brands_slice = createApi({
+    reducerPath: 'brandsApi',
+    tagTypes: ['Brand'],
     refetchOnReconnect: true,
     refetchOnMountOrArgChange: true,
     baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000' }),
     endpoints: (builder) => ({
-        postCategory: builder.mutation({
+        postBrand: builder.mutation({
             query: (formData) => ({
-                url: 'api/v1/categories',
+                url: 'api/v1/brands',
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: ['Brand'],
         }),
-        getCategories: builder.query<IDataResponse, void>({
+        getBrands: builder.query<IDataResponse, void>({
             query: () => ({
-                url: 'api/v1/categories'
+                url: 'api/v1/brands'
             }),
-            providesTags: ['Category'],
+            providesTags: ['Brand'],
         }),
-        deleteCategory: builder.mutation<null, string>({
+        deleteBrand: builder.mutation<null, string>({
             query: (id) => ({
-                url: `api/v1/categories/${id}`,
+                url: `api/v1/brands/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: ['Brand'],
         }),
-        updateCategory: builder.mutation<IData, { id: string, formData: FormData }>({
+        updateBrand: builder.mutation<IData, { id: string, formData: FormData }>({
             query: ({ id, formData }) => ({
-                url: `api/v1/categories/${id}`,
+                url: `api/v1/brands/${id}`,
                 method: 'PUT',
                 body: formData,
             }),
-            invalidatesTags: ['Category'],
+            invalidatesTags: ['Brand'],
         }),
     }),
 });
 
 export const {
-    usePostCategoryMutation, useGetCategoriesQuery, useDeleteCategoryMutation,useUpdateCategoryMutation
-} = categories_slice;
+    usePostBrandMutation,useGetBrandsQuery,useDeleteBrandMutation,useUpdateBrandMutation
+} = brands_slice;

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ICategory } from '../../Interface';
+import { IData } from '../../Interface';
 
 // Define prop types
 interface ICategoryCardProps {
-    category: ICategory;
+    category: IData;
     isLoading: boolean;
 }
 
