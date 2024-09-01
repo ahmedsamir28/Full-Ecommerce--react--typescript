@@ -1,85 +1,15 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { ICategory } from "../../../Interface";
 import Button from "../../../UI-items/Button";
 import Image from "../../../UI-items/Image";
 import Modal from "../../../UI-items/Modal";
 import GetCategoryTableHook from "../../../Hooks/Admin/Category/Get_Category_Table_Hook";
 import DeleteCategoryHook from "../../../Hooks/Admin/Category/Delete_Category_Hook";
-import Notify from "../../../Utils/UseNotifaction";
-import { useUpdateCategoryMutation } from "../../../Redux/RTK Query/categories_slice";
+import UpdateCategoryHook from "../../../Hooks/Admin/Category/Update_Category_Hook";
 
 function AdminCategoryTable() {
     const [data, isError, isLoading, formatDate] = GetCategoryTableHook();
     const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, isDeleting, removeCategoryHandler] = DeleteCategoryHook();
-    const [putCategory, { isLoading: isPosting, isSuccess: updateIsSuccess }] = useUpdateCategoryMutation();
-    
-    const [selectedEditCategoryId, setSelectedEditCategoryId] = useState<string | null>(null);
-    const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-    const [img, setImg] = useState<string>('');
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [name, setName] = useState('');
-
-    const handleCloseEditModal = () => setIsOpenEditModal(false);
-
-    const handleShowEditModal = (e: FormEvent<HTMLButtonElement>, category: ICategory) => {
-        e.preventDefault();
-        setSelectedEditCategoryId(category._id);
-        setName(category.name);
-        setImg(category.image);
-        setIsOpenEditModal(true);
-    };
-
-    const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            if (img) URL.revokeObjectURL(img); // Revoke previous object URL to avoid memory leaks
-            const newImgUrl = URL.createObjectURL(file);
-            setImg(newImgUrl);
-            setSelectedFile(file);
-        }
-    };
-
-    const onChangeName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    }, []);
-
-    const editCategoryHandler = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (name.trim() === "" || selectedFile === null) {
-            Notify({ msg: 'Please complete the data', type: 'warn' });
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("name", name);
-        if (selectedFile) {
-            formData.append("image", selectedFile);
-        }
-
-        try {
-            if (selectedEditCategoryId) {
-                await putCategory({ id: selectedEditCategoryId, formData }).unwrap();
-                setIsOpenEditModal(false);
-                resetForm();
-                Notify({ msg: 'The update was completed successfully', type: 'success' });
-            }
-        } catch {
-            Notify({ msg: 'There is a problem with the update process', type: 'error' });
-        }
-    };
-
-    const resetForm = () => {
-        setName('');
-        setSelectedFile(null);
-        setImg('');
-    };
-
-    useEffect(() => {
-        if (updateIsSuccess) {
-            resetForm();
-        }
-    }, [updateIsSuccess]);
+    const [isOpenEditModal,handleCloseEditModal,editCategoryHandler,isPosting,onImageChange,img,onChangeName,name,handleShowEditModal] = UpdateCategoryHook()
 
     return (
         <>
@@ -134,8 +64,8 @@ function AdminCategoryTable() {
                 </label>
             </Modal>
 
+            {!isLoading && isError && <p className="text-center text-error">There is no data</p>}
             <div className="overflow-x-auto border-2 rounded-lg xl:w-[900px] 2xl:w-[1000px]">
-                {!isLoading && isError && <p className="text-center text-error">There is no data</p>}
                 <table className="table">
                     <thead>
                         <tr>
