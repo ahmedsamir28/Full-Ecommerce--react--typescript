@@ -13,7 +13,7 @@ function AddCategoryHook() {
 
     const [postCategory, { isLoading: isPosting, isSuccess }] = usePostCategoryMutation();
 
-    const onImageChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             // Revoke previous object URL to avoid memory leaks
@@ -22,7 +22,7 @@ function AddCategoryHook() {
             setImg(newImgUrl);
             setSelectedFile(file);
         }
-    }, [img]);
+    }
 
     const onChangeName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
@@ -47,9 +47,7 @@ function AddCategoryHook() {
             setIsOpenConfirmModal(false);
             resetForm();
             Notify({ msg: 'The addition was completed successfully', type: 'success' });
-        } catch (err) {
-            // Handle and log error
-            console.error('Error posting category:', err);
+        } catch {
             Notify({ msg: 'There is a problem with the addition process', type: 'error' });
         }
     };

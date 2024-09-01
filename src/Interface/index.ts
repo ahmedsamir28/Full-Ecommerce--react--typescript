@@ -27,5 +27,14 @@ export interface ICategory {
     _id: string;
     createdAt: string;
     updatedAt: string;
-    __v: number;
+}
+
+export interface CategoriesResponse {
+    results: number;
+    data: ICategory[];
+    paginationResult: {
+        currentPage: number;
+        limit: number;
+        numberOfPages: number;
+    };
 }

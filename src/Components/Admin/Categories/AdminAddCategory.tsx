@@ -1,8 +1,8 @@
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
-import AddCategoryHook from "../../../Hooks/Add_Category_Hook";
 import { ToastContainer } from "react-toastify";
+import AddCategoryHook from "../../../Hooks/Add_Category_Hook";
 
 function AdminAddCategory() {
 const [isOpenConfirmModal, img, name, handleCloseModal, handleShowModal, onImageChange, onChangeName, handleSubmit, isPosting] = AddCategoryHook()

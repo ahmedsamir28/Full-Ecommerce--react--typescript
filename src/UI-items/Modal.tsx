@@ -3,7 +3,7 @@ import Button from './Button';
 interface IProps {
     isOpen: boolean;
     title?: string;
-    add: string | ReactNode;
+    add: string ;
     btnClass?: string;
     children: ReactNode;
     closeModal: () => void;

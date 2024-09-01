@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ICategory } from '../../Interface';
+import { CategoriesResponse } from '../../Interface';
 
 // const baseQuery = fetchBaseQuery({
 //     baseUrl: 'http://127.0.0.1:8000',
@@ -23,7 +23,7 @@ export const categories_slice = createApi({
     refetchOnMountOrArgChange: true,
     baseQuery:  fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000' }),
     endpoints: (builder) => ({
-        postCategory: builder.mutation<ICategory, FormData>({
+        postCategory: builder.mutation({
             query: (formData) => ({
                 url: 'api/v1/categories',
                 method: 'POST',
@@ -31,10 +31,15 @@ export const categories_slice = createApi({
             }),
             invalidatesTags: ['Category'],
         }),
-
+        getCategories: builder.query<CategoriesResponse, void>({
+            query: () => ({
+                url: 'api/v1/categories'
+            }),
+            providesTags: ['Category'],
+        }),
     }),
 });
 
 export const {
-usePostCategoryMutation
+usePostCategoryMutation,useGetCategoriesQuery
 } = categories_slice;
