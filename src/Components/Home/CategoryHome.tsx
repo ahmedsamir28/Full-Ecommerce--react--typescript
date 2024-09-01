@@ -17,11 +17,11 @@ function CategoryHome({ title, buttonTitle, pathTitle }: cateTitleProps) {
         document.title = "Home Page";
     }, []);
 
-    useEffect(() => {
-        if (!isLoading && !isError && data) {
-            console.log("Fetched data:", data);
-        }
-    }, [data, isLoading, isError]);
+    // useEffect(() => {
+    //     if (!isLoading && !isError && data) {
+    //         console.log("Fetched data:", data);
+    //     }
+    // }, [data, isLoading, isError]);
 
     return (
         <div className="mt-5 container">

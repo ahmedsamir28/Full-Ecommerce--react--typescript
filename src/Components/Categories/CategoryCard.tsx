@@ -23,7 +23,7 @@ const CategoryCard = ({ category, isLoading }: ICategoryCardProps) => {
                             <div className="h-4 bg-gray-300 rounded w-1/2"></div>
                         </div>
                     </div>) : (
-                    <div className='flex items-center py-3 px-6 gap-x-4 bg-zinc-100 rounded-2xl '>
+                    <div className='flex items-center py-3 px-6 gap-x-4 bg-zinc-100 rounded-2xl'>
                         <div className='w-24 h-24'>
                             <Link to="/category/5">
                                 <img alt="Category" src={category.image} className="h-full" />
