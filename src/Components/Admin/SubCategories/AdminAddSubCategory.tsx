@@ -1,53 +1,10 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
-import { usePostSubCategoryMutation } from "../../../Redux/RTK Query/subCategory_slice";
-import Notify from "../../../Utils/UseNotifaction";
-import { useGetCategoriesQuery } from "../../../Redux/RTK Query/categories_slice";
 import { IData } from "../../../Interface";
+import AddSubCategoryHook from "../../../Hooks/Admin/SubCategory/Add_SubCategory_Hook";
 
 function AdminAddSubCategory() {
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-    const [category, setCategory] = useState<string>('');
-    const [name, setName] = useState<string>('');
-
-    const [postSubCategory, { isLoading: isPosting }] = usePostSubCategoryMutation();
-    const { data: categories, isError, isLoading } = useGetCategoriesQuery();
-
-    const handleCloseModal = () => setIsOpenConfirmModal(false);
-    const handleShowModal = () => setIsOpenConfirmModal(true);
-
-    const onChangeName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    }, []);
-
-    const onChangeCategory = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-        setCategory(event.target.value);
-    }, []);
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (name.trim() === "" || category === '') {
-            Notify({ msg: 'Please complete the data', type: 'warn' });
-            return;
-        }
-
-        try {
-            await postSubCategory({ name, category }).unwrap();
-            setIsOpenConfirmModal(false);
-            resetForm();
-            Notify({ msg: 'The addition was completed successfully', type: 'success' });
-        } catch {
-            Notify({ msg: 'There is a problem with the addition process', type: 'error' });
-        }
-    };
-
-    const resetForm = () => {
-        setName('');
-        setCategory('');
-    };
-
+const [isOpenConfirmModal,name,category,isPosting ,categories,isError,isLoading,handleCloseModal,handleShowModal,onChangeName,onChangeCategory,handleSubmit]  = AddSubCategoryHook()
     return (
         <div className="flex items-center justify-center">
             <Button
