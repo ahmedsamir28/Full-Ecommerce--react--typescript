@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import SubTitle from "../../../Utils/SubTitle"
 import AdminAddSubCategory from "./AdminAddSubCategory";
 import AdminCategoryTable from "./AdminSubcategoryTable"
@@ -17,6 +18,7 @@ function AdminSubcategories({ title, buttonTitle, pathTitle }: cateTitleProps) {
             <div className="">
                 <AdminCategoryTable />
             </div>
+            <ToastContainer />
         </div>
     )
 }

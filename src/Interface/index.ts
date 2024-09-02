@@ -20,6 +20,7 @@ export interface ILoginInput {
     };
 }
 
+// interface of categories & brands
 export interface IData {
     name: string;
     slug: string;
@@ -28,7 +29,7 @@ export interface IData {
     createdAt: string;
     updatedAt: string;
 }
-
+// interface of categories & brands
 export interface IDataResponse {
     results: number;
     data: IData[];
@@ -38,3 +39,26 @@ export interface IDataResponse {
         numberOfPages: number;
     };
 }
+
+
+//interface of subCategories
+export interface ISubCategory {
+    name: string;
+    slug: string;
+    category: string;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+}
+//interface of subCategories
+export interface ISubCategories {
+    results: number;
+    data: ISubCategory[];
+    paginationResult: {
+        currentPage: number;
+        limit: number;
+        numberOfPages: number;
+    };
+}
+
+

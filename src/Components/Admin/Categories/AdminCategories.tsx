@@ -20,7 +20,6 @@ function AdminCategories({ title, buttonTitle, pathTitle }: cateTitleProps) {
                 <AdminCategoryTable/>
             </div>
             <ToastContainer />
-
         </div>
     )
 }

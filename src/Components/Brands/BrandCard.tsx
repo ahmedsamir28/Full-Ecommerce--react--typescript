@@ -18,7 +18,6 @@ function BrandCard({ brand, isLoading }: IBrandCardProps) {
                         {/* Skeleton for the text */}
                         <div className="flex flex-col gap-y-3 pl-5 w-full">
                             <div className="h-6 bg-gray-300 rounded w-3/4"></div>
-                            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
                         </div>
                     </div>) : (
                     <div className='flex items-center py-3 px-6 gap-x-4 bg-zinc-100 rounded-2xl'>
