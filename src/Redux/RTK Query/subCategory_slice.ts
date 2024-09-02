@@ -37,18 +37,18 @@ export const subCategory_slice = createApi({
             }),
             providesTags: ['subCategory'],
         }),
-        deleteCategory: builder.mutation<null, string>({
+        deleteSubCategory: builder.mutation<null, string>({
             query: (id) => ({
                 url: `api/v1/subcategories/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['subCategory'],
         }),
-        updateCategory: builder.mutation<ISubCategory, { id: string, formData: FormData }>({
-            query: ({ id, formData }) => ({
+        updateSubCategory: builder.mutation<ISubCategory, { id: string; name: string }>({
+            query: ({ id, name }) => ({
                 url: `api/v1/subcategories/${id}`,
                 method: 'PUT',
-                body: formData,
+                body: { name }, // Send as a JSON object
             }),
             invalidatesTags: ['subCategory'],
         }),
@@ -56,5 +56,5 @@ export const subCategory_slice = createApi({
 });
 
 export const {
-    usePostSubCategoryMutation, useGetSubCategoriesQuery, useDeleteCategoryMutation, useUpdateCategoryMutation
+    usePostSubCategoryMutation, useGetSubCategoriesQuery, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation
 } = subCategory_slice;
