@@ -34,15 +34,9 @@ function AdminSubcategoryTable() {
     const editSubCategoryHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     
-        const sanitized_name = name.trim();
-        if (!sanitized_name) {
-            Notify({ msg: 'The name cannot be empty.', type: 'error' });
-            return;
-        }
-    
         try {
             if (selectedEditSubCategoryId) {
-                await putSubCategory({ id: selectedEditSubCategoryId, name: sanitized_name }).unwrap();
+                await putSubCategory({ id: selectedEditSubCategoryId, name: name }).unwrap();
                 setIsOpenEditModal(false);
                 resetForm();
                 Notify({ msg: 'The update was completed successfully', type: 'success' });

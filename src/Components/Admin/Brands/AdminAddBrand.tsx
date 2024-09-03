@@ -1,7 +1,7 @@
 import Button from "../../../UI-items/Button"
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
-import AddBrandHook from "../../../Hooks/Admin/Admin/Add_Brand_Hook";
+import AddBrandHook from "../../../Hooks/Admin/Brand/Add_Brand_Hook";
 
 function AdminAddBrand() {
     const [isOpenConfirmModal, img, name, handleCloseModal, handleShowModal, onImageChange, onChangeName, handleSubmit, isPosting] = AddBrandHook()

@@ -1,6 +1,6 @@
-import DeleteBrandHook from "../../../Hooks/Admin/Admin/Delete_Brand_Hook";
-import GetBrandTableHook from "../../../Hooks/Admin/Admin/Get_Brand_Table_Hook";
-import UpdateBrandHook from "../../../Hooks/Admin/Admin/Update_Brand_Hook";
+import DeleteBrandHook from "../../../Hooks/Admin/Brand/Delete_Brand_Hook";
+import GetBrandTableHook from "../../../Hooks/Admin/Brand/Get_Brand_Table_Hook";
+import UpdateBrandHook from "../../../Hooks/Admin/Brand/Update_Brand_Hook";
 import { IData } from "../../../Interface";
 import Button from "../../../UI-items/Button"
 import Image from "../../../UI-items/Image"
@@ -63,7 +63,7 @@ function AdminBrandTable() {
                     />
                 </label>
             </Modal>
-            
+
             {!isLoading && isError && <p className="text-center text-error">There is no data</p>}
             <div className="overflow-x-auto border-2 rounded-lg xl:w-[900px] 2xl:w-[1000px]">
                 <table className="table">
