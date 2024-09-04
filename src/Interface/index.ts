@@ -61,4 +61,34 @@ export interface ISubCategories {
     };
 }
 
+export interface IProduct {
+    _id: string;
+    title: string;
+    slug: string;
+    description: string;
+    quantity: number;
+    sold: number;
+    price: number;
+    availableColors: string[];
+    imageCover: string;
+    images: string[];
+    category: string;
+    subcategory: string[];
+    ratingsQuantity: number;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
+export interface IProducts {
+    results: number;
+    data: IProduct[];
+    paginationResult: {
+        currentPage: number;
+        limit: number;
+        numberOfPages: number;
+    };
+}
+
+
 

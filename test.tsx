@@ -4,44 +4,41 @@ import { CompactPicker } from 'react-color';
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
-// import { usePostProductMutation } from "../../../Redux/RTK Query/products_slice";
-// import Notify from "../../../Utils/UseNotifaction";
 import { useGetCategoriesQuery } from "../../../Redux/RTK Query/categories_slice";
-import { IData, ISubCategory } from "../../../Interface";
 import { useGetBrandsQuery } from "../../../Redux/RTK Query/brands_slice";
 import { useGetCategory_SubQuery } from "../../../Redux/RTK Query/subCategory_slice";
+import { IData, ISubCategory } from "../../../Interface";
+
 
 function AdminAddProduct() {
     const { data: categories, isError: isCategoryError, isLoading: isCategoryLoading } = useGetCategoriesQuery();
     const { data: brands, isError: isBrandError, isLoading: isBrandLoading } = useGetBrandsQuery();
 
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-    const handleCloseModal = () => setIsOpenConfirmModal(false);
-    const handleShowModal = () => setIsOpenConfirmModal(true);
-
     const [images, setImages] = useState<string[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<ISubCategory[]>([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState<string | number | undefined>("");
-    const [discount, setDiscount] = useState<string | number | undefined>("");
-    const [quantity, setQuantity] = useState<string | number | undefined>("");
+    const [price, setPrice] = useState<string | number>("");
+    const [discount, setDiscount] = useState<string | number>("");
+    const [quantity, setQuantity] = useState<string | number>("");
     const [category, setCategory] = useState<string>("");
     const [brand, setBrand] = useState<string>("");
     const [options, setOptions] = useState<ISubCategory[]>([]);
-
     const [showColor, setShowColor] = useState(false);
     const [colors, setColors] = useState<string[]>([]);
 
     // Fetch subcategories based on selected category
     const { data: category_sub } = useGetCategory_SubQuery(category || "");
 
-
     useEffect(() => {
         if (category_sub) {
             setOptions(category_sub.data);
         }
     }, [category_sub]);
+
+    const handleCloseModal = () => setIsOpenConfirmModal(false);
+    const handleShowModal = () => setIsOpenConfirmModal(true);
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -72,15 +69,19 @@ function AdminAddProduct() {
     const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     };
+
     const onChangeDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(event.target.value);
     };
+
     const onChangePrice = (event: ChangeEvent<HTMLInputElement>) => {
         setPrice(event.target.value);
     };
+
     const onChangeDiscount = (event: ChangeEvent<HTMLInputElement>) => {
         setDiscount(event.target.value);
     };
+
     const onChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => {
         setQuantity(event.target.value);
     };
@@ -88,6 +89,7 @@ function AdminAddProduct() {
     const onChangeCategory = (event: ChangeEvent<HTMLSelectElement>) => {
         setCategory(event.target.value);
     };
+
     const onChangeBrand = (event: ChangeEvent<HTMLSelectElement>) => {
         setBrand(event.target.value);
     };
@@ -110,37 +112,9 @@ function AdminAddProduct() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(name);
-        console.log(description);
-        console.log(price);
-        console.log(discount);
-        console.log(quantity);
-        console.log(images);
-        console.log(category);
-        console.log(brand);
-        console.log(colors);
-
-        // const formData = new FormData();
-        // formData.append("name", name);
-        // if (selectedFile) {
-        //     formData.append("image", selectedFile);
-        // }
-
-        // try {
-        //     await postCategory(formData).unwrap();
-        //     setIsOpenConfirmModal(false);
-        //     resetForm();
-        //     Notify({ msg: 'The addition was completed successfully', type: 'success' });
-        // } catch {
-        //     Notify({ msg: 'There is a problem with the addition process', type: 'error' });
-        // }
+        console.log({ name, description, price, discount, quantity, images, category, brand, colors, selectedOptions });
+        // Implement your submit logic here
     };
-
-    // const resetForm = () => {
-    //     setName('');
-    //     setSelectedFile(null);
-    //     setImg('');
-    // };
 
     return (
         <div className="flex items-center justify-center">
@@ -151,10 +125,8 @@ function AdminAddProduct() {
                 isOpen={isOpenConfirmModal}
                 closeModal={handleCloseModal}
                 onSubmit={handleSubmit}
-
                 title="Add Product"
                 add="Add Product"
-
             >
                 <div className="flex gap-5 items-center justify-start border-2 rounded-lg py-2 scroll">
                     <div>
@@ -275,7 +247,6 @@ function AdminAddProduct() {
                         </div>
                     )}
                 </div>
-
             </Modal>
         </div>
     );

@@ -37,6 +37,12 @@ export const subCategory_slice = createApi({
             }),
             providesTags: ['subCategory'],
         }),
+        getCategory_Sub: builder.query<ISubCategories, string>({
+            query: (id) => ({
+                url: `api/v1/categories/${id}/subcategories`
+            }),
+            providesTags: ['subCategory'],
+        }),
         deleteSubCategory: builder.mutation<null, string>({
             query: (id) => ({
                 url: `api/v1/subcategories/${id}`,
@@ -56,5 +62,5 @@ export const subCategory_slice = createApi({
 });
 
 export const {
-    usePostSubCategoryMutation, useGetSubCategoriesQuery, useDeleteSubCategoryMutation, useUpdateSubCategoryMutation
+    usePostSubCategoryMutation, useGetSubCategoriesQuery, useGetCategory_SubQuery,useDeleteSubCategoryMutation, useUpdateSubCategoryMutation
 } = subCategory_slice;
