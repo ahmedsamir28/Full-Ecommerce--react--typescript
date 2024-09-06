@@ -69,6 +69,7 @@ export interface IProduct {
     quantity: number;
     sold: number;
     price: number;
+    priceAfterDiscount:number
     availableColors: string[];
     imageCover: string;
     images: string[];

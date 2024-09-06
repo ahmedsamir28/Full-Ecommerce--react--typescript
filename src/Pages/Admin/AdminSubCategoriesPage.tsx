@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import AdminSideBar from "../../Components/Admin/AdminSideBar"
 import AdminSubcategories from "../../Components/Admin/SubCategories/AdminSubcategories"
 
 function AdminSubCategoriesPage() {
+    useEffect(() => {
+        document.title = "Admin SubCategories Page";
+    }, []);
     return (
         <div className="min-h-[calc(80vh-100px)] border-t-2 mb-10 mt-3 py-5 container">
         <div className="flex flex-col lg:flex-row lg:items-start gap-5 ">

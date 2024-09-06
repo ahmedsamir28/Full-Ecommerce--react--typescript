@@ -1,147 +1,17 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Multiselect from 'multiselect-react-dropdown';
 import { CompactPicker } from 'react-color';
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
-// import { usePostProductMutation } from "../../../Redux/RTK Query/products_slice";
-// import Notify from "../../../Utils/UseNotifaction";
-import { useGetCategoriesQuery } from "../../../Redux/RTK Query/categories_slice";
-import { IData, ISubCategory } from "../../../Interface";
-import { useGetBrandsQuery } from "../../../Redux/RTK Query/brands_slice";
-import { useGetCategory_SubQuery } from "../../../Redux/RTK Query/subCategory_slice";
-
+import { IData } from "../../../Interface";
+import AddProductHook from "../../../Hooks/Admin/Product/Add_Product_Hook";
 function AdminAddProduct() {
-    const { data: categories, isError: isCategoryError, isLoading: isCategoryLoading } = useGetCategoriesQuery();
-    const { data: brands, isError: isBrandError, isLoading: isBrandLoading } = useGetBrandsQuery();
-
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-    const handleCloseModal = () => setIsOpenConfirmModal(false);
-    const handleShowModal = () => setIsOpenConfirmModal(true);
-
-    const [images, setImages] = useState<string[]>([]);
-    const [selectedOptions, setSelectedOptions] = useState<ISubCategory[]>([]);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState<string | number | undefined>("");
-    const [discount, setDiscount] = useState<string | number | undefined>("");
-    const [quantity, setQuantity] = useState<string | number | undefined>("");
-    const [category, setCategory] = useState<string>("");
-    const [brand, setBrand] = useState<string>("");
-    const [options, setOptions] = useState<ISubCategory[]>([]);
-
-    const [showColor, setShowColor] = useState(false);
-    const [colors, setColors] = useState<string[]>([]);
-
-    // Fetch subcategories based on selected category
-    const { data: category_sub } = useGetCategory_SubQuery(category || "");
-
-
-    useEffect(() => {
-        if (category_sub) {
-            setOptions(category_sub.data);
-        }
-    }, [category_sub]);
-
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            const fileArray = Array.from(event.target.files).map((file) =>
-                URL.createObjectURL(file)
-            );
-            setImages((prevImages) => prevImages.concat(fileArray));
-        }
-    };
-
-    const removeImage = (url: string) => {
-        return () => {
-            setImages((prevImages) => prevImages.filter((image) => image !== url));
-            URL.revokeObjectURL(url);
-        }
-    };
-
-    const handleSelect = (selectedItem: ISubCategory) => {
-        setSelectedOptions([...selectedOptions, selectedItem]);
-    }
-
-    const handleRemove = (removedItem: ISubCategory) => {
-        setSelectedOptions(
-            selectedOptions.filter((option) => option._id !== removedItem._id)
-        );
-    };
-
-    const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-        setName(event.target.value);
-    };
-    const onChangeDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(event.target.value);
-    };
-    const onChangePrice = (event: ChangeEvent<HTMLInputElement>) => {
-        setPrice(event.target.value);
-    };
-    const onChangeDiscount = (event: ChangeEvent<HTMLInputElement>) => {
-        setDiscount(event.target.value);
-    };
-    const onChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => {
-        setQuantity(event.target.value);
-    };
-
-    const onChangeCategory = (event: ChangeEvent<HTMLSelectElement>) => {
-        setCategory(event.target.value);
-    };
-    const onChangeBrand = (event: ChangeEvent<HTMLSelectElement>) => {
-        setBrand(event.target.value);
-    };
-
-    const onChangeColor = () => {
-        setShowColor(!showColor);
-    };
-
-    const handelChangeComplete = (color: { hex: string }) => {
-        setColors([...colors, color.hex]);
-        setShowColor(false);
-    };
-
-    const removeColor = (color: string) => {
-        return () => {
-            const newColor = colors.filter((e) => e !== color);
-            setColors(newColor);
-        }
-    };
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(name);
-        console.log(description);
-        console.log(price);
-        console.log(discount);
-        console.log(quantity);
-        console.log(images);
-        console.log(category);
-        console.log(brand);
-        console.log(colors);
-
-        // const formData = new FormData();
-        // formData.append("name", name);
-        // if (selectedFile) {
-        //     formData.append("image", selectedFile);
-        // }
-
-        // try {
-        //     await postCategory(formData).unwrap();
-        //     setIsOpenConfirmModal(false);
-        //     resetForm();
-        //     Notify({ msg: 'The addition was completed successfully', type: 'success' });
-        // } catch {
-        //     Notify({ msg: 'There is a problem with the addition process', type: 'error' });
-        // }
-    };
-
-    // const resetForm = () => {
-    //     setName('');
-    //     setSelectedFile(null);
-    //     setImg('');
-    // };
-
+    const [categories, isCategoryError, isCategoryLoading, brands, isBrandError, isBrandLoading,
+        isOpenConfirmModal, handleCloseModal, handleShowModal, images, title, description, price, 
+        discount, quantity, category, brand, options, showColor, colors,handleImageUpload, removeImage, 
+        handleSelect, handleRemove, onChangeName, onChangeDescription,onChangePrice, onChangeDiscount, 
+        onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
+        handelChangeComplete, removeColor, handleSubmit] = AddProductHook()
     return (
         <div className="flex items-center justify-center">
             <Button onClick={handleShowModal} className="w-46 btn btn-outline capitalize btn-success">
@@ -177,7 +47,7 @@ function AdminAddProduct() {
                     <label className="input input-bordered input-info flex items-center mb-5 gap-2">
                         Title:
                         <input
-                            value={name}
+                            value={title}
                             onChange={onChangeName}
                             type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
                     </label>

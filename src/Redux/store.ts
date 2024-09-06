@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { categories_slice } from './RTK Query/categories_slice'
 import { brands_slice } from './RTK Query/brands_slice'
 import { subCategory_slice } from './RTK Query/subCategory_slice'
-import { products_slice } from './RTK Query/prodducts_slice'
+import { products_slice } from './RTK Query/products_slice'
 
 export const store = configureStore({
     reducer: {

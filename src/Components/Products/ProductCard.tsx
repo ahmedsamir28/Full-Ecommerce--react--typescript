@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
 import Image from "../../UI-items/Image"
-
-const ProductCard = () => {
+import { IProduct } from "../../Interface";
+interface IProductCardProps {
+    product: IProduct;
+    isLoading: boolean;
+}
+const ProductCard = ({product,isLoading}:IProductCardProps) => {
     return (
         <div className='border-2 p-2 rounded-badge'>
             <div className="relative">
@@ -9,7 +13,7 @@ const ProductCard = () => {
                     <Link to="/product-details/4">
                         <Image
                             alt="image name"
-                            url="/src/assets/assets/Headphone2.png"
+                            url={product.imageCover}
                             className="w-full"
                         />
                     </Link>
@@ -22,7 +26,7 @@ const ProductCard = () => {
                     <div className="flex items-start bg-white px-4 py-1 rounded-full ">
                         <span className="mr-1">5.0</span>
                         <i className="fa-solid fa-star text-blue-700 text-sm"></i>
-                        <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                        <span className="text-zinc-500 text-sm ml-2"> ( {product.ratingsQuantity} )</span>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { CompactPicker } from 'react-color';
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
 import Button from "../../../UI-items/Button";
+import { IProduct } from "../../../Interface";
 
 type Option = {
     label: string;
@@ -19,7 +20,12 @@ const options: Option[] = [
     { label: 'Option 4', value: 'option4' },
 ];
 
-function AdminProductCard() {
+// Define prop types
+interface IProductCardProps {
+    product: IProduct;
+    isLoading: boolean;
+}
+function AdminProductCard({ product, isLoading }: IProductCardProps) {
     const [handleEditModal, setHandleEditModal] = useState(false);
     const [handleRemoveModal, setHandleRemoveModal] = useState(false);
 
@@ -176,43 +182,46 @@ function AdminProductCard() {
 
             </Modal>
 
-            <div className='border-2 p-2 rounded-badge'>
-                <div className="relative">
-                    <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
-                        <Link to="/product-details/4">
-                            <Image
-                                alt="image name"
-                                url="/src/assets/assets/Headphone2.png"
-                                className="w-full"
-                            />
-                        </Link>
-                    </div>
-                    <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
-                        <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
-                    </Button>
-                    <Button onClick={() => setHandleRemoveModal(true)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
-                        <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
-                    </Button>
+            {
+                isLoading ? (<div>test</div>) : (<div className='border-2 p-2 rounded-badge'>
+                    <div className="relative">
+                        <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
+                            <Link to="/product-details/4">
+                                <Image
+                                    alt="image name"
+                                    url={product.imageCover}
+                                    className="w-full"
+                                />
+                            </Link>
+                        </div>
+                        <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                            <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
+                        </Button>
+                        <Button onClick={() => setHandleRemoveModal(true)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                            <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
+                        </Button>
 
 
-                    <div className="absolute bottom-3 left-3">
-                        <div className="flex items-start bg-white px-4 py-1 rounded-full ">
-                            <span className="mr-1">5.0</span>
-                            <i className="fa-solid fa-star text-blue-700 text-sm"></i>
-                            <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                        <div className="absolute bottom-3 left-3">
+                            <div className="flex items-start bg-white px-4 py-1 rounded-full ">
+                                <span className="mr-1">5.0</span>
+                                <i className="fa-solid fa-star text-blue-700 text-sm"></i>
+                                <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="mt-2 ml-2">
-                    <h6>title of the product</h6>
-                    <div className="mt-1 flex justify-between items-center">
-                        <div className="flex justify-between items-center w-full">
-                            <span className="text-lg">$ 5000 </span>
-                            <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ 3000</span>
+                    <div className="mt-2 ml-2">
+                        <h6>{product.title}</h6>
+                        <div className="mt-1 flex justify-between items-center">
+                            <div className="flex justify-between items-center w-full">
+                                <span className="text-lg">$ {product.price} </span>
+                                <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ {product.priceAfterDiscount}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>)
+            }
+
         </>
 
     )
