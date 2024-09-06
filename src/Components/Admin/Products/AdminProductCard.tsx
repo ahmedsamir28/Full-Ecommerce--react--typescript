@@ -1,22 +1,27 @@
 import { Link } from "react-router-dom"
-
-// import Multiselect from 'multiselect-react-dropdown';
-// import { CompactPicker } from 'react-color';
+import Multiselect from 'multiselect-react-dropdown';
+import { CompactPicker } from 'react-color';
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
 import Button from "../../../UI-items/Button";
-import { IProduct } from "../../../Interface";
+import { IData, IProduct } from "../../../Interface";
 import DeleteProductHook from "../../../Hooks/Admin/Product/Delete_Product_Hook";
-
-
-// Define prop types
+import UpdateProductHook from "../../../Hooks/Admin/Product/Update_Product_Hook";
 interface IProductCardProps {
     product: IProduct;
     isLoading: boolean;
 }
 
 function AdminProductCard({ product, isLoading }: IProductCardProps) {
-    const [isOpenDeleteModal,handleCloseDeleteModal,handleShowDeleteModal,isDeleting,removeCategoryHandler] = DeleteProductHook()
+    const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, isDeleting, removeCategoryHandler] = DeleteProductHook()
+    
+    const [categories, isCategoryError, isCategoryLoading, brands, isBrandError, isBrandLoading,
+        isPosting, isOpenEditModal, handleCloseEditModal, handleShowEditModal, images, title, description, price,
+        discount, quantity, category, brand, options, showColor, colors, handleImageUpload, removeImage,
+        handleSelect, handleRemove, onChangeName, onChangeDescription, onChangePrice, onChangeDiscount,
+        onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
+        handelChangeComplete, removeColor, editProductHandler] = UpdateProductHook()
+
     return (
         <>
             {/* modal of remove the product */}
@@ -32,11 +37,12 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
             </Modal>
 
             {/* modal of edit the product*/}
-            {/* <Modal
-                isOpen={handleEditModal}
-                closeModal={() => setHandleEditModal(false)}
+            <Modal
+                isOpen={isOpenEditModal}
+                closeModal={handleCloseEditModal}
+                onSubmit={editProductHandler}
                 title="Add Product"
-                add="Add Product"
+                add={isPosting ? 'Loading...' : 'edit product'}
             >
                 <div className="flex gap-5 items-center justify-start border-2 rounded-lg py-2 scroll">
                     <div>
@@ -50,7 +56,7 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                     </div>
                     <div className="flex space-x-2 items-center">
                         {images.map((photo, index) => (
-                            <Image url={photo} key={index} onClick={() => removeImage(photo)} alt="" className="h-24 rounded-md cursor-pointer" />
+                            <Image url={photo} key={index} onClick={removeImage(photo)} alt="" className="h-24 rounded-md cursor-pointer" />
                         ))}
                     </div>
                 </div>
@@ -58,43 +64,64 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                 <div className="">
                     <label className="input input-bordered input-info flex items-center mb-5 gap-2">
                         Title:
-                        <input type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
+                        <input
+                            onChange={onChangeName}
+                            value={title}
+                            type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
                     </label>
 
                     <label htmlFor="textarea" className="capitalize">
                         Description:
                     </label>
-                    <textarea id="textarea" className="textarea textarea-info text-lg mt-2 w-full placeholder:text-zinc-500 text-gray-700 capitalize" placeholder="Type description"></textarea>
+                    <textarea
+                        onChange={onChangeDescription}
+                        value={description}
+                        id="textarea" className="textarea textarea-info text-lg mt-2 w-full placeholder:text-zinc-500 text-gray-700 capitalize" placeholder="Type description"></textarea>
 
                     <div className="flex flex-col md:flex-row items-center gap-5 md:gap-2 mt-5 mb-5">
                         <label className="input input-bordered input-info flex items-center w-full gap-2">
                             Price:
-                            <input type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Price before discount" />
+                            <input
+                                onChange={onChangePrice}
+                                value={price}
+                                type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Price before discount" />
                         </label>
                         <label className="input input-bordered input-info flex items-center w-full gap-2">
                             Discount:
-                            <input type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Price after discount" />
+                            <input
+                                onChange={onChangeDiscount}
+                                value={discount}
+                                type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Price after discount" />
                         </label>
                     </div>
 
                     <label className="input input-bordered input-info flex items-center w-full gap-2">
                         Quantity:
-                        <input type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Quantity" />
+                        <input
+                            onChange={onChangeQuantity}
+                            value={quantity}
+                            type="number" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Quantity" />
                     </label>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center gap-5 mt-5">
-                    <select className="select select-info w-full text-lg capitalize text-zinc-600">
-                        <option disabled selected>Main Category</option>
-                        <option>English</option>
-                        <option>Japanese</option>
-                        <option>Italian</option>
+                    <select
+                        value={category}
+                        onChange={onChangeCategory}
+                        className="select select-info w-full text-lg capitalize text-zinc-600">
+                        <option value="" disabled>Main Category</option>
+                        {!isCategoryLoading && !isCategoryError && categories && categories.data.map((category: IData) => (
+                            <option key={category._id} value={category._id}>{category.name}</option>
+                        ))}
                     </select>
-                    <select className="select select-info w-full text-lg capitalize text-zinc-600">
-                        <option disabled selected>Choose a Brand</option>
-                        <option>English</option>
-                        <option>Japanese</option>
-                        <option>Italian</option>
+                    <select
+                        value={brand}
+                        onChange={onChangeBrand}
+                        className="select select-info w-full text-lg capitalize text-zinc-600">
+                        <option value="" disabled>Choose a Brand</option>
+                        {!isBrandLoading && !isBrandError && brands && brands.data.map((brand: IData) => (
+                            <option key={brand._id} value={brand._id}>{brand.name}</option>
+                        ))}
                     </select>
                 </div>
 
@@ -104,7 +131,7 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                     options={options}
                     onSelect={handleSelect}
                     onRemove={handleRemove}
-                    displayValue="label"
+                    displayValue="name"
                 />
 
                 <div className="text-lg font-semibold text-gray-600 mb-3">Available Colors</div>
@@ -112,7 +139,7 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                     {colors.length > 0 && colors.map((color, index) => (
                         <div
                             key={index}
-                            onClick={() => removeColor(color)}
+                            onClick={removeColor(color)}
                             className="cursor-pointer w-8 h-8 rounded-full border-2 border-gray-300 shadow-sm hover:shadow-md transition-shadow"
                             style={{ backgroundColor: color }}
                         />
@@ -130,7 +157,7 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                     )}
                 </div>
 
-            </Modal> */}
+            </Modal>
 
             {
                 isLoading ? (<div>test</div>) : (<div className='border-2 p-2 rounded-badge'>
@@ -144,9 +171,9 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                                 />
                             </Link>
                         </div>
-                        {/* <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                        <Button onClick={(e) => handleShowEditModal(e, product)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
                             <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
-                        </Button> */}
+                        </Button>
                         <Button onClick={(e) => handleShowDeleteModal(e, product._id)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
                             <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
                         </Button>

@@ -1,20 +1,22 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useGetBrandsQuery } from "../../../Redux/RTK Query/brands_slice";
 import { useGetCategoriesQuery } from "../../../Redux/RTK Query/categories_slice";
-import { usePostProductMutation } from "../../../Redux/RTK Query/products_slice";
-import { ISubCategory } from "../../../Interface";
+import { useUpdateProductMutation } from "../../../Redux/RTK Query/products_slice";
+import { IProduct, ISubCategory } from "../../../Interface";
 import { useGetCategory_SubQuery } from "../../../Redux/RTK Query/subCategory_slice";
 import Notify from "../../../Utils/UseNotifaction";
 
-function AddProductHook() {
+function UpdateProductHook() {
+
     const { data: categories, isError: isCategoryError, isLoading: isCategoryLoading } = useGetCategoriesQuery();
     const { data: brands, isError: isBrandError, isLoading: isBrandLoading } = useGetBrandsQuery();
-    const [postProduct] = usePostProductMutation();
 
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-    const handleCloseModal = () => setIsOpenConfirmModal(false);
-    const handleShowModal = () => setIsOpenConfirmModal(true);
+    const [putProduct, { isLoading: isPosting }] = useUpdateProductMutation();
 
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+    const handleCloseEditModal = () => setIsOpenEditModal(false);
+
+    const [selectedEditProductId, setSelectedEditProductId] = useState<string>();
     const [images, setImages] = useState<string[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<ISubCategory[]>([]);
     const [title, setTitle] = useState("");
@@ -30,7 +32,7 @@ function AddProductHook() {
     const [colors, setColors] = useState<string[]>([]);
 
     // Fetch subcategories when the category changes
-    const { data: category_sub } = useGetCategory_SubQuery(category, { skip: !category, }); // Skip the query if no category is selected
+    const { data: category_sub } = useGetCategory_SubQuery(category); // Skip the query if no category is selected
 
     useEffect(() => {
         if (category_sub) {
@@ -119,10 +121,11 @@ function AddProductHook() {
         return new File([blob], filename, { type: blob.type });
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const editProductHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (title.trim() === "" || description === '' || price === '' || category === '' || brand === '') {
-            Notify({ msg: 'Please complete the data', type: 'warn' });
+
+        if (!selectedEditProductId) {
+            Notify({ msg: 'Product ID is missing!', type: 'error' });
             return;
         }
 
@@ -143,42 +146,38 @@ function AddProductHook() {
                 convertBase64ToFile(img, `${Math.random()}-${index}.png`)
             )
         );
-        itemImages.map((item) => formData.append("images", item));
-        colors.map((color) => formData.append("availableColors", color));
-        selectedOptions.map((item) => formData.append("subcategory", item._id));
+        itemImages.forEach((item) => formData.append("images", item));
+        colors.forEach((color) => formData.append("availableColors", color));
+        selectedOptions.forEach((item) => formData.append("subcategory", item._id));
 
         try {
-            await postProduct(formData).unwrap();
-            setIsOpenConfirmModal(false);
-            resetForm()
-            Notify({ msg: 'The addition was completed successfully', type: 'success' });
+            await putProduct({ id: selectedEditProductId, formData }).unwrap();
+            setIsOpenEditModal(false);
+            Notify({ msg: 'The product was updated successfully', type: 'success' });
         } catch {
-            Notify({ msg: 'There is a problem with the addition process', type: 'error' });
+            Notify({ msg: 'There was a problem updating the product', type: 'error' });
         }
     };
 
 
-    const resetForm = () => {
-        setImages([])
-        setTitle('');
-        setDescription('');
-        setPrice('');
-        setDiscount('');
-        setQuantity('');
-        setCategory('');
-        setBrand('');
-        setTitle('');
-        setSelectedOptions([]);
-        setColors([]);
+    const handleShowEditModal = (e: FormEvent<HTMLButtonElement>, product: IProduct) => {
+        e.preventDefault();
+        setSelectedEditProductId(product._id);
+        setIsOpenEditModal(true);
+        setTitle(product.title)
+        setDescription(product.description)
+        setPrice(product.price)
+        setDiscount(product.priceAfterDiscount)
+        setQuantity(product.quantity)
+        setImages(product.images)
     };
 
     return [categories, isCategoryError, isCategoryLoading, brands, isBrandError, isBrandLoading,
-        isOpenConfirmModal, handleCloseModal, handleShowModal, images,
-        title, description, price, discount, quantity, category, brand, options, showColor, colors,
-        handleImageUpload, removeImage, handleSelect, handleRemove, onChangeName, onChangeDescription
-        , onChangePrice, onChangeDiscount, onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
-        handelChangeComplete, removeColor, handleSubmit
-    ] as const
+        isPosting,isOpenEditModal, handleCloseEditModal, handleShowEditModal, images, title, description, price, 
+    discount, quantity, category, brand, options, showColor, colors,handleImageUpload, removeImage, 
+    handleSelect, handleRemove, onChangeName, onChangeDescription,onChangePrice, onChangeDiscount, 
+    onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
+    handelChangeComplete, removeColor, editProductHandler] as const
 }
 
-export default AddProductHook
+export default UpdateProductHook
