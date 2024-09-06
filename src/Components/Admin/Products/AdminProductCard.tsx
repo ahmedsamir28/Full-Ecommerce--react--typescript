@@ -1,88 +1,38 @@
 import { Link } from "react-router-dom"
-import React, { useState } from "react";
 
-import Multiselect from 'multiselect-react-dropdown';
-import { CompactPicker } from 'react-color';
+// import Multiselect from 'multiselect-react-dropdown';
+// import { CompactPicker } from 'react-color';
 import Modal from "../../../UI-items/Modal";
 import Image from "../../../UI-items/Image";
 import Button from "../../../UI-items/Button";
 import { IProduct } from "../../../Interface";
+import DeleteProductHook from "../../../Hooks/Admin/Product/Delete_Product_Hook";
 
-type Option = {
-    label: string;
-    value: string;
-};
-
-const options: Option[] = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    { label: 'Option 3', value: 'option3' },
-    { label: 'Option 4', value: 'option4' },
-];
 
 // Define prop types
 interface IProductCardProps {
     product: IProduct;
     isLoading: boolean;
 }
+
 function AdminProductCard({ product, isLoading }: IProductCardProps) {
-    const [handleEditModal, setHandleEditModal] = useState(false);
-    const [handleRemoveModal, setHandleRemoveModal] = useState(false);
-
-    const [images, setImages] = useState<string[]>([]);
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-    const [showColor, setShowColor] = useState(false);
-    const [colors, setColors] = useState<string[]>([]);
-
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            const fileArray = Array.from(event.target.files).map(file => URL.createObjectURL(file));
-            setImages(prevImages => prevImages.concat(fileArray));
-        }
-    };
-
-    const removeImage = (url: string) => {
-        setImages(prevImages => prevImages.filter(image => image !== url));
-        URL.revokeObjectURL(url);
-    };
-
-    const handleSelect = (selectedList: Option[], selectedItem: Option) => {
-        setSelectedOptions([...selectedOptions, selectedItem]);
-    };
-
-    const handleRemove = (selectedList: Option[], removedItem: Option) => {
-        setSelectedOptions(selectedOptions.filter(option => option.value !== removedItem.value));
-    };
-
-    const onChangeColor = () => {
-        setShowColor(!showColor);
-    };
-
-    const handelChangeComplete = (color: unknown) => {
-        setColors([...colors, (color as { hex: string }).hex]);
-        setShowColor(false);
-    };
-
-    const removeColor = (color: string) => {
-        const newColor = colors.filter((e) => e !== color);
-        setColors(newColor);
-    };
-
+    const [isOpenDeleteModal,handleCloseDeleteModal,handleShowDeleteModal,isDeleting,removeCategoryHandler] = DeleteProductHook()
     return (
         <>
             {/* modal of remove the product */}
             <Modal
-                isOpen={handleRemoveModal}
-                closeModal={() => setHandleRemoveModal(false)}
+                isOpen={isOpenDeleteModal}
+                closeModal={handleCloseDeleteModal}
+                onSubmit={removeCategoryHandler}
                 title="Confirm deletion"
-                add="remove product"
+                add={isDeleting ? 'loading...' : 'remove product'}
                 btnClass="error"
             >
                 <p>Are you sure about the product deletion process ?</p>
             </Modal>
 
             {/* modal of edit the product*/}
-            <Modal
+            {/* <Modal
                 isOpen={handleEditModal}
                 closeModal={() => setHandleEditModal(false)}
                 title="Add Product"
@@ -180,7 +130,7 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                     )}
                 </div>
 
-            </Modal>
+            </Modal> */}
 
             {
                 isLoading ? (<div>test</div>) : (<div className='border-2 p-2 rounded-badge'>
@@ -194,10 +144,10 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
                                 />
                             </Link>
                         </div>
-                        <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                        {/* <Button onClick={() => setHandleEditModal(true)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
                             <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
-                        </Button>
-                        <Button onClick={() => setHandleRemoveModal(true)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                        </Button> */}
+                        <Button onClick={(e) => handleShowDeleteModal(e, product._id)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
                             <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
                         </Button>
 
