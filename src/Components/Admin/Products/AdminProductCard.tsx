@@ -14,7 +14,7 @@ interface IProductCardProps {
 
 function AdminProductCard({ product, isLoading }: IProductCardProps) {
     const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, isDeleting, removeCategoryHandler] = DeleteProductHook()
-    
+
     const [categories, isCategoryError, isCategoryLoading, brands, isBrandError, isBrandLoading,
         isPosting, isOpenEditModal, handleCloseEditModal, handleShowEditModal, images, title, description, price,
         discount, quantity, category, brand, options, showColor, colors, handleImageUpload, removeImage,
@@ -160,43 +160,81 @@ function AdminProductCard({ product, isLoading }: IProductCardProps) {
             </Modal>
 
             {
-                isLoading ? (<div>test</div>) : (<div className='border-2 p-2 rounded-badge'>
+                isLoading ? (<div className="border-2 p-2 rounded-badge animate-pulse">
                     <div className="relative">
-                        <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
-                            <Link to="/product-details/4">
-                                <Image
-                                    alt="image name"
-                                    url={product.imageCover}
-                                    className="w-full"
-                                />
-                            </Link>
+                        <div className="border bg-zinc-100 rounded-badge py-1 px-6">
+                            {/* Skeleton for image */}
+                            <div className="w-full h-48 bg-gray-300 rounded"></div>
                         </div>
-                        <Button onClick={(e) => handleShowEditModal(e, product)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
-                            <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
-                        </Button>
-                        <Button onClick={(e) => handleShowDeleteModal(e, product._id)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
-                            <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
-                        </Button>
 
+                        {/* Skeleton for edit button */}
+                        <div className="absolute top-3 left-2">
+                            <div className="w-8 h-8 bg-gray-300 rounded-xl"></div>
+                        </div>
 
+                        {/* Skeleton for delete button */}
+                        <div className="absolute top-3 right-2">
+                            <div className="w-8 h-8 bg-gray-300 rounded-xl"></div>
+                        </div>
+
+                        {/* Skeleton for rating */}
                         <div className="absolute bottom-3 left-3">
-                            <div className="flex items-start bg-white px-4 py-1 rounded-full ">
-                                <span className="mr-1">5.0</span>
-                                <i className="fa-solid fa-star text-blue-700 text-sm"></i>
-                                <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                            <div className="flex items-start bg-white px-4 py-1 rounded-full">
+                                <div className="w-10 h-5 bg-gray-300 rounded"></div>
                             </div>
                         </div>
                     </div>
+
                     <div className="mt-2 ml-2">
-                        <h6>{product.title}</h6>
-                        <div className="mt-1 flex justify-between items-center">
-                            <div className="flex justify-between items-center w-full">
-                                <span className="text-lg">$ {product.price} </span>
-                                <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ {product.priceAfterDiscount}</span>
+                        {/* Skeleton for title */}
+                        <div className="w-32 h-4 bg-gray-300 rounded mb-2"></div>
+
+                        {/* Skeleton for price section */}
+                        <div className="flex justify-between items-center">
+                            <div className="w-16 h-4 bg-gray-300 rounded"></div>
+                            <div className="w-12 h-4 bg-gray-300 rounded ml-2"></div>
+                        </div>
+                    </div>
+                </div>
+                ) : (
+                    <div className='border-2 p-2 rounded-badge'>
+                        <div className="relative">
+                            <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
+                                <Link to="/product-details/4">
+                                    <Image
+                                        alt="image name"
+                                        url={product.imageCover}
+                                        className="w-full"
+                                    />
+                                </Link>
+                            </div>
+                            <Button onClick={(e) => handleShowEditModal(e, product)} className="absolute top-3 left-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                                <i className="fa-regular fa-pen-to-square text-xl text-blue-800"></i>
+                            </Button>
+                            <Button onClick={(e) => handleShowDeleteModal(e, product._id)} className="absolute top-3 right-2 cursor-pointer border-2 border-zinc-400 py-1 px-2 rounded-xl hover:bg-slate-200">
+                                <i className="fa-regular fa-trash-can text-xl text-blue-800"></i>
+                            </Button>
+
+
+                            <div className="absolute bottom-3 left-3">
+                                <div className="flex items-start bg-white px-4 py-1 rounded-full ">
+                                    <span className="mr-1">5.0</span>
+                                    <i className="fa-solid fa-star text-blue-700 text-sm"></i>
+                                    <span className="text-zinc-500 text-sm ml-2"> ( 14.5 )</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-2 ml-2">
+                            <h6>{product.title}</h6>
+                            <div className="mt-1 flex justify-between items-center">
+                                <div className="flex justify-between items-center w-full">
+                                    <span className="text-lg">$ {product.price} </span>
+                                    <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ {product.priceAfterDiscount}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>)
+                )
             }
 
         </>

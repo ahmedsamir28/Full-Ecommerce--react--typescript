@@ -18,7 +18,7 @@ function ProductsContainer({ title, buttonTitle, pathTitle }: proTitleProps) {
         <SubTitle title={title} buttonTitle={buttonTitle} pathText={pathTitle} />
       ) : null}
       <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 p-2 mt-5'>
-      {!isLoading && !isError && data?.data.map((product: IProduct) => (
+      {!isLoading && !isError && data?.data.slice(0,8).map((product: IProduct) => (
                     <ProductCard key={product._id} product={product} isLoading={isLoading} />
                 ))}
       </div>
