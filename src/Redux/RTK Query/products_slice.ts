@@ -37,6 +37,12 @@ export const products_slice = createApi({
             }),
             providesTags: ['Product'],
         }),
+        getProductsSearch: builder.query<IProducts, string>({
+            query: (queryString) => ({
+                url: `api/v1/products?${queryString}`
+            }),
+            providesTags: ['Product'],
+        }),
         deleteProduct: builder.mutation<null, string>({
             query: (id) => ({
                 url: `api/v1/products/${id}`,
@@ -56,5 +62,5 @@ export const products_slice = createApi({
 });
 
 export const {
-    usePostProductMutation, useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation
+    usePostProductMutation, useGetProductsQuery,useGetProductsSearchQuery ,useDeleteProductMutation, useUpdateProductMutation
 } = products_slice;
