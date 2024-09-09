@@ -61,17 +61,17 @@ function ViewSearchProductsHook() {
 
     // Handler for the 'from & to' price input change
     const priceFrom = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value; 
+        const value = e.target.value;
         // Convert the value to a number if it's not empty, otherwise set it to undefined
         const numericValue = value ? Number(value) : undefined;
-        setFrom(numericValue); 
+        setFrom(numericValue);
     };
-    
+
     const priceTo = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value; 
+        const value = e.target.value;
         // Convert the value to a number if it's not empty, otherwise set it to undefined
         const numericValue = value ? Number(value) : undefined;
-        setTo(numericValue); 
+        setTo(numericValue);
     };
 
 
@@ -88,12 +88,42 @@ function ViewSearchProductsHook() {
         priceToString = `&price[lte]=${to}`; // Less than or equal condition
     }
 
+
+    // State to hold the selected sort type, initially an empty string
+    const [sort, setSort] = useState<string>("");
+
+    // Function to handle the sort selection based on the provided type
+    const sortData = (type: string | null) => {
+        // Initialize an empty string for sortType
+        let sortType = '';
+
+        // Check the type and assign the appropriate sort value
+        if (type === "Price from low to high") {
+            sortType = "+price"; // Sort by price in ascending order
+        } else if (type === "Price from high to low") {
+            sortType = "-price"; // Sort by price in descending order
+        } else if (type === "best seller") {
+            sortType = "-sold"; // Sort by the number of items sold in descending order
+        } else if (type === "top rated") {
+            sortType = "-quantity"; // Sort by the top-rated items (by quantity sold)
+        }
+
+        // Update the state with the new sort value
+        setSort(sortType);
+    }
+
+    // Generate the sort query string based on the selected sort value
+    // If sort is not empty, append the sort parameter to the query string, otherwise leave it empty
+    const sortQuery = sort ? `&sort=${sort}` : "";
+
     // Fetch products based on search word and selected category/brand filters
-    const { data, isLoading, isError } = useGetProductsSearchQuery(`limit=${limit}&${cateQuery}&${brandQuery}&${priceFromString}&${priceToString}`);
+    const { data, isLoading, isError } = useGetProductsSearchQuery(
+        `limit=${limit}&${cateQuery}&${brandQuery}&${priceFromString}&${priceToString}${sortQuery}`
+    );
 
     // Return fetched data and states for use in the consuming component
     return [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand,
-        from, priceFrom, to, priceTo
+        from, priceFrom, to, priceTo, sortData
     ] as const;
 }
 
