@@ -10,7 +10,7 @@ function ShopProductsPage() {
         document.title = "Products Page";
     }, []);
 
-    const [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory ,clickBrand] = ViewSearchProductsHook()
+    const [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand, from, priceFrom, to, priceTo] = ViewSearchProductsHook()
     return (
         <div className="container border-t-2 mb-10 mt-3 py-2 min-h-[calc(70vh-100px)]">
             <CategoryHeader />
@@ -18,7 +18,8 @@ function ShopProductsPage() {
             <div className='flex justify-between items-center sm:items-start flex-col lg:flex-row mt-5'>
                 <div className="">
                     <SideFilter brands={brands} isBrandLoading={isBrandLoading} isBrandError={isBrandError}
-                        categories={categories} isCategoryLoading={isCategoryLoading} isCategoryError={isCategoryError} clickCategory={clickCategory} clickBrand={clickBrand}
+                        categories={categories} isCategoryLoading={isCategoryLoading} isCategoryError={isCategoryError}
+                        clickCategory={clickCategory} clickBrand={clickBrand} from={from} to={to} priceFrom={priceFrom} priceTo={priceTo}
                     />
                 </div>
                 <div className="">

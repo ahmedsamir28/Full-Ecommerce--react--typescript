@@ -20,9 +20,8 @@ function ViewSearchProductsHook() {
         if (value === "0") {
             setCategoryChecked([]); // Reset categories if 'All' is selected
         } else {
-            setCategoryChecked(prevState => 
-                e.target.checked 
-                    ? [...prevState, value] // Add the checked category to the state
+            setCategoryChecked(prevState =>
+                e.target.checked ? [...prevState, value] // Add the checked category to the state
                     : prevState.filter(item => item !== value) // Remove unchecked category from the state
             );
         }
@@ -41,8 +40,8 @@ function ViewSearchProductsHook() {
         if (value === "0") {
             setBrandChecked([]); // Reset brands if 'All' is selected
         } else {
-            setBrandChecked(prevState => 
-                e.target.checked 
+            setBrandChecked(prevState =>
+                e.target.checked
                     ? [...prevState, value] // Add the checked brand to the state
                     : prevState.filter(item => item !== value) // Remove unchecked brand from the state
             );
@@ -56,11 +55,46 @@ function ViewSearchProductsHook() {
         setBrandQuery(query); // Update the brand query state
     }, [brandChecked]); // Re-run effect when brandChecked changes
 
+
+    const [from, setFrom] = useState<number | undefined>(undefined);
+    const [to, setTo] = useState<number | undefined>(undefined);
+
+    // Handler for the 'from & to' price input change
+    const priceFrom = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value; 
+        // Convert the value to a number if it's not empty, otherwise set it to undefined
+        const numericValue = value ? Number(value) : undefined;
+        setFrom(numericValue); 
+    };
+    
+    const priceTo = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value; 
+        // Convert the value to a number if it's not empty, otherwise set it to undefined
+        const numericValue = value ? Number(value) : undefined;
+        setTo(numericValue); 
+    };
+
+
+    let priceFromString = "";
+    let priceToString = "";
+
+    // Construct the priceFrom query string if 'from' is set and greater than 0
+    if (from !== undefined && from > 0) {
+        priceFromString = `&price[gt]=${from}`; // Greater than condition
+    }
+
+    // Construct the priceTo query string if 'to' is set and greater than 0
+    if (to !== undefined && to > 0) {
+        priceToString = `&price[lte]=${to}`; // Less than or equal condition
+    }
+
     // Fetch products based on search word and selected category/brand filters
-    const { data, isLoading, isError } = useGetProductsSearchQuery(`limit=${limit}&${cateQuery}&${brandQuery}`);
+    const { data, isLoading, isError } = useGetProductsSearchQuery(`limit=${limit}&${cateQuery}&${brandQuery}&${priceFromString}&${priceToString}`);
 
     // Return fetched data and states for use in the consuming component
-    return [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand] as const;
+    return [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand,
+        from, priceFrom, to, priceTo
+    ] as const;
 }
 
 export default ViewSearchProductsHook;

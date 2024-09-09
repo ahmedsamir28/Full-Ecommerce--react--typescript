@@ -10,10 +10,12 @@ interface ISideFilterData {
     isCategoryError: boolean
     clickCategory: (e: ChangeEvent<HTMLInputElement>) => void;
     clickBrand: (e: ChangeEvent<HTMLInputElement>) => void;
-
-
+    from: number | undefined
+    priceFrom: (e: ChangeEvent<HTMLInputElement>) => void;
+    to: number | undefined
+    priceTo: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-const SideFilter = ({ brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand }: ISideFilterData) => {
+const SideFilter = ({ brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand, from, priceFrom, to, priceTo }: ISideFilterData) => {
 
     const [isCollapsed, setIsCollapsed] = useState(true);
     const toggleCollapse = () => {
@@ -108,6 +110,8 @@ const SideFilter = ({ brands, isBrandLoading, isBrandError, categories, isCatego
                             from :
                         </span>
                         <input
+                            value={from}
+                            onChange={priceFrom}
                             type="number"
                             className='border-2 rounded-md pl-2 outline-none'
                             style={{ width: "50px", height: "25px" }} />
@@ -119,6 +123,8 @@ const SideFilter = ({ brands, isBrandLoading, isBrandError, categories, isCatego
                             to :
                         </span>
                         <input
+                            value={to}
+                            onChange={priceTo}
                             type="number"
                             className='border-2 rounded-md pl-2 outline-none'
                             style={{ width: "50px", height: "25px" }} />
