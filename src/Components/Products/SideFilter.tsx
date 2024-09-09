@@ -1,6 +1,19 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import { IData, IDataResponse } from '../../Interface';
 
-const SideFilter = () => {
+interface ISideFilterData {
+    brands: IDataResponse | undefined
+    isBrandLoading: boolean
+    isBrandError: boolean
+    categories: IDataResponse | undefined
+    isCategoryLoading: boolean
+    isCategoryError: boolean
+    clickCategory: (e: ChangeEvent<HTMLInputElement>) => void;
+    clickBrand: (e: ChangeEvent<HTMLInputElement>) => void;
+
+
+}
+const SideFilter = ({ brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand }: ISideFilterData) => {
 
     const [isCollapsed, setIsCollapsed] = useState(true);
     const toggleCollapse = () => {
@@ -35,19 +48,23 @@ const SideFilter = () => {
                     </div>
 
 
-                    <div className=" flex items-center justify-start gap-2 mb-2 ">
-                        <input
-                            className="h-[1.125rem] w-[1.125rem] cursor-pointer"
-                            type="checkbox"
-                            id="checkboxDefault" />
-                        <label
-                            className="capitalize text-sm text-zinc-500"
-                        >
-                            uyuuu
-                        </label>
-                    </div>
-
-
+                    {!isCategoryLoading && !isCategoryError && categories?.data.map((category: IData) => (
+                        <div key={category._id} className="flex items-center justify-start gap-2 mb-2">
+                            <input
+                                onChange={clickCategory}
+                                value={category._id}
+                                id={`category-${category._id}`}
+                                className="h-[1.125rem] w-[1.125rem] cursor-pointer"
+                                type="checkbox"
+                            />
+                            <label
+                                htmlFor={`category-${category._id}`}
+                                className="capitalize text-sm text-zinc-500"
+                            >
+                                {category.name}
+                            </label>
+                        </div>
+                    ))}
 
                     <h3 className='text-lg font-bold text-zinc-500 capitalize mt-5 mb-2  '>brands</h3>
                     <div className=" flex items-center justify-start gap-2 mb-2 ">
@@ -64,18 +81,23 @@ const SideFilter = () => {
                     </div>
 
 
-                    <div className=" flex items-center justify-start gap-2 mb-2 ">
-                        <input
-
-                            className="h-[1.125rem] w-[1.125rem] cursor-pointer"
-                            type="checkbox"
-                            id="checkboxDefault" />
-                        <label
-                            className="capitalize text-sm text-zinc-500"
-                        >
-                            iliu
-                        </label>
-                    </div>
+                    {!isBrandLoading && !isBrandError && brands?.data.map((brand: IData) => (
+                        <div key={brand._id} className="flex items-center justify-start gap-2 mb-2">
+                            <input
+                                onChange={clickBrand}
+                                value={brand._id}
+                                id={`category-${brand._id}`}
+                                className="h-[1.125rem] w-[1.125rem] cursor-pointer"
+                                type="checkbox"
+                            />
+                            <label
+                                htmlFor={`category-${brand._id}`}
+                                className="capitalize text-sm text-zinc-500"
+                            >
+                                {brand.name}
+                            </label>
+                        </div>
+                    ))}
 
 
                     <h3 className='text-lg font-bold text-zinc-500 capitalize mt-5 mb-2  '>price</h3>

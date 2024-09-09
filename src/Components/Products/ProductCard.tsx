@@ -70,10 +70,10 @@ const ProductCard = ({ product, isLoading }: IProductCardProps) => {
                         </div>
                     </div>
                     <div className="mt-2 ml-2">
-                        <h6>title of the product</h6>
+                        <h6>{product.title}</h6>
                         <div className="mt-1 flex justify-between items-center">
                             <div className="flex gap-2 items-center">
-                                <span className="text-lg">$ 5000 </span>
+                                <span className="text-lg">$ {product.price} </span>
                                 <span className="text-sm text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ 3000</span>
                             </div>
 
