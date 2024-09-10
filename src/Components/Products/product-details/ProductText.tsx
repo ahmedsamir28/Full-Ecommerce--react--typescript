@@ -1,12 +1,18 @@
 import { useState } from "react";
 import Button from "../../../UI-items/Button";
+import { IProductDetails } from "../../../Interface";
 
-function ProductText() {
+interface ProductDetails {
+    product: IProductDetails | undefined;
+}
+
+function ProductText({ product }: ProductDetails) {
+
+    console.log(product);
+    
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState<string | null>(null);
-    const maxQuantity = 12;
-
-    const colors = ['#f87171', '#9ca3af', '#d1d5db', '#e5e7eb', '#3b82f6'];
+    const maxQuantity: number = product?.data?.quantity ?? 12; // Default to 12 if quantity is undefined
 
     const handleIncrease = () => {
         if (quantity < maxQuantity) {
@@ -20,11 +26,15 @@ function ProductText() {
         }
     };
 
+    if (!product || !product.data) {
+        return <p>Product details not available.</p>;
+    }
+
     return (
         <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
-            <h1 className="text-2xl font-bold mb-2">Airpods - Max</h1>
+            <h1 className="text-2xl font-bold mb-2">{product.data.title}</h1>
             <p className="text-sm text-gray-600 mb-4">
-                a perfect balance of exhilarating high-fidelity audio and the effortless magic of AirPods.
+                {product.data.description || "No description available."}
             </p>
 
             <div className="flex items-center mb-4">
@@ -37,17 +47,17 @@ function ProductText() {
             </div>
 
             <div className="text-2xl font-bold mb-1 flex items-center gap-2 border-y-2 py-5">
-                <span>$549.00</span>
+                <span>${product.data.price}</span>
                 <span className="text-blue-700">Instead</span>
-                <span className="text-md text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ 3000</span>
+                <span className="text-md text-zinc-500" style={{ textDecorationLine: 'line-through' }}>$ {product.data.priceAfterDiscount}</span>
             </div>
+
             <div className="mb-4 pt-3 pb-5 border-b-2 ">
                 <p className="font-semibold mb-2">Choose a Color</p>
                 <div className="flex space-x-2">
-                    {colors.map((c, index) => (
+                    {product.data.availableColors.map((c) => (
                         <div
-                            key={index}
-                            className={`w-8 h-8 rounded-full border-2 cursor-pointer ${color === c ? 'border-blue-700' : 'border-gray-300'
+                            className={`w-8 h-8 rounded-full border-2 cursor-pointer ${c === color ? 'border-blue-700' : 'border-gray-300'
                                 }`}
                             style={{ backgroundColor: c }}
                             onClick={() => setColor(c)}
@@ -68,7 +78,7 @@ function ProductText() {
                 </div>
                 <div className="600 text-sm font-semibold">
                     Only
-                    <span className="text-blue-700"> {maxQuantity - quantity}  items </span>
+                    <span className="text-blue-700"> {maxQuantity - quantity} items </span>
                     left!
                 </div>
             </div>
@@ -85,4 +95,4 @@ function ProductText() {
     );
 }
 
-export default ProductText
+export default ProductText;

@@ -1,4 +1,3 @@
-import CategoryHeader from "../../Components/Categories/CategoryHeader"
 import ProductsContainer from "../../Components/Products/ProductsContainer"
 import DropDown from "../../Utils/DropDown"
 import SideFilter from "../../Components/Products/SideFilter"
@@ -13,7 +12,6 @@ function ShopProductsPage() {
     const [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand, from, priceFrom, to, priceTo,sortData] = ViewSearchProductsHook()
     return (
         <div className="container border-t-2 mb-10 mt-3 py-2 min-h-[calc(70vh-100px)]">
-            <CategoryHeader />
             <DropDown sortData={sortData} />
             <div className='flex justify-between items-center sm:items-start flex-col lg:flex-row mt-5'>
                 <div className="">

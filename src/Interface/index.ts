@@ -69,7 +69,7 @@ export interface IProduct {
     quantity: number;
     sold: number;
     price: number;
-    priceAfterDiscount:number
+    priceAfterDiscount: number
     availableColors: string[];
     imageCover: string;
     images: string[];
@@ -91,5 +91,26 @@ export interface IProducts {
     };
 }
 
+export interface IProductDetails {
+    data: {
+        _id: string;
+        title: string;
+        slug: string;
+        description: string;
+        quantity: number;
+        sold: number;
+        price: number;
+        priceAfterDiscount: number;
+        availableColors: string[];
+        imageCover: string;
+        images: string[];
+        category: string;
+        subcategory: string[];
+        ratingsQuantity: number;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    };
+}
 
 

@@ -27,6 +27,7 @@ const images = [
 const ProductGallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
+
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="bg-zinc-200 border-2 w-full flex justify-center rounded-xl">
@@ -51,7 +52,6 @@ const ProductGallery: React.FC = () => {
         ))}
       </div>
     </div>
-
   );
 };
 

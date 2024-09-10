@@ -20,7 +20,7 @@ function ProductsContainer({ items, isError, isLoading, title, buttonTitle, path
   // Check if items is defined to avoid potential errors
   if (items?.data) {
     if (location.pathname !== '/products') {
-      products = items.data.slice(0, 4); // Show only the first 4 products for non-products page
+      products = items.data.slice(0, 8); // Show only the first 4 products for non-products page
     } else {
       products = items.data; // Show all products on the products page
     }

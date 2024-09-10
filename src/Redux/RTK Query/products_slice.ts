@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IProduct, IProducts } from '../../Interface';
+import { IProduct, IProductDetails, IProducts } from '../../Interface';
 
 // const baseQuery = fetchBaseQuery({
 //     baseUrl: 'http://127.0.0.1:8000',
@@ -37,6 +37,12 @@ export const products_slice = createApi({
             }),
             providesTags: ['Product'],
         }),
+        getProductId: builder.query<IProductDetails, string>({
+            query: (id) => ({
+                url: `api/v1/products/${id}`
+            }),
+            providesTags: ['Product'],
+        }),
         getProductsSearch: builder.query<IProducts, string>({
             query: (queryString) => ({
                 url: `api/v1/products?${queryString}`
@@ -62,5 +68,5 @@ export const products_slice = createApi({
 });
 
 export const {
-    usePostProductMutation, useGetProductsQuery,useGetProductsSearchQuery ,useDeleteProductMutation, useUpdateProductMutation
+    usePostProductMutation, useGetProductsQuery,useGetProductIdQuery,useGetProductsSearchQuery ,useDeleteProductMutation, useUpdateProductMutation
 } = products_slice;

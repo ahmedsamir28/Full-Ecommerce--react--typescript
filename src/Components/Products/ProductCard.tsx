@@ -46,14 +46,14 @@ const ProductCard = ({ product, isLoading }: IProductCardProps) => {
                         </div>
                     </div>
                 </div>
-                ) : (<div className='border-2 p-2 rounded-badge'>
-                    <div className="relative">
-                        <div className=" border bg-zinc-100  rounded-badge py-1 px-6">
-                            <Link to="/product-details/4">
+                ) : (<div className='border-2 p-2 rounded-badge '>
+                    <div className="relative ">
+                        <div className=" border bg-zinc-100 h-72 rounded-badge py-1 px-6">
+                            <Link to={`/product-details/${product._id}`}>
                                 <Image
                                     alt="image name"
                                     url={product.imageCover}
-                                    className="w-full"
+                                    className="w-full h-full"
                                 />
                             </Link>
                         </div>
