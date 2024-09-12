@@ -4,7 +4,9 @@ import { categories_slice } from './RTK Query/categories_slice'
 import { brands_slice } from './RTK Query/brands_slice'
 import { subCategory_slice } from './RTK Query/subCategory_slice'
 import { products_slice } from './RTK Query/products_slice'
-import registerSlice  from './Slice/registerSlice'; // Import the registerSlice
+import registerSlice  from './Slice/registerSlice'; 
+import loginSlice  from './Slice/loginSlice'; 
+
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
         [subCategory_slice.reducerPath]: subCategory_slice.reducer,
         [products_slice.reducerPath]: products_slice.reducer,
         register: registerSlice,
+        login: loginSlice,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(categories_slice.middleware, brands_slice.middleware, subCategory_slice.middleware, products_slice.middleware),

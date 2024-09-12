@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import { REGISTER_FORM } from "../../Data_Auth/Index";
 import { ToastContainer } from "react-toastify";
 import RegisterHook from "../../Hooks/Auth/Register_Hook";
+import { useEffect } from "react";
 
 
 
 function RegisterPage() {
-const [register, handleSubmit,errors,onSubmit ] =RegisterHook()
+    useEffect(() => {
+        document.title = "Register Page";
+    }, []);
+    const [register, handleSubmit, errors, onSubmit] = RegisterHook()
+    
     const renderLoginForm = REGISTER_FORM.map(({ name, placeholder, type, validation }, idx) => {
         return (
             <div key={idx}>

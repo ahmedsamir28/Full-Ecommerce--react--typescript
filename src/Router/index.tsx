@@ -1,12 +1,8 @@
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import {Route, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
+
 import PageNotFound from "../Utils/PageNotFound";
 import RootLayout from "../Utils/Layout";
 import ErrorHandler from "../Components/errors/ErrorHandler";
-// import ProtectedRoute from "../Components/Auth/ProtectedRoute";
 import HomePage from "../Pages/Home/HomePage";
 import ProductDetailsPage from "../Pages/Products/ProductDetailsPage";
 import CategoriesPage from "../Pages/Categories/CategoriesPage";
@@ -26,9 +22,6 @@ import CartPage from "../Pages/Cart/CartPage";
 import LoginPage from "../Pages/Auth/LoginPage";
 import RegisterPage from "../Pages/Auth/RegisterPage";
 
-// const storageKey = "user";
-// const userDataString = localStorage.getItem(storageKey);
-// const userData = userDataString ? JSON.parse(userDataString) : null;
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,241 +29,31 @@ const router = createBrowserRouter(
       {/* Root Layout */}
       <Route path="/" element={<RootLayout />} errorElement={<ErrorHandler />}>
 
-        <Route
-          index
-          element={
-            // <ProtectedRoute
-            //   isAllowed={userData?.jwt}
-            //   redirectPath="/login"
-            //   data={userData}
-            // >
-            <HomePage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route index element={<HomePage />} />
 
-        <Route
-          path="categories"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <CategoriesPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="products"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <ShopProductsPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="product-details/:id"
-          element={
-            // <ProtectedRoute
-            //   isAllowed={userData?.jwt}
-            //   redirectPath="/login"
-            //   data={userData}
-            // >
-            <ProductDetailsPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="brands"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <BrandsPage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="products" element={<ShopProductsPage />} />
+        <Route path="product-details/:id" element={<ProductDetailsPage />} />
+        <Route path="brands" element={<BrandsPage />} />
 
         {/* admin routes */}
-        <Route
-          path="admin/dash-board"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <DashBoardAdminPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="admin/products"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <AdminProductsPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="admin/categories"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <AdminCategoriesPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="admin/subcategories"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <AdminSubCategoriesPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="admin/brands"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <AdminBrandsPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="admin/coupons"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <AdminCouponsPage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="admin/dash-board" element={<DashBoardAdminPage />} />
+        <Route path="admin/products" element={<AdminProductsPage />} />
+        <Route path="admin/categories" element={<AdminCategoriesPage />} />
+        <Route path="admin/subcategories" element={<AdminSubCategoriesPage />} />
+        <Route path="admin/brands" element={<AdminBrandsPage />} />
+        <Route path="admin/coupons" element={<AdminCouponsPage />} />
 
         {/* user routes */}
-        <Route
-          path="user/orders"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <UserOrdersPage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="user/orders" element={<UserOrdersPage />} />
+        <Route path="user/wish-list" element={<UserWishListPage />} />
+        <Route path="user/addresses" element={<UserAddressesPage />} />
+        <Route path="user/profile" element={<UserProfilePage />} />
 
-        <Route
-          path="user/wish-list"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <UserWishListPage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="cart" element={<CartPage />} />
 
-        <Route
-          path="user/addresses"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <UserAddressesPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="user/profile"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <UserProfilePage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/cart"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <CartPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/auth/login"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <LoginPage />
-            // </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/auth/register"
-          element={
-            // <ProtectedRoute
-            // isAllowed={userData?.jwt}
-            // redirectPath="/login"
-            // data={userData}
-            // >
-            <RegisterPage />
-            // </ProtectedRoute>
-          }
-        />
+        <Route path="auth/login" element={<LoginPage />} />
+        <Route path="auth/register" element={<RegisterPage />} />
 
       </Route>
 

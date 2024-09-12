@@ -1,4 +1,3 @@
-
 interface IProps {
     message?: string
 }

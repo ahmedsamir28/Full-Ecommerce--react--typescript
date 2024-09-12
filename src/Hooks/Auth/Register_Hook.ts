@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch, useAppSelector } from "../../Redux/store";
 import Notify from "../../Utils/UseNotifaction";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -29,7 +28,6 @@ function isApiError(error: unknown): error is ApiError {
 }
 
 function RegisterHook() {
-    const navigate = useNavigate();
     const { user, error } = useAppSelector(({ register }: RootState) => register)
     const dispatch = useAppDispatch()
 
@@ -37,8 +35,8 @@ function RegisterHook() {
     if (user) {
         Notify({ msg: 'You will navigate to the login page after 2 seconds to login.', type: 'success' });
         setTimeout(() => {
-            navigate("/auth/login");
-        }, 2000);
+            window.location.href="/auth/login"
+        }, 1000);
     }
 
     // Handle registration errors

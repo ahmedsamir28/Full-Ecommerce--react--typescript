@@ -4,6 +4,17 @@ import { IProduct } from "../Interface";
 import { useGetProductsSearchQuery } from "../Redux/RTK Query/products_slice";
 
 function Navbar() {
+    const storageKey = "user";
+    const userDataString = localStorage.getItem(storageKey);
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+
+    const logOut = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        window.location.href = "/auth/login";  
+    };
+    
+
     const [searchWord, onChangeSearch, searchBar, setSearchBar] = NavbarSearchHook(); // Add setSearchBar
     const { data, isLoading, isError } = useGetProductsSearchQuery(`keyword=${searchWord}`);
     const navigate = useNavigate(); // Add useNavigate for navigation
@@ -76,19 +87,35 @@ function Navbar() {
                         </div>
                     </div>
 
-                    <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    {
+                        userData ? (<div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                </div>
                             </div>
-                        </div>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li><Link to="/admin/dash-board" className="justify-between">control panel<span className="badge">New</span></Link></li>
-                            <li><Link to="/user/orders" className="justify-between">profile page<span className="badge">New</span></Link></li>
-                            <li><a>Settings</a></li>
-                            <li><Link to="/auth/login">Logout</Link></li>
-                        </ul>
-                    </div>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                {
+                                    userData.role === "admin" ? (<li><Link to="/admin/dash-board" className="justify-between">control panel<span className="badge">New</span></Link></li>
+                                    ) : (<li><Link to="/user/orders" className="justify-between">profile page<span className="badge">New</span></Link></li>
+                                    )
+                                }
+                                {/* <li><a>Settings</a></li> */}
+                                <li onClick={logOut}><Link to="/auth/login">Logout</Link></li>
+                            </ul>
+                        </div>) : (
+                            <div >
+                                <Link to="/auth/login">
+                                    <div className="flex items-center gap-2 cursor-pointer hover:text-zinc-500">
+                                        <i className="fa-regular fa-user text-xl "></i> <div>Login</div>
+                                    </div>
+                                </Link>
+                            </div>
+                        )
+                    }
+
+
+
                 </div>
 
 
