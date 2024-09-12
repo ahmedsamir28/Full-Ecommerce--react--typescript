@@ -20,7 +20,7 @@ function ProductDetails() {
         <div className='container py-5'>
             <div className='flex flex-col lg:flex-row gap-10 items-center'>
                 <div className='w-11/12 lgg:w-6/12  h-9/12 lgg:h-96 rounded-lg'>
-                    <ProductGallery />
+                    <ProductGallery  product={ data }/>
                 </div>
                 <div className='rounded-lg w-11/12'>
                     <ProductText product={ data } />

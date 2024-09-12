@@ -2,7 +2,7 @@ import { ILoginInput, IRegisterInput } from "../Interface";
 
 export const REGISTER_FORM: IRegisterInput[] = [
   {
-    name: "username",
+    name: "name",
     placeholder: "Username",
     type: "text",
     validation: {
@@ -20,6 +20,14 @@ export const REGISTER_FORM: IRegisterInput[] = [
     },
   },
   {
+    name: "phone",
+    placeholder: "Phone",
+    type: "phone",
+    validation: {
+      required: true,
+    },
+  },
+  {
     name: "password",
     placeholder: "Password",
     type: "password",
@@ -28,6 +36,16 @@ export const REGISTER_FORM: IRegisterInput[] = [
       minLength: 6,
     },
   },
+  {
+    name: "passwordConfirm",
+    placeholder: "passwordConfirm",
+    type: "password",
+    validation: {
+      required: true,
+      minLength: 6,
+    },
+  },
+  
 ];
 
 export const LOGIN_FORM: ILoginInput[] = [

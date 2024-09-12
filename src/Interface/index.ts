@@ -1,5 +1,5 @@
 export interface IRegisterInput {
-    name: "username" | "email" | "password";
+    name: "name" | "email" | "phone" | "password" |"passwordConfirm";
     placeholder: string;
     type: string;
     validation: {
@@ -112,5 +112,22 @@ export interface IProductDetails {
         __v: number;
     };
 }
+export interface UserData {
+    _id: string;
+    name: string;
+    slug: string;
+    email: string;
+    phone: string;
+    role: string;
+    active: boolean;
+    wishlist: []; // If you have a specific type for wishlist items, replace `any` with that type
+    addresses: []; // Same as wishlist, replace `any` with the appropriate type
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
 
-
+export interface UserJwtDataResponse {
+    data: UserData;
+    token: string;
+}

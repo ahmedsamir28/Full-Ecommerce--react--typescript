@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IProduct, IProductDetails, IProducts } from '../../Interface';
+import { BaseUrl } from '../../Config/Base_Url';
 
 // const baseQuery = fetchBaseQuery({
 //     baseUrl: 'http://127.0.0.1:8000',
@@ -21,7 +22,7 @@ export const products_slice = createApi({
     tagTypes: ['Product'],
     refetchOnReconnect: true,
     refetchOnMountOrArgChange: true,
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: BaseUrl }),
     endpoints: (builder) => ({
         postProduct: builder.mutation({
             query: (formData) => ({

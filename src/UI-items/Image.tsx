@@ -1,5 +1,5 @@
 interface IProps {
-    url: string;
+    url: string | undefined;
     alt: string;
     className: string;
     onClick?: () => void; 

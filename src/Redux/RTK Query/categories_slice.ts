@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IData, IDataResponse } from '../../Interface';
+import { BaseUrl } from '../../Config/Base_Url';
 
 // const baseQuery = fetchBaseQuery({
 //     baseUrl: 'http://127.0.0.1:8000',
@@ -21,7 +22,7 @@ export const categories_slice = createApi({
     tagTypes: ['Category'],
     refetchOnReconnect: true,
     refetchOnMountOrArgChange: true,
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: BaseUrl }),
     endpoints: (builder) => ({
         postCategory: builder.mutation({
             query: (formData) => ({

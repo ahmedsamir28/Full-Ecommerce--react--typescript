@@ -7,9 +7,6 @@ interface ProductDetails {
 }
 
 function ProductText({ product }: ProductDetails) {
-
-    console.log(product);
-    
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState<string | null>(null);
     const maxQuantity: number = product?.data?.quantity ?? 12; // Default to 12 if quantity is undefined
