@@ -3,7 +3,7 @@ import { axiosInstance } from '../Config/Base_Url';
 
 
 // Create async thunk for user login
-export const authLogin = createAsyncThunk('auth/login', async (credentials: { email: string; password: string}, thunkAPI) => {
+export const authLogin = createAsyncThunk('auth/login', async (credentials: { email: string; password: string }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
         const response = await axiosInstance.post('api/v1/auth/login', credentials);
@@ -15,8 +15,9 @@ export const authLogin = createAsyncThunk('auth/login', async (credentials: { em
 }
 
 );
+
 // Create async thunk for user register
-export const authRegister = createAsyncThunk('auth/register', async (credentials: { name: string; email: string; phone: string; password: string ; passwordConfirm:string}, thunkAPI) => {
+export const authRegister = createAsyncThunk('auth/register', async (credentials: { name: string; email: string; phone: string; password: string; passwordConfirm: string }, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
         const response = await axiosInstance.post('api/v1/auth/signup', credentials);
@@ -27,3 +28,6 @@ export const authRegister = createAsyncThunk('auth/register', async (credentials
     }
 }
 );
+
+
+

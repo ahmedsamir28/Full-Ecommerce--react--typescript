@@ -11,7 +11,7 @@ function Navbar() {
     const logOut = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        window.location.href = "/auth/login";  
+        window.location.href = "/";  
     };
     
 
@@ -101,7 +101,7 @@ function Navbar() {
                                     )
                                 }
                                 {/* <li><a>Settings</a></li> */}
-                                <li onClick={logOut}><Link to="/auth/login">Logout</Link></li>
+                                <li onClick={logOut}><div>Logout</div></li>
                             </ul>
                         </div>) : (
                             <div >

@@ -1,28 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi} from '@reduxjs/toolkit/query/react';
 import { IData, IDataResponse } from '../../Interface';
-import { BaseUrl } from '../../Config/Base_Url';
+import { baseQuery } from '../../Config/Base_Query';
 
-// const baseQuery = fetchBaseQuery({
-//     baseUrl: 'http://127.0.0.1:8000',
-//     prepareHeaders: (headers) => {
-//         const storageKey = "user";
-//         const userDataString = localStorage.getItem(storageKey);
-//         const userData = userDataString ? JSON.parse(userDataString) : null;
-//         const token = userData?.jwt;
-
-//         if (token) {
-//             headers.set('Authorization', `Bearer ${token}`);
-//         }
-//         return headers;
-//     },
-// });
 
 export const categories_slice = createApi({
     reducerPath: 'categoriesApi',
     tagTypes: ['Category'],
     refetchOnReconnect: true,
     refetchOnMountOrArgChange: true,
-    baseQuery: fetchBaseQuery({ baseUrl: BaseUrl }),
+    baseQuery: baseQuery,
     endpoints: (builder) => ({
         postCategory: builder.mutation({
             query: (formData) => ({

@@ -1,7 +1,13 @@
+import { ToastContainer } from "react-toastify"
 import Userprofile from "../../Components/User/Profile/Userprofile"
 import UserSideBar from "../../Components/User/UserSideBar"
+import { useEffect } from "react";
 
 function UserProfilePage() {
+    useEffect(() => {
+        document.title = "Profile Page";
+    }, [])
+
     return (
         <div className="min-h-[calc(80vh-100px)] border-t-2 mb-10 mt-3 py-5">
             <div className="flex flex-col lg:flex-row lg:items-start gap-5 container">
@@ -12,6 +18,7 @@ function UserProfilePage() {
                     <Userprofile/>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

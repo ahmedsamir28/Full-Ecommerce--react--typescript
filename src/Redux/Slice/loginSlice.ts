@@ -25,9 +25,6 @@ const loginSlice = createSlice({
     name: 'login',
     initialState,
     reducers: {
-        clearUserState: (state) => {
-            state.user = null; // Clear the user state
-        },
     },
     extraReducers: (builder) => {
         builder

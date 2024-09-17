@@ -2,16 +2,16 @@ import Button from "../../UI-items/Button";
 import { LOGIN_FORM } from "../../Data_Auth/Index";
 import InputErrorMessage from "../../UI-items/InputErrorMessage";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import LoginHook from "../../Hooks/Auth/Login_Hook";
 
 function LoginPage() {
-    const [register, handleSubmit, errors ,onSubmit] = LoginHook()
+    const [register, handleSubmit, errors, onSubmit] = LoginHook()
 
-    useEffect(() => {
-        document.title = "Login Page";
-    }, [])
+        useEffect(() => {
+            document.title = "Login Page";
+        }, [])
 
     const renderLoginForm = LOGIN_FORM.map(({ name, placeholder, type, validation }, idx) => {
         return (
@@ -23,7 +23,7 @@ function LoginPage() {
                     className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
                 />
                 {errors[name] && <InputErrorMessage message={errors[name]?.message} />}
-                </div>
+            </div>
         );
     });
     return (

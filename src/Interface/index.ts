@@ -120,11 +120,12 @@ export interface UserData {
     phone: string;
     role: string;
     active: boolean;
-    wishlist: []; // If you have a specific type for wishlist items, replace `any` with that type
-    addresses: []; // Same as wishlist, replace `any` with the appropriate type
+    wishlist: []; 
+    addresses: []; 
     createdAt: string;
     updatedAt: string;
     __v: number;
+    passwordChangedAt:string
 }
 
 export interface UserJwtDataResponse {
