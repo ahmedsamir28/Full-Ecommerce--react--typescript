@@ -1,5 +1,5 @@
 export interface IRegisterInput {
-    name: "name" | "email" | "phone" | "password" |"passwordConfirm";
+    name: "name" | "email" | "phone" | "password" | "passwordConfirm";
     placeholder: string;
     type: string;
     validation: {
@@ -120,15 +120,35 @@ export interface UserData {
     phone: string;
     role: string;
     active: boolean;
-    wishlist: []; 
-    addresses: []; 
+    wishlist: [];
+    addresses: [];
     createdAt: string;
     updatedAt: string;
     __v: number;
-    passwordChangedAt:string
+    passwordChangedAt: string
 }
 
 export interface UserJwtDataResponse {
     data: UserData;
     token: string;
 }
+
+export interface LoggedUser {
+    data: {
+        active: boolean;
+        addresses: []; 
+        createdAt: string;
+        email: string;
+        name: string;
+        password: string;
+        passwordChangedAt: string;
+        phone: string;
+        role: string;
+        slug: string;
+        updatedAt: string;
+        wishlist: []; 
+        __v: number;
+        _id: string;
+    };
+}
+

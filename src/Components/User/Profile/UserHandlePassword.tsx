@@ -1,8 +1,8 @@
-import ChangePasswordHook from '../../../Hooks/User/Change_Password_Hook';
+import ChangePasswordHook from '../../../Hooks/User/LoggedUser/Change_Password_Hook';
 import Button from '../../../UI-items/Button';
 
 function UserHandlePassword() {
-const [state, handleChange, handleSavePassword, isLoading] = ChangePasswordHook()
+    const [state, handleChange, handleSavePassword, isLoading] = ChangePasswordHook()
     return (
         <div className="mt-5 border-2 rounded-lg py-3">
             <div className="text-xl font-bold text-zinc-500 capitalize ml-2">Change Password</div>

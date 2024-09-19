@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { usePutUserProfileMutation } from "../../Redux/RTK Query/profile_slice";
-import Notify from "../../Utils/UseNotifaction";
+import Notify from "../../../Utils/UseNotifaction";
+import { useUpdateUserPasswordMutation } from "../../../Redux/RTK Query/logged_users_slice";
 
 function ChangePasswordHook() {
     const [state, setState] = useState({
@@ -14,7 +14,7 @@ function ChangePasswordHook() {
     };
 
     // Step 1: Destructure the mutation trigger function
-    const [putUserProfile, { isLoading }] = usePutUserProfileMutation();
+    const [updateUserPassword, { isLoading }] = useUpdateUserPasswordMutation();
 
     const handleSavePassword = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ function ChangePasswordHook() {
 
         // Step 2: Call the mutation trigger function and pass the state
         try {
-            await putUserProfile(state);
+            await updateUserPassword(state);
             Notify({ msg: 'Password updated successfully. Please log in again.', type: 'success' });
             setTimeout(() => {
                 localStorage.removeItem('token');
