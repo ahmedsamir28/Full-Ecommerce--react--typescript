@@ -107,6 +107,7 @@ export interface IProductDetails {
         category: string;
         subcategory: string[];
         ratingsQuantity: number;
+        ratingsAverage:number
         createdAt: string;
         updatedAt: string;
         __v: number;
@@ -136,7 +137,7 @@ export interface UserJwtDataResponse {
 export interface LoggedUser {
     data: {
         active: boolean;
-        addresses: []; 
+        addresses: [];
         createdAt: string;
         email: string;
         name: string;
@@ -146,9 +147,45 @@ export interface LoggedUser {
         role: string;
         slug: string;
         updatedAt: string;
-        wishlist: []; 
+        wishlist: [];
         __v: number;
         _id: string;
     };
 }
 
+export interface IReview {
+    data: {
+        _id: string;
+        review: string;
+        rating: number;
+        user: {
+            _id: string;
+            name: string;
+        };
+        product: string;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
+}
+
+export  interface IReviewResponse {
+    results: number;
+    paginationResult: {
+        currentPage: number;
+        numberOfPages: number;
+        limit: number;
+    };
+    data: {
+        _id: string;
+        review: string;
+        rating: number;
+        user: {
+            _id: string;
+            name: string;
+        };
+        product: string;
+        createdAt: string;
+        updatedAt: string;
+    }[];
+}

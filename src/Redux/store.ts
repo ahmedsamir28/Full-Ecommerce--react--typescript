@@ -7,6 +7,7 @@ import { brands_slice } from './RTK Query/brands_slice';
 import { subCategory_slice } from './RTK Query/subCategory_slice';
 import { products_slice } from './RTK Query/products_slice';
 import { logged_users_slice } from './RTK Query/logged_users_slice';
+import { reviews_slice } from './RTK Query/reviews_slice';
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,8 @@ export const store = configureStore({
         [subCategory_slice.reducerPath]: subCategory_slice.reducer,
         [products_slice.reducerPath]: products_slice.reducer,
         [logged_users_slice.reducerPath]: logged_users_slice.reducer,
+        [reviews_slice.reducerPath]: reviews_slice.reducer,
+
 
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -24,8 +27,8 @@ export const store = configureStore({
         brands_slice.middleware,
         subCategory_slice.middleware,
         products_slice.middleware,
-        logged_users_slice.middleware
-
+        logged_users_slice.middleware,
+        reviews_slice.middleware
     ),
 });
 

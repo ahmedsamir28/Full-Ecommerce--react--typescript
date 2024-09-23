@@ -3,6 +3,7 @@ import ProductDetails from "../../Components/Products/product-details/ProductDet
 import ProductsContainer from "../../Components/Products/ProductsContainer";
 import RateContainer from "../../Components/Rate/RateContainer";
 import { useGetProductsQuery } from "../../Redux/RTK Query/products_slice";
+import { ToastContainer } from "react-toastify";
 
 function ProductDetailsPage() {
 
@@ -19,6 +20,7 @@ function ProductDetailsPage() {
       <div className="mt-5">
         <ProductsContainer items={data} isError={isError} isLoading={isLoading} title="Products you may like" buttonTitle="" pathTitle="" />
       </div>
+      <ToastContainer />
     </div>
   )
 }
