@@ -3,11 +3,15 @@ import Modal from "../../UI-items/Modal";
 import ReactStars from "react-rating-stars-component";
 import Button from "../../UI-items/Button";
 import UpdateReviewHook from "../../Hooks/User/Reviews/Update_Review_Hook";
+import DeleteReviewHook from "../../Hooks/User/Reviews/Delete_Review_Hook";
 
 function RateContainer() {
-    const [data, isLoading, error, product, productLoading, productError, user, review, rating, onChangeReview
-        , ratingChanged, isOpenEditModal, handleCloseEditModal, handleShowEditModal, editReviewHandler
-    ] = UpdateReviewHook()
+    // update review hook
+    const [data, isLoading, error, product, productLoading, productError, user, review, rating, onChangeReview,
+        ratingChanged, isOpenEditModal, handleCloseEditModal, handleShowEditModal, editReviewHandler] = UpdateReviewHook()
+
+        // delete review hook
+    const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, isReviewLoading, removeReviewHandler] = DeleteReviewHook()
 
     if (isLoading || productLoading) {
         return <div>Loading...</div>;
@@ -33,11 +37,22 @@ function RateContainer() {
     return (
         <>
             <Modal
+                isOpen={isOpenDeleteModal}
+                closeModal={handleCloseDeleteModal}
+                onSubmit={removeReviewHandler}
+                title="delete the review"
+                add={isReviewLoading ? 'loading ....' : 'delete the review'}
+                btnClass="error"
+            >
+                <p>Are you sure you want to delete the comment?</p>
+            </Modal>
+
+            <Modal
                 isOpen={isOpenEditModal}
                 closeModal={handleCloseEditModal}
                 onSubmit={editReviewHandler}
                 title="edit the review"
-                add="save edit"
+                add={isLoading ? 'loading ... ' : "save edit"}
                 btnClass="success"
             >
                 <div>
@@ -100,7 +115,7 @@ function RateContainer() {
                                         <Button onClick={(e) => handleShowEditModal(e, review._id, review.review, review.rating)}>
                                             <i className="fa-solid fa-pen-to-square text-blue-700 hover:text-blue-500 cursor-pointer"></i>
                                         </Button>
-                                        <Button>
+                                        <Button onClick={(e) => handleShowDeleteModal(e, review._id)}>
                                             <i className="fa-regular fa-trash-can text-blue-700 hover:text-blue-500 cursor-pointer"></i>
                                         </Button>
                                     </div>

@@ -32,29 +32,17 @@ export const reviews_slice = createApi({
             }),
             invalidatesTags: ['review'],
         }),
-        // getProductId: builder.query<IProductDetails, string>({
-        //     query: (id) => ({
-        //         url: `api/v1/products/${id}`
-        //     }),
-        //     providesTags: ['Product'],
-        // }),
-        // getProductsSearch: builder.query<IProducts, string>({
-        //     query: (queryString) => ({
-        //         url: `api/v1/products?${queryString}`
-        //     }),
-        //     providesTags: ['Product'],
-        // }),
-        // deleteProduct: builder.mutation<null, string>({
-        //     query: (id) => ({
-        //         url: `api/v1/products/${id}`,
-        //         method: 'DELETE',
-        //     }),
-        //     invalidatesTags: ['Product'],
-        // }),
+        deleteReview: builder.mutation<null, string>({
+            query: (id) => ({
+                url: `/api/v1/reviews/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['review'],
+        }),
 
     }),
 });
 
 export const {
-    useCreateReviewMutation,useGetReviewsQuery,useUpdateReviewMutation
+    useCreateReviewMutation,useGetReviewsQuery,useUpdateReviewMutation,useDeleteReviewMutation
 } = reviews_slice;
