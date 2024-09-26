@@ -1,12 +1,37 @@
-import { Link } from "react-router-dom"
-import Image from "../../UI-items/Image"
 import { IProduct } from "../../Interface";
+import { MouseEvent, useEffect } from "react";
+import Notify from "../../Utils/UseNotifaction";
+import { useAddToWishlistMutation } from "../../Redux/RTK Query/wishlist_slice";
+import { Link } from "react-router-dom";
+import Image from "../../UI-items/Image";
 interface IProductCardProps {
     product: IProduct;
     isLoading: boolean;
 }
 const ProductCard = ({ product, isLoading }: IProductCardProps) => {
-    return (
+    const [addToWishlist, { isLoading: isWishlist, data, isSuccess }] = useAddToWishlistMutation();
+
+    const addProductToWishlist = async (e: MouseEvent<HTMLSpanElement>, productId: string) => {
+        e.preventDefault();
+
+        try {
+            await addToWishlist(productId).unwrap();
+            Notify({ msg: "Product added to wishlist successfully!", type: "success" });
+        } catch (error) {
+            console.error(error);
+            Notify({ msg: "Failed to add product to wishlist", type: "error" });
+        }
+    };
+
+    useEffect(() => {
+        if (data) {
+            console.log(data);
+        }
+        console.log(isWishlist);
+        console.log(isSuccess);
+    }, [data, isWishlist, isSuccess]);
+
+return (
 
         <>
             {
@@ -57,13 +82,13 @@ const ProductCard = ({ product, isLoading }: IProductCardProps) => {
                                 />
                             </Link>
                         </div>
-                        <span className="absolute top-3 left-4 cursor-pointer">
+                        <span onClick={(e) => addProductToWishlist(e, product._id)} className="absolute top-3 left-4 cursor-pointer">
                             <i className="fa-regular fa-heart text-xl text-blue-700"></i>
                         </span>
 
                         <div className="absolute bottom-3 left-3">
                             <div className="flex items-start bg-white px-4 py-1 rounded-full ">
-                                <span className="mr-1">5.0</span>
+                                <span className="mr-1">{product.ratingsAverage || 0}</span>
                                 <i className="fa-solid fa-star text-blue-700 text-sm"></i>
                                 <span className="text-zinc-500 text-sm ml-2"> ( {product.ratingsQuantity} )</span>
                             </div>
