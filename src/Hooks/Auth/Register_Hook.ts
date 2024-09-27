@@ -68,7 +68,6 @@ function RegisterHook() {
     });
 
     const onSubmit: SubmitHandler<TFormInputs> = (data) => {
-        console.log(data);
         dispatch(authRegister(data))
     }
 

@@ -56,7 +56,7 @@ function UpdateUserDataHook() {
         }
     };
 
-    return [isOpenEditModal ,state, formErrors, handleChange,handleCloseEditModal,handleShowEditModal,data,isFetchingUser,isUpdating,editUserDataHandler] as const 
+    return [isOpenEditModal, state, formErrors, handleChange, handleCloseEditModal, handleShowEditModal, data, isFetchingUser, isUpdating, editUserDataHandler] as const
 }
 
 export default UpdateUserDataHook

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../../UI-items/Button";
 import { IProductDetails } from "../../../Interface";
+import HandleWishlistHook from "../../../Hooks/User/Wishlist/Handle_Wishlist_Hook";
 
 interface ProductDetails {
     product: IProductDetails | undefined;
@@ -8,6 +9,7 @@ interface ProductDetails {
 }
 
 function ProductText({ product, isLoading }: ProductDetails) {
+    const [isWishlist, handleProductToWishlist] = HandleWishlistHook(product?.data._id)
     const [quantity, setQuantity] = useState(1);
     const [color, setColor] = useState<string | null>(null);
     const maxQuantity: number = product?.data?.quantity ?? 12; // Default to 12 if quantity is undefined
@@ -131,8 +133,9 @@ function ProductText({ product, isLoading }: ProductDetails) {
                         <Button className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-2 rounded-lg">
                             Add to Cart
                         </Button>
-                        <Button className="border hover:bg-slate-100 border-gray-300 text-gray-700 px-6 py-2 rounded-lg">
-                            <i className="fa-regular fa-heart text-xl text-blue-700"></i>
+                        <Button onClick={(e) => handleProductToWishlist(e, product?.data._id)}
+                            className="border hover:bg-slate-100 border-gray-300 text-gray-700 px-6 py-2 rounded-lg">
+                            <i className={`fa-regular fa-heart text-xl text-blue-700 ${isWishlist ? 'font-bold' : ''}`}></i>
                         </Button>
                     </div>
                 </div>

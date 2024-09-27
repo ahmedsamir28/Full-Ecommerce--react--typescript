@@ -36,14 +36,11 @@ const loginSlice = createSlice({
                 state.user = action.payload; // assuming the user data is the response data
                 localStorage.setItem('user', JSON.stringify(action.payload.data));
                 localStorage.setItem('token', JSON.stringify(action.payload.token));
-
-                console.log('Fulfilled action payload:', action.payload);
             })
             .addCase(authLogin.rejected, (state, action) => {
                 state.loading = false;
                 state.user = null;
                 state.error = action.payload as string;
-                console.error('Rejected action payload:', action.payload);
             });
     },
 });

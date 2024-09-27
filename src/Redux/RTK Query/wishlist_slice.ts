@@ -17,9 +17,17 @@ export const wishlist_slice = createApi({
             }),
             invalidatesTags: ['wishlist'],
         }),
+        deleteWishlist: builder.mutation<null, string>({
+            query: (id) => ({
+                url: `api/v1/wishlist/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['wishlist'],
+        }),
+
     }),
 });
 
 export const {
-    useAddToWishlistMutation
+    useAddToWishlistMutation, useDeleteWishlistMutation
 } = wishlist_slice;

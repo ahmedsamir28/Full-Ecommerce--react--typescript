@@ -20,7 +20,8 @@ function ProductDetailsPage() {
       <div className="mt-5">
         <ProductsContainer items={data} isError={isError} isLoading={isLoading} title="Products you may like" buttonTitle="" pathTitle="" />
       </div>
-      <ToastContainer />
+      <ToastContainer/>
+
     </div>
   )
 }
