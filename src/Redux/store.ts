@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import registerSlice from './Slice/registerSlice';
 import loginSlice from './Slice/loginSlice';
@@ -9,6 +10,7 @@ import { products_slice } from './RTK Query/products_slice';
 import { logged_users_slice } from './RTK Query/logged_users_slice';
 import { reviews_slice } from './RTK Query/reviews_slice';
 import { wishlist_slice } from './RTK Query/wishlist_slice';
+import { address_slice } from './RTK Query/addresses_slice';
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +23,7 @@ export const store = configureStore({
         [logged_users_slice.reducerPath]: logged_users_slice.reducer,
         [reviews_slice.reducerPath]: reviews_slice.reducer,
         [wishlist_slice.reducerPath]: wishlist_slice.reducer,
-
+        [address_slice.reducerPath]: address_slice.reducer,
 
 
     },
@@ -32,10 +34,14 @@ export const store = configureStore({
         products_slice.middleware,
         logged_users_slice.middleware,
         reviews_slice.middleware,
-        wishlist_slice.middleware
+        wishlist_slice.middleware,
+        address_slice.middleware
+
 
     ),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,11 +1,11 @@
-import { IProduct, IProducts } from "../../Interface";
+import { ILoggedUserWishlist, IProduct, IProducts } from "../../Interface";
 import SubTitle from "../../Utils/SubTitle";
 import ProductCard from "./ProductCard";
 import { useLocation } from "react-router-dom";
 
 // Define prop types
 interface ProTitleProps {
-  items: IProducts | undefined;
+  items: IProducts | ILoggedUserWishlist | undefined;
   isError: boolean;
   isLoading: boolean;
   title: string;

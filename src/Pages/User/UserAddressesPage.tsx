@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify"
 import UserAddresses from "../../Components/User/Addresses/UserAddresses"
 import UserSideBar from "../../Components/User/UserSideBar"
 
@@ -12,6 +13,7 @@ function UserAddressesPage() {
                     <UserAddresses />
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

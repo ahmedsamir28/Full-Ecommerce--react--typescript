@@ -76,7 +76,7 @@ export interface IProduct {
     category: string;
     subcategory: string[];
     ratingsQuantity: number;
-    ratingsAverage:number
+    ratingsAverage: number
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -108,7 +108,7 @@ export interface IProductDetails {
         category: string;
         subcategory: string[];
         ratingsQuantity: number;
-        ratingsAverage:number
+        ratingsAverage: number
         createdAt: string;
         updatedAt: string;
         __v: number;
@@ -170,7 +170,7 @@ export interface IReview {
     }
 }
 
-export  interface IReviewResponse {
+export interface IReviewResponse {
     results: number;
     paginationResult: {
         currentPage: number;
@@ -189,4 +189,27 @@ export  interface IReviewResponse {
         createdAt: string;
         updatedAt: string;
     }[];
+}
+
+export interface ILoggedUserWishlist {
+    status: string;
+    data: IProduct[];
+}
+
+
+// Interface for each address item
+export interface Address {
+    alias: string;
+    details: string;
+    phone: string;
+    city: string;
+    postalCode: string;
+    _id: string;
+}
+
+// Interface for the entire response structure
+export interface AddressResponse {
+    results: number;
+    status: string;
+    data: Address[];
 }

@@ -14,6 +14,7 @@ function HomePage() {
 
   const { data, isError, isLoading } = useGetProductsQuery();
 
+  
   return (
     <>
       <Landing />

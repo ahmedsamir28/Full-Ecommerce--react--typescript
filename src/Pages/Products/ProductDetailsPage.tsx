@@ -21,7 +21,6 @@ function ProductDetailsPage() {
         <ProductsContainer items={data} isError={isError} isLoading={isLoading} title="Products you may like" buttonTitle="" pathTitle="" />
       </div>
       <ToastContainer/>
-
     </div>
   )
 }

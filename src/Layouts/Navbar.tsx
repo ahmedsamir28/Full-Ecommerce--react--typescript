@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import NavbarSearchHook from "../Hooks/Navbar/Navbar_Search_Hook";
 import { IProduct } from "../Interface";
 import { useGetProductsSearchQuery } from "../Redux/RTK Query/products_slice";
+import { useGetWishlistQuery } from "../Redux/RTK Query/wishlist_slice";
 
 function Navbar() {
     const storageKey = "user";
@@ -11,9 +12,9 @@ function Navbar() {
     const logOut = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        window.location.href = "/";  
+        window.location.href = "/";
     };
-    
+
 
     const [searchWord, onChangeSearch, searchBar, setSearchBar] = NavbarSearchHook(); // Add setSearchBar
     const { data, isLoading, isError } = useGetProductsSearchQuery(`keyword=${searchWord}`);
@@ -23,6 +24,8 @@ function Navbar() {
         setSearchBar(false); // Hide the search bar
         navigate(`/product-details/${productId}`); // Navigate to product details
     };
+
+    const { data: wishlistData } = useGetWishlistQuery()
 
     return (
         <div className="container">
@@ -60,11 +63,13 @@ function Navbar() {
 
                 <div className="flex justify-between items-center gap-4">
                     <div className="flex items-center gap-1.5 cursor-pointer hover:text-zinc-400">
-                        <Link to="/user/wish-list" className="text-sm">WishList</Link>
-                        <div className="relative">
-                            <i className="fa-regular fa-heart text-lg"></i>
-                            <span className="absolute bottom-3 left-2.5 bg-zinc-300 text-sm font-semibold border-2 px-1.5 rounded-full">8</span>
-                        </div>
+                        <Link to="/user/wish-list" className="flex items-center gap-2">
+                            <div className="text-sm">WishList</div>
+                            <div className="relative">
+                                <i className="fa-regular fa-heart text-lg"></i>
+                                <span className="absolute bottom-3 left-2.5 bg-zinc-300 text-sm font-semibold border-2 px-1.5 rounded-full">{wishlistData?.data.length}</span>
+                            </div>
+                        </Link>
                     </div>
 
                     <div className="dropdown dropdown-end">

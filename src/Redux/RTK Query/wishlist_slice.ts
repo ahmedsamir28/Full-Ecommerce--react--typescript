@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../../Config/Base_Query';
+import { ILoggedUserWishlist } from '../../Interface';
 
 
 export const wishlist_slice = createApi({
@@ -24,10 +25,15 @@ export const wishlist_slice = createApi({
             }),
             invalidatesTags: ['wishlist'],
         }),
-
+        getWishlist: builder.query<ILoggedUserWishlist, void>({
+            query: () => ({
+                url: 'api/v1/wishlist'
+            }),
+            providesTags: ['wishlist'],
+        }),
     }),
 });
 
 export const {
-    useAddToWishlistMutation, useDeleteWishlistMutation
+    useAddToWishlistMutation, useDeleteWishlistMutation, useGetWishlistQuery
 } = wishlist_slice;
