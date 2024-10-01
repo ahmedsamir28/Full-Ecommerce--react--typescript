@@ -67,7 +67,7 @@ function Navbar() {
                             <div className="text-sm">WishList</div>
                             <div className="relative">
                                 <i className="fa-regular fa-heart text-lg"></i>
-                                <span className="absolute bottom-3 left-2.5 bg-zinc-300 text-sm font-semibold border-2 px-1.5 rounded-full">{wishlistData?.data.length}</span>
+                                <span className="absolute bottom-3 left-2.5 bg-zinc-300 text-sm font-semibold border-2 px-1.5 rounded-full">{wishlistData?.data.length || 0 } </span>
                             </div>
                         </Link>
                     </div>

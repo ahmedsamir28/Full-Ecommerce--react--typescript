@@ -11,6 +11,7 @@ import { logged_users_slice } from './RTK Query/logged_users_slice';
 import { reviews_slice } from './RTK Query/reviews_slice';
 import { wishlist_slice } from './RTK Query/wishlist_slice';
 import { address_slice } from './RTK Query/addresses_slice';
+import { coupons_slice } from './RTK Query/coupons_slice';
 
 export const store = configureStore({
     reducer: {
@@ -24,6 +25,8 @@ export const store = configureStore({
         [reviews_slice.reducerPath]: reviews_slice.reducer,
         [wishlist_slice.reducerPath]: wishlist_slice.reducer,
         [address_slice.reducerPath]: address_slice.reducer,
+        [coupons_slice.reducerPath]: coupons_slice.reducer,
+
 
 
     },
@@ -35,7 +38,7 @@ export const store = configureStore({
         logged_users_slice.middleware,
         reviews_slice.middleware,
         wishlist_slice.middleware,
-        address_slice.middleware
+        coupons_slice.middleware
 
 
     ),
