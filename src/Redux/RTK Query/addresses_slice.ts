@@ -24,7 +24,22 @@ export const address_slice = createApi({
             }),
             providesTags: ['Address'],
         }),
+        deleteAddresses: builder.mutation({
+            query: (id) => ({
+                url: `api/v1/addresses/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Address'],
+        }),
+        updateAddresses: builder.mutation({
+            query: ({ addressId, addressData }) => ({
+                url: `api/v1/addresses/${addressId}`,
+                method: 'PUT',
+                body: addressData,
+            }),
+            invalidatesTags: ['Address'],
+        }),
     }),
 });
 
-export const { usePostAddressMutation ,useGetAddressesQuery} = address_slice;
+export const { usePostAddressMutation ,useGetAddressesQuery ,useDeleteAddressesMutation ,useUpdateAddressesMutation} = address_slice;

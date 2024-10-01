@@ -1,6 +1,7 @@
-import { useState } from "react";
+import {MouseEvent, useState } from "react";
 import Modal from "../../../UI-items/Modal"
 import { Address } from "../../../Interface";
+import DeleteUserAddressHook from "../../../Hooks/User/Addresses/Delete_User_Address_Hook";
 
 interface IAddress {
     address: Address | undefined
@@ -8,18 +9,30 @@ interface IAddress {
 }
 
 function UserAddressCard({ address, isLoading }: IAddress) {
+    // Modal open/close state
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+    
 
+    // Function to close the edit modal
+    const handleCloseEditModal = () => setIsOpenEditModal(false);
 
-    const [handleEditModal, setHandleEditModal] = useState(false);
-    const [handleRemoveModal, setHandleRemoveModal] = useState(false);
+    // Function to open the edit modal with selected brand data
+    const handleShowEditModal = (e: MouseEvent<HTMLDivElement>, addressId: string | undefined) => {
+        e.preventDefault();
+        setIsOpenEditModal(true)
+    };
+
+    
+    const [isOpenDeleteModal, handleCloseDeleteModal, handleShowDeleteModal, addressIsLoading, deleteAddressHandler] = DeleteUserAddressHook()
     return (
         <>
             {/* modal of remove the product */}
             <Modal
-                isOpen={handleRemoveModal}
-                closeModal={() => setHandleRemoveModal(false)}
+                isOpen={isOpenDeleteModal}
+                closeModal={handleCloseDeleteModal}
+                onSubmit={deleteAddressHandler}
                 title="Confirm deletion"
-                add="Remove Address"
+                add={addressIsLoading ? "Loading ..." : "Remove Address"}
                 btnClass="error"
             >
                 <p>Are you sure about the address deletion process ?</p>
@@ -27,8 +40,8 @@ function UserAddressCard({ address, isLoading }: IAddress) {
 
             {/* modal of edit the product*/}
             <Modal
-                isOpen={handleEditModal}
-                closeModal={() => setHandleEditModal(false)}
+                isOpen={isOpenEditModal}
+                closeModal={handleCloseEditModal}
                 title="Edit Address"
                 add="Edit Address"
             >
@@ -48,7 +61,7 @@ function UserAddressCard({ address, isLoading }: IAddress) {
                 </label>
             </Modal>
             {
-                !isLoading ? (<div className='flex justify-between border-2 py-5 px-7 rounded-lg items-start'>
+                isLoading ? (<div className='flex justify-between border-2 py-5 px-7 rounded-lg items-start'>
                     <div className='flex justify-start flex-col gap-3'>
                         <div className="flex gap-9">
                             {/* Skeleton for name */}
@@ -106,8 +119,8 @@ function UserAddressCard({ address, isLoading }: IAddress) {
 
                     </div>
                     <div className='flex justify-start items-center gap-5'>
-                        <div onClick={() => setHandleRemoveModal(true)} className='cursor-pointer font-bold text-zinc-400 hover:text-zinc-600 underline'>Delete </div>
-                        <div onClick={() => setHandleEditModal(true)} className='cursor-pointer font-bold text-zinc-400 hover:text-zinc-600 underline'>Edit </div>
+                        <div onClick={(e) => handleShowDeleteModal(e, address?._id)} className='cursor-pointer font-bold text-zinc-400 hover:text-zinc-600 underline'>Delete </div>
+                        <div onClick={(e)=>handleShowEditModal(e, address?._id)} className='cursor-pointer font-bold text-zinc-400 hover:text-zinc-600 underline'>Edit </div>
                     </div>
                 </div>)
             }
