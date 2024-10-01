@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AdminSideBar from "../../Components/Admin/AdminSideBar"
 import AdminCoupons from "../../Components/Admin/Coupons/AdminCoupons"
+import { ToastContainer } from "react-toastify";
 
 function AdminCouponsPage() {
     useEffect(() => {
@@ -16,6 +17,8 @@ function AdminCouponsPage() {
                     <AdminCoupons title="all coupons" buttonTitle="" pathTitle="" />
                 </div>
             </div>
+            <ToastContainer />
+
         </div>
     )
 }

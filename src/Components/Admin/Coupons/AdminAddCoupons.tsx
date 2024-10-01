@@ -1,34 +1,59 @@
-import { useState } from "react";
+import AddCouponsHook from "../../../Hooks/Admin/Coupons/Add_Coupons_Hook"
 import Button from "../../../UI-items/Button"
 import Modal from "../../../UI-items/Modal"
 
 function AdminAddCoupon() {
-    // State for controlling the confirmation modal visibility
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-
-    // Functions to handle the opening and closing of the confirmation modal
-    const handleCloseModal = () => setIsOpenConfirmModal(false);
-    const handleShowModal = () => setIsOpenConfirmModal(true);
-
+const [dateRef, isOpenConfirmModal, handleCloseModal, state, handleShowEditModal, handleInputChange, isCouponLoading, handleFormSubmit]  = AddCouponsHook()
     return (
         <div className="flex items-center justify-center">
-            <Button onClick={handleShowModal} className="w-46 btn btn-outline capitalize btn-success"> <i className="fa-solid fa-plus text-lg"></i>  add coupon</Button>
+            <Button onClick={handleShowEditModal} className="w-46 btn btn-outline capitalize btn-success">
+                <i className="fa-solid fa-plus text-lg"></i>  add coupon
+            </Button>
             <Modal
                 isOpen={isOpenConfirmModal}
                 closeModal={handleCloseModal}
-                title="Add sub-Category"
-                add="Add sub-Category"
+                onSubmit={handleFormSubmit}
+                title="Add Coupons"
+                add={isCouponLoading ? "Loading ..." : "Add Coupons"}
             >
                 <label className="input input-bordered input-info flex items-center mb-5 gap-2">
-                    Sub-Category :
-                    <input type="text" className="grow capitalize placeholder:text-zinc-500 text-gray-700" placeholder="Type here" />
+                    Name:
+                    <input
+                        type="text"
+                        name="name"
+                        value={state.name}
+                        onChange={handleInputChange}
+                        className="grow capitalize placeholder:text-zinc-500 text-gray-700"
+                        placeholder="Add Coupons"
+                    />
                 </label>
-                <select className="select select-info w-full text-lg capitalize text-zinc-600">
-                    <option disabled selected>Main Category</option>
-                    <option>English</option>
-                    <option>Japanese</option>
-                    <option>Italian</option>
-                </select>
+
+                <label htmlFor="textarea" className="capitalize">
+                    expire:
+                </label>
+                <input
+                    type="date"
+                    id="text"
+                    name="expire"
+                    value={state.expire}
+                    onChange={handleInputChange}
+                    className="textarea textarea-info text-lg mt-2 w-full placeholder:text-zinc-500 text-gray-700 capitalize"
+                    placeholder="Detailed address"
+                    onFocus={() => { if (dateRef.current) dateRef.current.type = "date" }}
+                    onBlur={() => { if (dateRef.current) dateRef.current.type = "text" }}
+                ></input>
+
+                <label className="input input-bordered input-info flex items-center mb-5 gap-2">
+                    Discount:
+                    <input
+                        type="text"
+                        name="discount"
+                        value={state.discount}
+                        onChange={handleInputChange}
+                        className="grow capitalize placeholder:text-zinc-500 text-gray-700"
+                        placeholder="The Discount"
+                    />
+                </label>
             </Modal>
         </div>
     )
