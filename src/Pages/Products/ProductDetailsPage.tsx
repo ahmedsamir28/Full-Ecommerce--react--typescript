@@ -6,8 +6,6 @@ import { useGetProductsQuery } from "../../Redux/RTK Query/products_slice";
 import { ToastContainer } from "react-toastify";
 
 function ProductDetailsPage() {
-
-
   useEffect(() => {
     document.title = "Products Details Page";
   }, []);

@@ -15,7 +15,6 @@ function DeleteUserAddressHook() {
     // Open the delete modal and set the address ID to delete
     const handleShowDeleteModal = (e: MouseEvent<HTMLDivElement>, addressId: string | undefined) => {
         e.preventDefault();
-        console.log(addressId);
 
         setSelectedAddressId(addressId);
         setIsOpenDeleteModal(true);
