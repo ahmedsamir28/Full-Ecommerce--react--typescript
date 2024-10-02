@@ -21,7 +21,7 @@ function AddCouponsHook() {
     });
 
     // Function to open the edit modal with selected address data
-    const handleShowEditModal = (e: MouseEvent<HTMLButtonElement>) => {
+    const handleShowAddModal = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         handleShowModal()
     };
@@ -51,7 +51,7 @@ function AddCouponsHook() {
         }
     };
 
-    return [dateRef, isOpenConfirmModal, handleCloseModal, state, handleShowEditModal, handleInputChange, isCouponLoading, handleFormSubmit] as const
+    return [dateRef, isOpenConfirmModal, handleCloseModal, state, handleShowAddModal, handleInputChange, isCouponLoading, handleFormSubmit] as const
 }
 
 export default AddCouponsHook

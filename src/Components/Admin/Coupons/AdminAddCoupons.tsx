@@ -3,10 +3,10 @@ import Button from "../../../UI-items/Button"
 import Modal from "../../../UI-items/Modal"
 
 function AdminAddCoupon() {
-const [dateRef, isOpenConfirmModal, handleCloseModal, state, handleShowEditModal, handleInputChange, isCouponLoading, handleFormSubmit]  = AddCouponsHook()
+const [dateRef, isOpenConfirmModal, handleCloseModal, state, handleShowAddModal, handleInputChange, isCouponLoading, handleFormSubmit]  = AddCouponsHook()
     return (
         <div className="flex items-center justify-center">
-            <Button onClick={handleShowEditModal} className="w-46 btn btn-outline capitalize btn-success">
+            <Button onClick={handleShowAddModal} className="w-46 btn btn-outline capitalize btn-success">
                 <i className="fa-solid fa-plus text-lg"></i>  add coupon
             </Button>
             <Modal

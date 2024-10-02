@@ -213,3 +213,32 @@ export interface AddressResponse {
     status: string;
     data: Address[];
 }
+
+// Interface for pagination information
+interface PaginationResult {
+    currentPage: number;
+    numberOfPages: number;
+    limit: number;
+}
+
+// Interface for the structure of a single coupon
+export interface Coupon {
+    _id: string;
+    name: string;
+    expire: string
+    discount: number;
+    createdAt: string; 
+    updatedAt: string;
+}
+
+// Interface for handling the response with multiple coupons and pagination
+export interface CouponResponse {
+    results: number;
+    paginationResult: PaginationResult;
+    data: Coupon[];
+}
+
+// Interface for handling the response with a single coupon
+export interface SpecificCouponResponse {
+    data: Coupon;
+}

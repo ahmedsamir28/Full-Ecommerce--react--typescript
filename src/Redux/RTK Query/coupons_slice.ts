@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../../Config/Base_Query';
+import { CouponResponse } from '../../Interface';
 
 
 export const coupons_slice = createApi({
@@ -17,12 +18,20 @@ export const coupons_slice = createApi({
             }),
             invalidatesTags: ['Coupons'],
         }),
-        // getAddresses: builder.query<AddressResponse, void>({
-        //     query: () => ({
-        //         url: 'api/v1/addresses'
-        //     }),
-        //     providesTags: ['Coupons'],
-        // }),
+        getCoupons: builder.query<CouponResponse, void>({
+            query: () => ({
+                url: 'api/v1/coupons'
+            }),
+            providesTags: ['Coupons'],
+        }),
+        updateCoupons: builder.mutation({
+            query: ({ couponId, couponData }) => ({
+                url: `api/v1/coupons/${couponId}`,
+                method: 'PUT',
+                body: couponData,
+            }),
+            invalidatesTags: ['Coupons'],
+        }),
         // deleteAddresses: builder.mutation({
         //     query: (id) => ({
         //         url: `api/v1/addresses/${id}`,
@@ -30,15 +39,8 @@ export const coupons_slice = createApi({
         //     }),
         //     invalidatesTags: ['Coupons'],
         // }),
-        // updateAddresses: builder.mutation({
-        //     query: ({ addressId, addressData }) => ({
-        //         url: `api/v1/addresses/${addressId}`,
-        //         method: 'PUT',
-        //         body: addressData,
-        //     }),
-        //     invalidatesTags: ['Coupons'],
-        // }),
+
     }),
 });
 
-export const { usePostCouponsMutation} = coupons_slice;
+export const { usePostCouponsMutation, useGetCouponsQuery , useUpdateCouponsMutation} = coupons_slice;
