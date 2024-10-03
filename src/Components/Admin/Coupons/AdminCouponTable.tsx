@@ -1,3 +1,4 @@
+import DeleteCouponsHook from "../../../Hooks/Admin/Coupons/Delete_Coupons_Hook";
 import UpdateCouponsHook from "../../../Hooks/Admin/Coupons/Update_Coupons_Hook";
 import { useGetCouponsQuery } from "../../../Redux/RTK Query/coupons_slice";
 import Button from "../../../UI-items/Button";
@@ -5,13 +6,24 @@ import Modal from "../../../UI-items/Modal";
 
 function AdminCouponsTable() {
     const { data, isLoading, isError } = useGetCouponsQuery();
-    const  [dateRef, isOpenConfirmEditModal, handleCloseModal, handleShowEditModal, state, handleInputChange, isCouponLoading, handleFormSubmit] = UpdateCouponsHook()
+    const [dateRef, isOpenConfirmEditModal, handleCloseModal, handleShowEditModal, state, handleInputChange, isCouponLoading, handleFormSubmit] = UpdateCouponsHook()
+    const [isOpenDeleteModal,handleCloseDeleteModal ,handleShowDeleteModal, isDeleting, removeCouponHandler] = DeleteCouponsHook()
     if (isError) {
         return <p>Something went wrong!</p>;
     }
 
     return (
         <>
+            <Modal
+                isOpen={isOpenDeleteModal}
+                closeModal={handleCloseDeleteModal}
+                onSubmit={removeCouponHandler}
+                title="Confirm deletion"
+                add={isDeleting ? 'Loading...' : 'remove Coupon'}
+                btnClass="error"
+            >
+                <p>Are you sure about the category deletion process?</p>
+            </Modal>
             <Modal
                 isOpen={isOpenConfirmEditModal}
                 closeModal={handleCloseModal}
@@ -106,7 +118,7 @@ function AdminCouponsTable() {
                                     <td>{new Date(item.expire).toLocaleDateString()}</td>
                                     <td>{item.discount}%</td>
                                     <td className="flex items-center justify-end gap-5">
-                                        <Button className="btn btn-outline btn-error capitalize">
+                                        <Button onClick={(e) => handleShowDeleteModal(e, item._id)} className="btn btn-outline btn-error capitalize">
                                             <i className="fa-regular fa-trash-can"></i> Delete
                                         </Button>
                                         <Button onClick={(e) => handleShowEditModal(e, item._id, item.name, item.expire, item.discount.toString())} className="btn btn-outline btn-warning capitalize">

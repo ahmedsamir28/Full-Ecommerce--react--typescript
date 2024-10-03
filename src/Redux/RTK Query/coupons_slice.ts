@@ -32,15 +32,15 @@ export const coupons_slice = createApi({
             }),
             invalidatesTags: ['Coupons'],
         }),
-        // deleteAddresses: builder.mutation({
-        //     query: (id) => ({
-        //         url: `api/v1/addresses/${id}`,
-        //         method: 'DELETE',
-        //     }),
-        //     invalidatesTags: ['Coupons'],
-        // }),
+        deleteCoupons: builder.mutation({
+            query: (id) => ({
+                url: `api/v1/coupons/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Coupons'],
+        }),
 
     }),
 });
 
-export const { usePostCouponsMutation, useGetCouponsQuery , useUpdateCouponsMutation} = coupons_slice;
+export const { usePostCouponsMutation, useGetCouponsQuery , useUpdateCouponsMutation,useDeleteCouponsMutation} = coupons_slice;
