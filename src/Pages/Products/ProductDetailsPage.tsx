@@ -12,7 +12,7 @@ function ProductDetailsPage() {
   const { data, isError, isLoading } = useGetProductsQuery();
 
   return (
-    <div className="container mb-10 border-t-2 mt-3">
+    <div className="container mb-10 border-t-2 mt-5">
       <ProductDetails />
       <RateContainer />
       <div className="mt-5">

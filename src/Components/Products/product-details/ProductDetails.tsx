@@ -14,7 +14,7 @@ function ProductDetails() {
 
     return (
         <div className='container py-5'>
-            <div className='flex flex-col lg:flex-row gap-10 items-center'>
+            <div className='flex flex-col lg:flex-row gap-10 items-start '>
                 <div className='w-11/12 lgg:w-6/12  h-9/12 lgg:h-96 rounded-lg'>
                     <ProductGallery  product={ data } isLoading = {isLoading}/>
                 </div>
