@@ -227,7 +227,7 @@ export interface Coupon {
     name: string;
     expire: string
     discount: number;
-    createdAt: string; 
+    createdAt: string;
     updatedAt: string;
 }
 
@@ -241,4 +241,43 @@ export interface CouponResponse {
 // Interface for handling the response with a single coupon
 export interface SpecificCouponResponse {
     data: Coupon;
+}
+
+
+// Define the interfaces
+
+interface Category {
+    name: string;
+}
+
+interface Brand {
+    name: string;
+}
+
+interface Product {
+    _id: string;
+    title: string;
+    imageCover: string;
+    category: Category
+    brand: Brand;
+}
+
+export interface CartItem {
+    product: Product;
+    numOfCartItems: number;
+    count: number,
+    color: string,
+    price: number,
+    _id: string;
+}
+
+interface CartData {
+    products: CartItem[];
+
+}
+
+export interface CartResponse {
+    status: string;
+    numOfCartItems: number;
+    data: CartData;
 }
