@@ -245,7 +245,6 @@ export interface SpecificCouponResponse {
 
 
 // Define the interfaces
-
 interface Category {
     name: string;
 }
@@ -273,7 +272,8 @@ export interface CartItem {
 
 interface CartData {
     products: CartItem[];
-
+    totalCartPrice: number
+    totalAfterDiscount : number
 }
 
 export interface CartResponse {

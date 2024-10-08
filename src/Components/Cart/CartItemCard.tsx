@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import Button from "../../UI-items/Button";
 import Image from "../../UI-items/Image";
 import { CartItem } from "../../Interface";
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, MouseEvent } from "react";
+import { useRemoveFromCartMutation, useUpdateQuantityMutation } from "../../Redux/RTK Query/cart_slice";
+import Notify from "../../Utils/UseNotifaction";
 
 interface ICart {
     cart: CartItem | undefined;
@@ -10,20 +12,41 @@ interface ICart {
 }
 
 function CartItemCard({ cart, isLoading }: ICart) {
-    const [quantity, setQuantity] = useState<number>(cart?.count || 1);
+    const [quantity, setQuantity] = useState(cart?.count || 1);
 
+    // Effect to update quantity when cart changes
     useEffect(() => {
         if (cart?.count) {
             setQuantity(cart.count);
         }
     }, [cart]);
 
-    const onChangeQuantity = (event: ChangeEvent<HTMLSelectElement>) => {
-        const selectedQuantity = Number(event.target.value);
-        setQuantity(selectedQuantity);
-        console.log("Selected Quantity:", selectedQuantity);
+    const [updateQuantity] = useUpdateQuantityMutation();
+    const [removeFromCart] = useRemoveFromCartMutation();
+
+    // Handle quantity change
+    const handleQuantityChange = async (event: ChangeEvent<HTMLSelectElement>, cartId: string) => {
+        const newCount = parseInt(event.target.value, 10);
+        try {
+            await updateQuantity({ cartId, count: newCount }).unwrap();
+            Notify({ msg: 'Quantity updated successfully', type: 'success' });
+        } catch {
+            Notify({ msg: 'Error updating quantity', type: 'error' });
+        }
     };
 
+    // Handle product removal from the cart
+    const handleRemoveFromCart = async (e: MouseEvent<HTMLButtonElement>, cartId: string) => {
+        e.preventDefault();
+        try {
+            await removeFromCart(cartId).unwrap();
+            Notify({ msg: 'Product removed from cart successfully', type: 'success' });
+        } catch {
+            Notify({ msg: 'Error removing item from cart', type: 'error' });
+        }
+    };
+
+    // If loading, show loading placeholder
     if (isLoading) {
         return (
             <div className="border-2 rounded-lg w-full flex items-start gap-5 py-3 px-5 animate-pulse">
@@ -40,49 +63,55 @@ function CartItemCard({ cart, isLoading }: ICart) {
         );
     }
 
+    // If no cart data is available, show a message
     if (!cart) {
         return <div>No cart data available</div>;
     }
 
+    // Destructure cart item data for easier readability
+    const { product, price, color, _id, count } = cart;
+    const { imageCover, title, category } = product || {};
+
     return (
         <div className="border-2 rounded-lg w-full flex items-start gap-5 py-3 px-5">
             <Link to="" className="border py-2 px-3 rounded-xl bg-gray-200">
-                <Image url={cart.product?.imageCover} alt="Product image" className="w-32 h-46" />
+                <Image url={imageCover} alt="Product image" className="w-32 h-46" />
             </Link>
             <div className="w-full flex flex-col gap-5">
                 <div className="flex items-start justify-between">
                     <div>
-                        <h6 className="text-lg capitalize">{cart.product?.title || "No title"}</h6>
-                        <p className="mt-2 text-sm text-zinc-600">
-                            {cart.product?.category?.name || "No category"}
-                        </p>
+                        <h6 className="text-lg capitalize">{title || "No title"}</h6>
+                        <p className="mt-2 text-sm text-zinc-600">{category?.name || "No category"}</p>
                     </div>
                     <div>
-                        <span className="text-lg font-bold text-zinc-500">
-                            $ {cart.price || "N/A"}
-                        </span>
+                        <span className="text-lg font-bold text-zinc-500">$ {price || "N/A"}</span>
                     </div>
                 </div>
+
+                {/* Color block */}
                 <div
-                    className={`w-8 h-8 rounded-full border-2 cursor-pointer`}
-                    style={{ backgroundColor: cart.color || "#ccc" }}
+                    className="w-8 h-8 rounded-full border-2 cursor-pointer"
+                    style={{ backgroundColor: color || "#ccc" }}
                 ></div>
 
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-5">
-                        <Button className="py-1 px-2 border-2 text-zinc-500 text-sm hover:bg-zinc-200">
+                        <Button
+                            onClick={(e) => handleRemoveFromCart(e, _id)}
+                            className="py-1 px-2 border-2 text-zinc-500 text-sm hover:bg-zinc-200"
+                        >
                             <i className="fa-regular fa-trash-can"></i> Remove
                         </Button>
                         <div>
                             <span className="mr-2 text-zinc-500">Qty</span>
                             <select
                                 value={quantity}
-                                onChange={onChangeQuantity}
+                                onChange={(e) => handleQuantityChange(e, _id)}
                                 className="py-1 px-3 cursor-pointer bg-white rounded-lg border-2 text-sm text-gray-700 outline-none"
                             >
-                                {[1, 2, 3, 4, 5].map((qty) => (
-                                    <option key={qty} value={qty}>
-                                        {qty}
+                                {[...Array(5)].map((_, idx) => (
+                                    <option key={idx + 1} value={idx + 1}>
+                                        {idx + 1}
                                     </option>
                                 ))}
                             </select>
@@ -91,7 +120,7 @@ function CartItemCard({ cart, isLoading }: ICart) {
 
                     <div>
                         <div className="border px-2 text-blue-700 border-blue-700 rounded-2xl">
-                            {cart.count || 1}
+                            {count || 1}
                         </div>
                     </div>
                 </div>

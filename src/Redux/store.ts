@@ -38,6 +38,8 @@ export const store = configureStore({
         logged_users_slice.middleware,
         reviews_slice.middleware,
         wishlist_slice.middleware,
+        address_slice.middleware,
+        coupons_slice.middleware,
         cart_slice.middleware
 
 

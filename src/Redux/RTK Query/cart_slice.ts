@@ -25,14 +25,36 @@ export const cart_slice = createApi({
             providesTags: ['Cart'],
         }),
         updateQuantity: builder.mutation({
-            query: ({ cartId, quantity }) => ({
+            query: ({ cartId, count }: { cartId: string; count: number }) => ({
                 url: `api/v1/cart/${cartId}`,
                 method: 'PUT',
-                body: quantity,
+                body: { count },
+            }),
+            invalidatesTags: ['Cart'],
+        }),
+        removeFromCart: builder.mutation({
+            query: (cartId: string) => ({
+                url: `api/v1/cart/${cartId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart'],
+        }),
+        removeAllCart: builder.mutation<void, void>({
+            query: () => ({
+                url: 'api/v1/cart',
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart'],
+        }),
+        applyCoupon: builder.mutation({
+            query: ({couponName }) => ({
+                url: `api/v1/cart/applyCoupon`,
+                method: 'PUT',
+                body: { couponName },
             }),
             invalidatesTags: ['Cart'],
         }),
     }),
 });
 
-export const { usePostCartMutation, useGetCartQuery ,useUpdateQuantityMutation} = cart_slice;
+export const { usePostCartMutation, useGetCartQuery, useUpdateQuantityMutation, useRemoveFromCartMutation, useRemoveAllCartMutation ,useApplyCouponMutation} = cart_slice;
