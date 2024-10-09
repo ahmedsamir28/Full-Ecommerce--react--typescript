@@ -1,30 +1,11 @@
-import { useGetCartQuery, useRemoveAllCartMutation } from "../../Redux/RTK Query/cart_slice";
 import Button from "../../UI-items/Button";
 import CartCheckout from "./CartCheckout";
 import CartItemCard from "./CartItemCard";
 import { CartItem } from "../../Interface";
-import { MouseEvent } from "react";
-import Notify from "../../Utils/UseNotifaction";
+import Remove_All_Cart_Hook from "../../Hooks/User/Cart/Remove_All_Cart_Hook";
 
 function CartItems() {
-    const { data, isLoading } = useGetCartQuery();
-    const [removeAllCart] = useRemoveAllCartMutation();
-
-    const handleRemoveAllCart = async (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-
-        try {
-            await removeAllCart().unwrap();
-            Notify({ msg: 'Cart cleared successfully', type: 'success' });
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
-        } catch (err) {
-            console.error("Failed to remove all items from cart:", err);
-            Notify({ msg: 'Failed to clear cart', type: 'error' });
-        }
-    };
-
+    const [data, isLoading, handleRemoveAllCart] = Remove_All_Cart_Hook()
     return (
         <div>
             <div className="flex items-center justify-between">
@@ -38,7 +19,6 @@ function CartItems() {
                         </Button>
                     )
                 }
-
             </div>
 
             <div className="mt-5 flex items-start justify-between gap-5">
@@ -48,7 +28,7 @@ function CartItems() {
                     ))}
                 </div>
                 <div>
-                    <CartCheckout totalCartPrice={ data?.data.totalCartPrice} totalAfterDiscount={data?.data.totalAfterDiscount} numOfCartItems={data?.numOfCartItems} />
+                    <CartCheckout totalCartPrice={data?.data.totalCartPrice} totalAfterDiscount={data?.data.totalAfterDiscount} numOfCartItems={data?.numOfCartItems} />
                 </div>
             </div>
         </div>
