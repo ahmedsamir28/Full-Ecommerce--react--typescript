@@ -1,14 +1,29 @@
+import { MouseEvent } from "react";
 import Apply_Coupon_To_Cart_Hook from "../../Hooks/User/Cart/Apply_Coupon_To_Cart_Hook";
 import Button from "../../UI-items/Button";
+import { useNavigate } from "react-router-dom";
+import { CartResponse } from "../../Interface";
+import Notify from "../../Utils/UseNotifaction";
 
 interface ICheckout {
+    cart: CartResponse | undefined
     totalCartPrice?: number;
     totalAfterDiscount?: number;
     numOfCartItems?: number;
 }
 
-function CartCheckout({ totalCartPrice = 0, totalAfterDiscount, numOfCartItems = 0 }: ICheckout) {
-const [ coupon, isLoading,errorMessage,successMessage,handleInput,applyCouponHandler] = Apply_Coupon_To_Cart_Hook()
+function CartCheckout({ cart, totalCartPrice = 0, totalAfterDiscount, numOfCartItems = 0 }: ICheckout) {
+    const [coupon, isLoading, errorMessage, successMessage, handleInput, applyCouponHandler] = Apply_Coupon_To_Cart_Hook()
+
+    const navigate = useNavigate()
+    const navigateToOrderPayMethod = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        if (cart?.status === "success") {
+            navigate('/order/pay-method')
+        } else {
+            Notify({ msg:'There are no products in the shopping cart.', type: 'error' })
+        }
+    }
 
     return (
         <div className="p-5 rounded-md bg-gray-50 w-96 border-2 shadow-sm">
@@ -81,6 +96,7 @@ const [ coupon, isLoading,errorMessage,successMessage,handleInput,applyCouponHan
 
 
             <Button
+                onClick={navigateToOrderPayMethod}
                 className="w-full p-3 mt-4 text-center text-white text-lg border border-blue-700 rounded-lg bg-blue-600 hover:bg-blue-700 capitalize"
                 disabled={isLoading}
             >

@@ -1,6 +1,14 @@
+import { Order } from "../../../Interface"
 import UserOrderCard from "./UserOrderCard"
 
-function UserOrderItem() {
+interface  IOrder {
+    orderItems : Order
+    isLoading :boolean
+}
+
+function UserOrderItem({orderItems,isLoading} :IOrder) {
+    console.log(orderItems);
+    
     return (
         <div className="px-5 mt-4 border-2 rounded-lg bg-zinc-50">
             <div>

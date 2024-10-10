@@ -273,11 +273,78 @@ export interface CartItem {
 interface CartData {
     products: CartItem[];
     totalCartPrice: number
-    totalAfterDiscount : number
+    totalAfterDiscount: number
+    _id: string
 }
 
 export interface CartResponse {
     status: string;
     numOfCartItems: number;
     data: CartData;
+}
+
+// Interface for Shipping Address
+interface ShippingAddress {
+    details: string;
+    phone: string;
+    city: string;
+    postalCode: string;
+}
+
+// Interface for Product Details
+export interface ProductOrder {
+    _id: string;
+    title: string;
+    imageCover: string;
+    ratingsQuantity: number;
+    ratingsAverage?: number |  undefined; // Optional as some products don't have ratingsAverage
+    id: string;
+}
+
+// Interface for Cart Item
+export interface CartItems {
+    product: ProductOrder;
+    count: number;
+    color: string;
+    price: number;
+    _id: string;
+}
+
+// Interface for User Details
+interface User {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+// Interface for Order Data
+export interface Order {
+    shippingAddress: ShippingAddress;
+    _id: string;
+    user: User;
+    cartItems: CartItems[];
+    taxPrice: number;
+    shippingPrice: number;
+    totalOrderPrice: number;
+    paymentMethodType: string;
+    isPaid: boolean;
+    isDelivered: boolean;
+    createdAt: string;
+    updatedAt: string;
+    id: number;
+}
+
+// Interface for Pagination Information
+interface PaginationResult {
+    currentPage: number;
+    numberOfPages: number;
+    limit: number;
+}
+
+// Main Interface for the Response
+export interface ordersResponse {
+    results: number;
+    paginationResult: PaginationResult;
+    data: Order[];
 }

@@ -13,6 +13,7 @@ import { wishlist_slice } from './RTK Query/wishlist_slice';
 import { address_slice } from './RTK Query/addresses_slice';
 import { coupons_slice } from './RTK Query/coupons_slice';
 import { cart_slice } from './RTK Query/cart_slice';
+import { orders_slice } from './RTK Query/orders_slice';
 
 export const store = configureStore({
     reducer: {
@@ -27,7 +28,9 @@ export const store = configureStore({
         [wishlist_slice.reducerPath]: wishlist_slice.reducer,
         [address_slice.reducerPath]: address_slice.reducer,
         [coupons_slice.reducerPath]: coupons_slice.reducer,
-        [cart_slice.reducerPath]: cart_slice.reducer
+        [cart_slice.reducerPath]: cart_slice.reducer,
+        [orders_slice.reducerPath]: orders_slice.reducer
+
 
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
@@ -40,7 +43,9 @@ export const store = configureStore({
         wishlist_slice.middleware,
         address_slice.middleware,
         coupons_slice.middleware,
-        cart_slice.middleware
+        cart_slice.middleware,
+        orders_slice.middleware
+
 
 
     ),

@@ -11,7 +11,7 @@ function UserSideBar() {
                 <ul className="mt-6 space-y-1">
                     <li>
                         <Link
-                            to="/user/orders"
+                            to="/user/allorders"
                             className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
                         >
                             <i className="fa-solid fa-gauge-high text-sky-600 mr-1"></i>  Orders

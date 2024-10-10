@@ -21,6 +21,7 @@ import UserProfilePage from "../Pages/User/UserProfilePage";
 import CartPage from "../Pages/Cart/CartPage";
 import LoginPage from "../Pages/Auth/LoginPage";
 import RegisterPage from "../Pages/Auth/RegisterPage";
+import CheckoutPage from "../Pages/CheckOut/checkoutPage";
 
 
 const router = createBrowserRouter(
@@ -45,12 +46,14 @@ const router = createBrowserRouter(
         <Route path="admin/coupons" element={<AdminCouponsPage />} />
 
         {/* user routes */}
-        <Route path="user/orders" element={<UserOrdersPage />} />
+        <Route path="user/allorders" element={<UserOrdersPage />} />
         <Route path="user/wish-list" element={<UserWishListPage />} />
         <Route path="user/addresses" element={<UserAddressesPage />} />
         <Route path="user/profile" element={<UserProfilePage />} />
 
         <Route path="cart" element={<CartPage />} />
+        <Route path="order/pay-method" element={<CheckoutPage />} />
+
 
         <Route path="auth/login" element={<LoginPage />} />
         <Route path="auth/register" element={<RegisterPage />} />

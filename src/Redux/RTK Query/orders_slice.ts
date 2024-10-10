@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../../Config/Base_Query';
-
+import { ordersResponse } from '../../Interface';
 
 export const orders_slice = createApi({
     reducerPath: 'ordersApi',
@@ -9,37 +9,29 @@ export const orders_slice = createApi({
     refetchOnMountOrArgChange: true,
     baseQuery: baseQuery,
     endpoints: (builder) => ({
-        postCoupons: builder.mutation({
+        postOrder: builder.mutation({
             query: ({ id, shippingAddress }) => ({
                 url: `api/v1/orders/${id}`,
                 method: 'POST',
-                body: shippingAddress,
+                body: { shippingAddress },
             }),
             invalidatesTags: ['Orders'],
         }),
-        // getCoupons: builder.query<CouponResponse, void>({
-        //     query: () => ({
-        //         url: 'api/v1/coupons'
-        //     }),
-        //     providesTags: ['Coupons'],
-        // }),
-        // updateCoupons: builder.mutation({
-        //     query: ({ couponId, couponData }) => ({
-        //         url: `api/v1/coupons/${couponId}`,
-        //         method: 'PUT',
-        //         body: couponData,
-        //     }),
-        //     invalidatesTags: ['Coupons'],
-        // }),
-        // deleteCoupons: builder.mutation({
-        //     query: (id) => ({
-        //         url: `api/v1/coupons/${id}`,
-        //         method: 'DELETE',
-        //     }),
-        //     invalidatesTags: ['Coupons'],
-        // }),
-
+        getCheckOutSession: builder.query({
+            query: ({ id, shippingAddress }) => ({
+                url: `api/v1/orders/checkout-session/${id}`,
+                method: 'GET',
+                params: { shippingAddress },
+            }),
+            providesTags: ['Orders'],
+        }),
+        getAllOrders: builder.query<ordersResponse,void>({
+            query: () => ({
+                url: 'api/v1/orders'
+            }),
+            providesTags: ['Orders'],
+        }),
     }),
 });
 
-export const {usePostCouponsMutation } = orders_slice;
+export const { usePostOrderMutation, useGetCheckOutSessionQuery ,useGetAllOrdersQuery} = orders_slice;

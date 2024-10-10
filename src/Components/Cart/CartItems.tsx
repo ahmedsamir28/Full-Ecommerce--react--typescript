@@ -28,7 +28,7 @@ function CartItems() {
                     ))}
                 </div>
                 <div>
-                    <CartCheckout totalCartPrice={data?.data.totalCartPrice} totalAfterDiscount={data?.data.totalAfterDiscount} numOfCartItems={data?.numOfCartItems} />
+                    <CartCheckout cart={data} totalCartPrice={data?.data.totalCartPrice} totalAfterDiscount={data?.data.totalAfterDiscount} numOfCartItems={data?.numOfCartItems} />
                 </div>
             </div>
         </div>
