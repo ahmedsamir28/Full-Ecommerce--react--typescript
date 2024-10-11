@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import AdminSideBar from "../../Components/Admin/AdminSideBar"
 import DashBoard from "../../Components/Admin/DashBoard/DashBoard"
+import { ToastContainer } from "react-toastify";
 
 function DashBoardAdminPage() {
     useEffect(() => {
@@ -16,6 +17,7 @@ function DashBoardAdminPage() {
                     <DashBoard />
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     )
 }

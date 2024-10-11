@@ -1,15 +1,17 @@
-import { FormEvent, MouseEvent, useState } from "react";
-import { useGetAllOrdersQuery, useGetSpecificOrderQuery } from "../../../Redux/RTK Query/orders_slice";
+import { MouseEvent, useEffect, useState } from "react";
+import { useGetAllOrdersQuery, useGetSpecificOrderQuery, useUpdateOrderToDeliverMutation } from "../../../Redux/RTK Query/orders_slice";
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
+import Notify from "../../../Utils/UseNotifaction";
 
 function DashBoardTable() {
+
     const [selectOrderId, setSelectOrderId] = useState<string>('');
     const { data: getAllOrders, isLoading: ordersLoading } = useGetAllOrdersQuery();
     const { data: getOrder, isLoading: orderLoading } = useGetSpecificOrderQuery(selectOrderId, { skip: !selectOrderId });
     console.log(getOrder);
 
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(true);
+    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
     const handleCloseModal = () => setIsOpenConfirmModal(false);
     const handleShowModal = (e: MouseEvent<HTMLButtonElement>, orderId: string) => {
         e.preventDefault();
@@ -25,16 +27,27 @@ function DashBoardTable() {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    };
 
+    const [updateOrderToDeliver, { data, isLoading, error }] = useUpdateOrderToDeliverMutation()
+    const orderDeliverDone = async (e: MouseEvent<HTMLButtonElement>, orderId: string) => {
+        e.preventDefault()
+        try {
+            updateOrderToDeliver(orderId)
+            Notify({msg:"The operation was completed successfully" , type:'success'})
+        } catch  {
+            Notify({msg:"There is an error. Try again" , type:'error'})
+        }
+        
+    }
+
+    useEffect(() => {
+        console.log(error);
+    }, [error])
     return (
         <>
             <Modal
                 isOpen={isOpenConfirmModal}
                 closeModal={handleCloseModal}
-                onSubmit={handleSubmit}
                 title="Processing orders"
             >
                 <div className="max-w-xl mx-auto bg-white p-6 shadow-md rounded-md">
@@ -75,20 +88,32 @@ function DashBoardTable() {
                                 ))}
                             </div>
 
-                            <div className="mt-6 space-y-1">
-                                <div className="flex gap-5 items-center">
-                                    <span className="text-sm font-semibold">Delivery :</span>
-                                    <span className="text-error">{getOrder?.data.isDelivered ? <div className="text-success">Yes</div> : <div className="text-error">No</div>}</span>
+                            <div className="mt-6 space-y-2">
+                                <div className="flex items-center justify-between ">
+                                    <div className="flex gap-5 items-center">
+                                        <span className="text-sm font-semibold">Delivery :</span>
+                                        <span className="text-error">{getOrder?.data.isDelivered ? <div className="text-success">Yes</div> : <div className="text-error">No</div>}</span>
+                                    </div>
+                                    <Button onClick={(e)=>orderDeliverDone(e,getOrder?.data._id)} className="btn btn-primary btn-outline">
+                                        Done
+                                    </Button>
+
                                 </div>
 
-                                <div className="flex gap-5 items-center">
-                                    <span className="text-sm font-semibold">Pay :</span>
-                                    <span className="text-error">{getOrder?.data.isPaid ? <div className="text-success">Yes</div> : <div className="text-error">No</div>}</span>
+                                <div className="flex items-center justify-between ">
+                                    <div className="flex gap-5 items-center">
+                                        <span className="text-sm font-semibold">Pay :</span>
+                                        <span className="text-error">{getOrder?.data.isPaid ? <div className="text-success">Yes</div> : <div className="text-error">No</div>}</span>
+                                    </div>
+                                    {/* <Button onClick={orderDeliverDone} className="btn btn-primary btn-outline">
+                                        Done
+                                    </Button> */}
                                 </div>
+
 
                                 <div className="flex gap-5 items-center">
                                     <span className="text-sm font-semibold">Payment Method :</span>
-                                    <span className="text-blue-800 font-semibold">{getOrder?.data.paymentMethodType}</span>
+                                    <span className="text-blue-800 font-bold text-lg">{getOrder?.data.paymentMethodType}</span>
                                 </div>
                             </div>
 
