@@ -8,7 +8,7 @@ function DashBoard() {
             <div className="mb-5">
                 <DashBoardHeader />
             </div>
-            <div>
+            <div className="my-2">
                 <SubTitle title="Order Status" buttonTitle="" pathText="" />
             </div >
             <div>

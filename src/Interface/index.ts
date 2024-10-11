@@ -297,7 +297,7 @@ export interface ProductOrder {
     title: string;
     imageCover: string;
     ratingsQuantity: number;
-    ratingsAverage?: number |  undefined; // Optional as some products don't have ratingsAverage
+    ratingsAverage?: number | undefined; // Optional as some products don't have ratingsAverage
     id: string;
 }
 
@@ -334,6 +334,11 @@ export interface Order {
     updatedAt: string;
     id: number;
 }
+
+export interface specificOrder {
+    data: Order
+}
+
 
 // Interface for Pagination Information
 interface PaginationResult {

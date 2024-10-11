@@ -3,7 +3,7 @@ import Button from './Button';
 interface IProps {
     isOpen: boolean;
     title?: string;
-    add: string ;
+    add?: string;
     btnClass?: string;
     children: ReactNode;
     closeModal: () => void;
@@ -45,12 +45,15 @@ function Modal({ isOpen, closeModal, onSubmit, title, btnClass = "success", add,
                                     {children}
                                 </div>
                                 <div className="flex gap-3 items-start justify-end p-4 md:p-5">
-                                    <Button
-                                        type="submit"
-                                        className={`btn btn-outline btn-${btnClass} capitalize border-2`}
-                                    >
-                                        {add}
-                                    </Button>
+                                    {
+                                        add && <Button
+                                            type="submit"
+                                            className={`btn btn-outline btn-${btnClass} capitalize border-2`}
+                                        >
+                                            {add}
+                                        </Button>
+                                    }
+
                                     <Button
                                         onClick={closeModal}
                                         className="btn btn-outline btn-ghost capitalize border-2"

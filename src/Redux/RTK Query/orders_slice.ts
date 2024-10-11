@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../../Config/Base_Query';
-import { ordersResponse } from '../../Interface';
+import { ordersResponse, specificOrder } from '../../Interface';
 
 export const orders_slice = createApi({
     reducerPath: 'ordersApi',
@@ -31,7 +31,27 @@ export const orders_slice = createApi({
             }),
             providesTags: ['Orders'],
         }),
+        getSpecificOrder: builder.query<specificOrder,string>({
+            query: (id) => ({
+                url: `api/v1/orders/${id}`
+            }),
+            providesTags: ['Orders'],
+        }),
+        updateOrderToPaid: builder.mutation({
+            query: (id) => ({
+                url: `api/v1/orders/${id}/pay`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Orders'],
+        }),
+        updateOrderToDeliver: builder.mutation({
+            query: (id) => ({
+                url: `api/v1/orders/${id}/deliver`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Orders'],
+        }),
     }),
 });
 
-export const { usePostOrderMutation, useGetCheckOutSessionQuery ,useGetAllOrdersQuery} = orders_slice;
+export const { usePostOrderMutation, useGetCheckOutSessionQuery ,useGetAllOrdersQuery,useGetSpecificOrderQuery,useUpdateOrderToPaidMutation,useUpdateOrderToDeliverMutation} = orders_slice;

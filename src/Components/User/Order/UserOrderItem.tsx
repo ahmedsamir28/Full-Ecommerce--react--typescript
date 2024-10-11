@@ -65,13 +65,13 @@ function UserOrderItem({ orderItems, isLoading }: IOrder) {
                                 <div className="border-2 py-2 px-3 rounded-lg">
                                     <div className="text-center">Delivery</div>
                                     <div className="text-sm text-center">
-                                        <span className="text-error">{orderItems.isDelivered ? 'Yes' : 'No'}</span>
+                                        <span className="text-error">{orderItems.isDelivered ? <div className="text-success">Yes</div>: <div className="text-error">No</div> }</span>
                                     </div>
                                 </div>
                                 <div className="border-2 py-2 px-3 rounded-lg">
                                     <div className="text-center">Pay</div>
                                     <div className="text-sm">
-                                        <span className="text-success">{orderItems.isPaid ? 'Yes' : 'No'}</span>
+                                        <span className="text-success">{orderItems.isPaid ? <div className="text-success">Yes</div>: <div className="text-error">No</div> }</span>
                                     </div>
                                 </div>
 
