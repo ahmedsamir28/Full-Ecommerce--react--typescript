@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Button from '../UI-items/Button';
 
 // Define prop types
 interface SubTitleProps {
@@ -15,9 +14,9 @@ const SubTitle: React.FC<SubTitleProps> = ({ title, buttonTitle, pathText }) => 
                 <h6 className="capitalize text-md xl:text-xl font-bold"> {title} </h6>
                 {buttonTitle && pathText ? (
                     <Link to={pathText}>
-                        <Button className="capitalize text-sm sm:text-sm hover:text-blue-700 cursor-pointer">
-                            {buttonTitle} <i className="ml-2 fa-solid fa-arrow-right-long"></i>
-                        </Button>
+                        <div className="capitalize text-sm sm:text-sm hover:text-blue-700 cursor-pointer border-2 py-2 px-3 rounded-md">
+                            {buttonTitle} 
+                        </div>
                     </Link>
                 ) : null}
             </div>

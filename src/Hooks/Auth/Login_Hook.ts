@@ -14,57 +14,48 @@ type TFormInputs = {
 // Define an interface for the error object
 interface ApiError {
     response?: {
+        status: number;
         data?: {
-            message: string
-        }
-    }
+            message: string;
+        };
+    };
 }
 
-// Type guard function
+// Type guard function for identifying ApiError
 function isApiError(error: unknown): error is ApiError {
     return typeof error === 'object' && error !== null && 'response' in error;
 }
 
 function LoginHook() {
-    const { user, error, loading } = useAppSelector(({ login }: RootState) => login);
+    const { user, error, loading } = useAppSelector((state: RootState) => state.login);
     const dispatch = useAppDispatch();
 
-
-
     useEffect(() => {
-        if (loading === false) {
+        if (!loading) {
             if (user?.token) {
                 Notify({ msg: 'You will navigate to the home page after 2 seconds.', type: 'success' });
                 setTimeout(() => {
-                    window.location.href = "/"
+                    window.location.href = "/";
                 }, 1000);
             } else {
-                localStorage.removeItem("token")
-                localStorage.removeItem("user")
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
             }
-
             if (error) {
-                let errorMessage = "An unknown error occurred";
-                if (isApiError(error)) {
-                    errorMessage = error.response?.data?.message || errorMessage;
-                } else if (typeof error === 'string') {
-                    errorMessage = error;
-                }
-
-                if (errorMessage) {
-                    localStorage.removeItem("token")
-                    localStorage.removeItem("user")
+                if (isApiError(error) && error.response?.status === 500) {
                     Notify({ msg: "Incorrect email or password", type: "error" });
-
                 }
             }
         }
-    }, [loading, user, error])
 
+    }, [loading, user, error]);
+
+    // Form setup
     const { register, handleSubmit, formState: { errors } } = useForm<TFormInputs>({
-        resolver: yupResolver(loginSchema)
+        resolver: yupResolver(loginSchema),
     });
 
+    // Form submission handler
     const onSubmit: SubmitHandler<TFormInputs> = (data) => {
         dispatch(authLogin(data));
     };

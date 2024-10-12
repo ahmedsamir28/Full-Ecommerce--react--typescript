@@ -19,7 +19,7 @@ function ProductDetails() {
                     <ProductGallery  product={ data } isLoading = {isLoading}/>
                 </div>
                 <div className='rounded-lg w-11/12'>
-                    <ProductText product={ data } isLoading={isLoading}/>
+                    <ProductText product={ data?.data } isLoading={isLoading}/>
                 </div>
             </div>
         </div>

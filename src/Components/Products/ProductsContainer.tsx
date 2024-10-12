@@ -27,7 +27,7 @@ function ProductsContainer({ items, isError, isLoading, title, buttonTitle, path
   }
 
   return (
-    <div className="container">
+    <div className="">
       {title ? (
         <SubTitle title={title} buttonTitle={buttonTitle} pathText={pathTitle} />
       ) : null}
@@ -35,7 +35,6 @@ function ProductsContainer({ items, isError, isLoading, title, buttonTitle, path
         {!isLoading && !isError && products.map((product: IProduct) => (
           <ProductCard key={product._id} product={product} isLoading={isLoading} />
         ))}
-        {isLoading && <p>Loading...</p>}
         {isError && <p>Error loading products...</p>}
       </div>
     </div>

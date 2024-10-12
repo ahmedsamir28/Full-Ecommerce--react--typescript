@@ -1,28 +1,28 @@
 import { MouseEvent, useEffect, useState } from "react";
 import Notify from "../../../Utils/UseNotifaction";
 import { usePostCartMutation } from "../../../Redux/RTK Query/cart_slice";
-import { IProductDetails } from "../../../Interface";
+import { IProduct } from "../../../Interface";
 
-function AddProductToCartHook(product : IProductDetails | undefined) {
+function AddProductToCartHook(product : IProduct  |undefined) {
     const [postCart, { isLoading: isPostCart }] = usePostCartMutation();
 
     const [state, setState] = useState({
-        productId: product?.data?._id || '',
+        productId: product?._id || '',
         color: '',
     });
 
     useEffect(() => {
-        if (product?.data?._id) {
-            setState((prevState) => ({ ...prevState, productId: product.data._id, }));
+        if (product?._id) {
+            setState((prevState) => ({ ...prevState, productId: product._id, }));
         }
-    }, [product?.data?._id]);
+    }, [product?._id]);
 
     const handlerChooseColor = (e: MouseEvent<HTMLDivElement>, color: string) => {
         e.preventDefault();
         setState((prevState) => ({ ...prevState, color: color }));
     };
 
-    const handlerAddProductToCart = async (e: MouseEvent<HTMLButtonElement>) => {
+    const handlerAddProductToCart = async (e: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         e.preventDefault();
 
         const user = localStorage.getItem('user');
@@ -36,7 +36,7 @@ function AddProductToCartHook(product : IProductDetails | undefined) {
             return;
         }
 
-        const hasMultipleColors = Array.isArray(product?.data.availableColors) && product?.data.availableColors.length > 1;
+        const hasMultipleColors = Array.isArray(product?.availableColors) && product?.availableColors.length > 1;
         if (hasMultipleColors && !state.color) {
             Notify({ msg: 'Please choose a color', type: 'warn' });
             return;

@@ -1,55 +1,9 @@
-import { MouseEvent, useState, useCallback } from "react";
-import { useGetAllOrdersQuery, useGetSpecificOrderQuery, useUpdateOrderToDeliverMutation, useUpdateOrderToPaidMutation } from "../../../Redux/RTK Query/orders_slice";
+import Update_Order_Hook from "../../../Hooks/Orders/Update_Order_Hook";
 import Button from "../../../UI-items/Button";
 import Modal from "../../../UI-items/Modal";
-import Notify from "../../../Utils/UseNotifaction";
 
 function DashBoardTable() {
-    const [selectOrderId, setSelectOrderId] = useState<string>('');
-    const { data: getAllOrders, isLoading: ordersLoading } = useGetAllOrdersQuery();
-    const { data: getOrder, isLoading: orderLoading } = useGetSpecificOrderQuery(selectOrderId, { skip: !selectOrderId });
-    const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
-
-    const handleCloseModal = useCallback(() => setIsOpenConfirmModal(false), []);
-    
-    const handleShowModal = useCallback((e: MouseEvent<HTMLButtonElement>, orderId: string) => {
-        e.preventDefault();
-        setSelectOrderId(orderId);
-        setIsOpenConfirmModal(true);
-    }, []);
-
-    const formatDate = useCallback((dateString: string | undefined): string => {
-        if (!dateString) return "Invalid date";
-        const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "numeric", day: "numeric" };
-        return new Date(dateString).toLocaleDateString(undefined, options);
-    }, []);
-
-    const [updateOrderToDeliver] = useUpdateOrderToDeliverMutation();
-    const [updateOrderToPaid] = useUpdateOrderToPaidMutation()
-
-    const orderDeliverDone =async (e: MouseEvent<HTMLButtonElement>, orderId: string | undefined) => {
-        e.preventDefault();
-        if (!orderId) return;
-        try {
-            await updateOrderToDeliver(orderId).unwrap();
-            Notify({ msg: "The operation was completed successfully", type: 'success' });
-        } catch {
-            Notify({ msg: "There is an error. Try again", type: 'error' });
-        }
-    }
-
-    const orderPaidDone = async (e: MouseEvent<HTMLButtonElement>, orderId: string | undefined) => {
-        e.preventDefault();
-        if (!orderId) return;
-        try {
-            await updateOrderToPaid(orderId).unwrap();
-            Notify({ msg: "The operation was completed successfully", type: 'success' });
-        } catch {
-            Notify({ msg: "There is an error. Try again", type: 'error' });
-        }
-    }
-
-
+const   [getAllOrders,getOrder,ordersLoading,orderLoading,isOpenConfirmModal,handleCloseModal,handleShowModal,formatDate,orderDeliverDone,orderPaidDone] = Update_Order_Hook()
     return (
         <>
             <Modal
