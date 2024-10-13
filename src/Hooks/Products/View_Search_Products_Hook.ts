@@ -95,7 +95,7 @@ function ViewSearchProductsHook() {
         `limit=${limit}&page=${page}&${cateQuery}&${brandQuery}&${priceFromString}&${priceToString}${sortQuery}`
     );
 
-    const totalPages: number = Number(data?.results)
+    const totalPages: number = Number(data?.paginationResult.numberOfPages)
 
     const handlePageChange = (page: number) => {
         console.log("Current Page:", page);
