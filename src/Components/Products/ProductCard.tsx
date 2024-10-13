@@ -10,8 +10,8 @@ interface IProductCardProps {
 }
 
 const ProductCard = ({ product, isLoading }: IProductCardProps) => {
-    const [isWishlist, handleProductToWishlist, wishlistError] = HandleWishlistHook(product?._id);
-    const [handlerChooseColor, handlerAddProductToCart, cartError, state] = AddProductToCartHook(product);
+    const [isWishlist, handleProductToWishlist, ] = HandleWishlistHook(product?._id);
+    const [handlerChooseColor, handlerAddProductToCart,, state] = AddProductToCartHook(product);
 
     // Handle possible product errors (e.g., if product data is incomplete or missing)
     if (!product) {
@@ -72,7 +72,6 @@ const ProductCard = ({ product, isLoading }: IProductCardProps) => {
                                 className={`fa-regular fa-heart text-xl text-blue-700 ${isWishlist ? 'font-bold' : ''}`}
                             ></i>
                         </span>
-                        {wishlistError && <div className="text-red-500 mt-1">Error adding to wishlist</div>}
 
                         {/* Rating display */}
                         <div className="absolute bottom-3 left-3">

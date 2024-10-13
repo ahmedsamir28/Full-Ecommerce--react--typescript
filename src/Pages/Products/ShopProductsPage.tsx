@@ -4,13 +4,15 @@ import SideFilter from "../../Components/Products/SideFilter"
 import ViewSearchProductsHook from "../../Hooks/Products/View_Search_Products_Hook";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import Pagination from "../../Utils/Pagination";
 
 function ShopProductsPage() {
+    const [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand,
+        from, priceFrom, to, priceTo, sortData, totalPages, handlePageChange] = ViewSearchProductsHook()
+
     useEffect(() => {
         document.title = "Products Page";
     }, []);
-
-    const [data, isLoading, isError, brands, isBrandLoading, isBrandError, categories, isCategoryLoading, isCategoryError, clickCategory, clickBrand, from, priceFrom, to, priceTo, sortData] = ViewSearchProductsHook()
     return (
         <div className=" border-t-2 mb-10 mt-3 py-2 min-h-[calc(70vh-100px)]">
             <DropDown sortData={sortData} />
@@ -22,9 +24,27 @@ function ShopProductsPage() {
                     />
                 </div>
                 <div>
-                    <ProductsContainer items={data} isError={isError} isLoading={isLoading} title="" buttonTitle="" pathTitle="" />
+                    {data?.data.length === 0 ? (
+                        <div className="flex items-center flex-col justify-between min-h-[200px] text-center text-gray-500">
+                            <div>
+                                <p className="text-lg font-semibold">No products found.</p>
+                                <p className="mt-1">Try adjusting your filters or check back later.</p>
+                            </div>
+                            <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
+
+                        </div>
+                    ) : (
+                        <div>
+                            <ProductsContainer items={data} isError={isError} isLoading={isLoading} title="" buttonTitle="" pathTitle="" />
+                            <Pagination totalPages={totalPages} onPageChange={handlePageChange} />
+
+                        </div>
+                    )}
                 </div>
+
+
             </div>
+
             <ToastContainer />
         </div>
     )
