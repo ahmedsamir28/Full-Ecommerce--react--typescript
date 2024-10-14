@@ -2,47 +2,43 @@ import { FormEvent, useEffect, useState } from "react";
 import Notify from "../../../Utils/UseNotifaction";
 import { useDeleteSubCategoryMutation } from "../../../Redux/RTK Query/subCategory_slice";
 
-function DeleteSubCategoryHook() {
-    // State to manage the visibility of the delete confirmation modal
+function useDeleteSubCategory() {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null); // Change to null for better type handling
 
-    // State to hold the ID of the selected subcategory to delete
-    const [selectedCategoryId, setSelectedCategoryId] = useState('');
-
-    // Function to close the delete confirmation modal
-    const handleCloseDeleteModal = () => setIsOpenDeleteModal(false);
-
-    // Function to show the delete confirmation modal and set the selected category ID
-    const handleShowDeleteModal = (e: FormEvent<HTMLButtonElement>, categoryId: string) => {
-        e.preventDefault(); // Prevent default button click behavior
-        setSelectedCategoryId(categoryId); // Set the ID of the subcategory to delete
-        setIsOpenDeleteModal(true); // Open the modal
-    };
-
-    // Set up mutation for deleting a subcategory
     const [deleteSubCategory, { isLoading: isDeleting, isSuccess, isError: isDeleteError }] = useDeleteSubCategoryMutation();
 
-    // Effect to handle notifications based on the success or error of the deletion
+    const handleCloseDeleteModal = () => setIsOpenDeleteModal(false);
+
+    const handleShowDeleteModal = (e: FormEvent<HTMLButtonElement>, categoryId: string) => {
+        e.preventDefault();
+        setSelectedCategoryId(categoryId);
+        setIsOpenDeleteModal(true);
+    };
+
     useEffect(() => {
         if (isSuccess) {
-            Notify({ msg: 'The subcategory has been deleted successfully.', type: 'success' }); // Notify success
-            setIsOpenDeleteModal(false); // Close the modal on success
+            Notify({ msg: 'The subcategory has been deleted successfully.', type: 'success' });
+            handleCloseDeleteModal();
         } else if (isDeleteError) {
-            Notify({ msg: 'The subcategory has not been deleted', type: 'error' }); // Notify error
+            Notify({ msg: 'The subcategory has not been deleted.', type: 'error' });
         }
-    }, [isSuccess, isDeleteError]); // Run this effect whenever success or error state changes
+    }, [isSuccess, isDeleteError]);
 
-    // Function to handle the deletion of the subcategory
-    const removeCategoryHandler = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        if (selectedCategoryId) { // Check if a category ID is selected
-            await deleteSubCategory(selectedCategoryId); // Call the mutation to delete the subcategory
-            handleCloseDeleteModal(); // Close the modal after deletion
+    const handleDeleteSubCategory = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (selectedCategoryId) {
+            await deleteSubCategory(selectedCategoryId);
         }
     };
 
-    // Return state and handlers for use in the component
-    return [isOpenDeleteModal,handleCloseDeleteModal,handleShowDeleteModal,isDeleting,removeCategoryHandler] as const
+    return {
+        isOpenDeleteModal,
+        handleCloseDeleteModal,
+        handleShowDeleteModal,
+        isDeleting,
+        handleDeleteSubCategory,
+    };
 }
 
-export default DeleteSubCategoryHook
+export default useDeleteSubCategory;

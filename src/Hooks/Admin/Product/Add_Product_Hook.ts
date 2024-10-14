@@ -7,19 +7,14 @@ import { useGetCategory_SubQuery } from "../../../Redux/RTK Query/subCategory_sl
 import Notify from "../../../Utils/UseNotifaction";
 
 function AddProductHook() {
-    // Fetch categories and brands
     const { data: categories, isError: isCategoryError, isLoading: isCategoryLoading } = useGetCategoriesQuery();
     const { data: brands, isError: isBrandError, isLoading: isBrandLoading } = useGetBrandsQuery();
-
-    // Post product mutation hook from RTK Query
     const [postProduct] = usePostProductMutation();
 
-    // Modal state management
     const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
     const handleCloseModal = () => setIsOpenConfirmModal(false);
     const handleShowModal = () => setIsOpenConfirmModal(true);
 
-    // Form state management
     const [images, setImages] = useState<string[]>([]);
     const [selectedOptions, setSelectedOptions] = useState<ISubCategory[]>([]);
     const [title, setTitle] = useState("");
@@ -30,87 +25,63 @@ function AddProductHook() {
     const [category, setCategory] = useState<string>("");
     const [brand, setBrand] = useState<string>("");
     const [options, setOptions] = useState<ISubCategory[]>([]);
-
-    // Color management
     const [showColor, setShowColor] = useState(false);
     const [colors, setColors] = useState<string[]>([]);
 
-    // Fetch subcategories when category changes
     const { data: category_sub } = useGetCategory_SubQuery(category, { skip: !category });
     useEffect(() => {
-        if (category_sub) {
-            setOptions(category_sub.data);
-        }
+        if (category_sub) setOptions(category_sub.data);
     }, [category_sub]);
 
-    // Image upload handling
     const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            const fileArray = Array.from(event.target.files).map((file) =>
+            const fileArray = Array.from(event.target.files).map((file) => 
                 URL.createObjectURL(file)
             );
-            setImages((prevImages) => prevImages.concat(fileArray));
+            setImages((prev) => prev.concat(fileArray));
         }
     };
 
-    // Remove image from preview
     const removeImage = (url: string) => () => {
-        setImages((prevImages) => prevImages.filter((image) => image !== url));
-        URL.revokeObjectURL(url); // Prevent memory leaks
+        setImages((prev) => prev.filter((image) => image !== url));
+        URL.revokeObjectURL(url);
     };
 
-    // Select subcategories for the product
     const handleSelect = (selectedItem: ISubCategory | ISubCategory[]) => {
-        setSelectedOptions((prevSelectedOptions) => {
+        setSelectedOptions((prev) => {
             const newItems = Array.isArray(selectedItem) ? selectedItem : [selectedItem];
-            const updatedOptions = [...prevSelectedOptions];
-            newItems.forEach((item) => {
-                if (!updatedOptions.some(option => option._id === item._id)) {
-                    updatedOptions.push(item);
-                }
-            });
-            return updatedOptions;
+            return [...prev, ...newItems.filter(item => !prev.some(opt => opt._id === item._id))];
         });
     };
 
-    // Remove selected subcategory
     const handleRemove = (removedItem: ISubCategory) => {
-        setSelectedOptions((prevSelectedOptions) =>
-            prevSelectedOptions.filter((option) => option._id !== removedItem._id)
-        );
+        setSelectedOptions((prev) => prev.filter((opt) => opt._id !== removedItem._id));
     };
 
-    // Form input handlers
-    const onChangeName = (event: ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
-    const onChangeDescription = (event: ChangeEvent<HTMLTextAreaElement>) => setDescription(event.target.value);
-    const onChangePrice = (event: ChangeEvent<HTMLInputElement>) => setPrice(event.target.value);
-    const onChangeDiscount = (event: ChangeEvent<HTMLInputElement>) => setDiscount(event.target.value);
-    const onChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => setQuantity(event.target.value);
-    const onChangeCategory = (event: ChangeEvent<HTMLSelectElement>) => setCategory(event.target.value);
-    const onChangeBrand = (event: ChangeEvent<HTMLSelectElement>) => setBrand(event.target.value);
+    const onChangeName = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+    const onChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value);
+    const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => setPrice(e.target.value);
+    const onChangeDiscount = (e: ChangeEvent<HTMLInputElement>) => setDiscount(e.target.value);
+    const onChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => setQuantity(e.target.value);
+    const onChangeCategory = (e: ChangeEvent<HTMLSelectElement>) => setCategory(e.target.value);
+    const onChangeBrand = (e: ChangeEvent<HTMLSelectElement>) => setBrand(e.target.value);
 
-    // Toggle color picker
     const onChangeColor = () => setShowColor(!showColor);
-    
-    // Add color when color picker is selected
     const handelChangeComplete = (color: { hex: string }) => {
-        setColors([...colors, color.hex]);
+        setColors((prev) => [...prev, color.hex]);
         setShowColor(false);
     };
 
-    // Remove selected color
     const removeColor = (color: string) => () => {
-        setColors(colors.filter((e) => e !== color));
+        setColors((prev) => prev.filter((c) => c !== color));
     };
 
-    // Convert base64 image to file for upload
     const convertBase64ToFile = async (base64: string, filename: string): Promise<File> => {
         const response = await fetch(base64);
         const blob = await response.blob();
         return new File([blob], filename, { type: blob.type });
     };
 
-    // Submit product form
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!title || !description || !price || !category || !brand) {
@@ -119,7 +90,6 @@ function AddProductHook() {
         }
 
         const imgCover = await convertBase64ToFile(images[0], `${Math.random()}.png`);
-
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
@@ -130,12 +100,12 @@ function AddProductHook() {
         formData.append("brand", brand);
         formData.append("imageCover", imgCover);
 
-        const itemImages = await Promise.all(images.map((img, index) =>
-            convertBase64ToFile(img, `${Math.random()}-${index}.png`)
-        ));
-        itemImages.map((item) => formData.append("images", item));
-        colors.map((color) => formData.append("availableColors", color));
-        selectedOptions.map((item) => formData.append("subcategory", item._id));
+        const itemImages = await Promise.all(
+            images.map((img, i) => convertBase64ToFile(img, `${Math.random()}-${i}.png`))
+        );
+        itemImages.forEach((img) => formData.append("images", img));
+        colors.forEach((color) => formData.append("availableColors", color));
+        selectedOptions.forEach((item) => formData.append("subcategory", item._id));
 
         try {
             await postProduct(formData).unwrap();
@@ -147,7 +117,6 @@ function AddProductHook() {
         }
     };
 
-    // Reset form fields
     const resetForm = () => {
         setImages([]);
         setTitle('');
@@ -161,14 +130,12 @@ function AddProductHook() {
         setColors([]);
     };
 
-    // Return the required data and handlers
     return [
-        categories, isCategoryError, isCategoryLoading,
-        brands, isBrandError, isBrandLoading,
-        isOpenConfirmModal, handleCloseModal, handleShowModal, images,
-        title, description, price, discount, quantity, category, brand, options, showColor, colors,
-        handleImageUpload, removeImage, handleSelect, handleRemove, onChangeName, onChangeDescription,
-        onChangePrice, onChangeDiscount, onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
+        categories, isCategoryError, isCategoryLoading, brands, isBrandError, isBrandLoading,
+        isOpenConfirmModal, handleCloseModal, handleShowModal, images, title, description,
+        price, discount, quantity, category, brand, options, showColor, colors, handleImageUpload,
+        removeImage, handleSelect, handleRemove, onChangeName, onChangeDescription, onChangePrice,
+        onChangeDiscount, onChangeQuantity, onChangeCategory, onChangeBrand, onChangeColor,
         handelChangeComplete, removeColor, handleSubmit
     ] as const;
 }
